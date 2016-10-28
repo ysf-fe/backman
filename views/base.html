@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>常用标签元素样式</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- bootstrap stylesheet -->
+    <link rel="stylesheet" href="../libs/bootstrap/css/bootstrap.min.css">
+    <!-- admin -->
+    <link rel="stylesheet" href="../libs/adminlte/AdminLTE.min.css">
+    <link rel="stylesheet" href="../libs/adminlte/skins/_all-skins.min.css">
+    <!-- base element style -->
+    <link rel="stylesheet" href="../css/baseElement.css">
+    <style type="text/css">
+    /* 以下样式为仅仅是展示 */
+
+    body {
+        background: #f4f4f4;
+    }
+
+    .base-element-block {
+        background: #fff;
+        padding: 20px;
+    }
+
+    .base-element-block + .base-element-block {
+        margin-top: 20px;
+    }
+    </style>
+</head>
+<div class="container">
+    <h1>常用标签元素样式</h1>
+    <div class="base-element-block">
+        <h3>标题</h3>
+        <hr />
+        <p>从 <code>&lt;h1&gt;</code> 到 <code>&lt;h6&gt;</code> 标签</p>
+        <h1>h1.Heading 标题</h1>
+        <h2>h2.Heading 标题</h2>
+        <h3>h3.Heading 标题</h3>
+        <h4>h4.Heading 标题</h4>
+        <h5>h5.Heading 标题</h5>
+        <h6>h6.Heading 标题</h6>
+    </div>
+    <div class="base-element-block">
+        <h3>段落</h3>
+        <hr />
+        <p><code>&lt;p&gt;</code>标签</p>
+        <p>这是一段文字段落</p>
+    </div>
+    <div class="base-element-block">
+        <h3>水平线</h3>
+        <hr>
+        <p><code>&lt;hr&gt;</code>标签</p>
+        <hr />
+    </div>
+    <div class="base-element-block">
+        <h3>行内代码</h3>
+        <hr>
+        <p><code>&lt;code&gt;</code>标签</p>
+        <code>javascript</code>
+        <code>alert('Hello World!');</code>
+    </div>
+    <div class="base-element-block">
+        <h3>链接</h3>
+        <hr>
+        <p><code>&lt;a&gt;</code>标签, 带有默认颜色，悬浮颜色变浅</p>
+        <a href="#">这是一个a标签链接</a>
+    </div>
+    <div class="base-element-block">
+        <h3>列表</h3>
+        <hr>
+        <p><code>&lt;ul&gt;&lt;li&gt;</code>无序列表标签，默认样式如下：</p>
+        <ul>
+            <li>云渠道</li>
+            <li>云成交</li>
+            <li>云到访</li>
+            <li>云报备</li>
+            <li>鑫房宝</li>
+        </ul>
+        <p><code>&lt;ol&gt;&lt;li&gt;</code>有序列表标签，默认样式如下</p>
+        <ol>
+            <li>云渠道</li>
+            <li>云成交</li>
+            <li>云到访</li>
+            <li>云报备</li>
+            <li>鑫房宝</li>
+        </ol>
+        <hr />
+        <p>无样式<code>&lt;ul&gt;&lt;li&gt;</code><code>&lt;ol&gt;&lt;li&gt;</code>,通过添加<code>.list-unstyled</code> (注意：该类为Bootstrap的类,只是针对 <strong>直接子元素</strong> )，样式效果如下：</p>
+        <p><code>&lt;ul&gt;&lt;li&gt;</code>无序列表无样式如下</p>
+        <ul class="list-unstyled">
+            <li>
+                云渠道
+                <ul>
+                    <li>商家版</li>
+                    <li>经纪人版</li>
+                    <li>天眼版</li>
+                    <li>机构主版</li>
+                </ul>
+            </li>
+            <li>云成交</li>
+            <li>云到访</li>
+            <li>云报备</li>
+            <li>鑫房宝</li>
+        </ul>
+        <hr />
+        <p><code>&lt;ol&gt;&lt;li&gt;</code>有序列表无样式如下</p>
+        <ol class="list-unstyled">
+            <li>
+                云渠道
+                <ol>
+                    <li>商家版</li>
+                    <li>经纪人版</li>
+                    <li>天眼版</li>
+                    <li>机构主版</li>
+                </ol>
+            </li>
+            <li>云成交</li>
+            <li>云到访</li>
+            <li>云报备</li>
+            <li>鑫房宝</li>
+        </ol>
+        <hr/>
+        <p>内联<code>&lt;ul&gt;&lt;li&gt;</code><code>&lt;ol&gt;&lt;li&gt;</code>,通过添加<code>.list-inline</code> (注意：该类为Bootstrap的类,只是针对 <strong>直接子元素</strong> )，样式效果如下：</p>
+        <ul class="list-inline">
+            <li>云渠道</li>
+            <li>云成交</li>
+            <li>云到访</li>
+            <li>云报备</li>
+            <li>鑫房宝</li>
+        </ul>
+    </div>
+    <div class="base-element-block">
+        <h3>表格</h3>
+        <hr>
+        <p><code>&lt;table&gt;</code>标签</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th align="left">First Name</th>
+                    <th align="center">Last Name</th>
+                    <th align="right">Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td align="left">Mark</td>
+                    <td align="center">Otto</td>
+                    <td align="right">@mdo</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td align="left">Jacob</td>
+                    <td align="center">Thornton</td>
+                    <td align="right">@fat</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td align="left">Larry</td>
+                    <td align="center">the Bird</td>
+                    <td align="right">@twitter</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+    </div>
+</div>
+
+<body>
+</body>
+
+</html>
