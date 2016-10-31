@@ -1,0 +1,22 @@
+{
+  "name": "backman",
+  "version": "0.0.1",
+  "description": "基于Angluar与bootstrap进行后台管理系统快速搭建的前端框架",
+  "main": "bin/main",
+  "scripts": {
+    "test": "backman test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysf-fe/backman.git"
+  },
+  "keywords": [
+    "后台框架"
+  ],
+  "author": "遇善房前端攻城小分队",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ysf-fe/backman/issues"
+  },
+  "homepage": "https://github.com/ysf-fe/backman#readme"
+}
