@@ -1,0 +1,6 @@
+@charset "UTF-8";/*!
+ * author： Mak
+ * date: 2016-10-28
+ * des: base element style (基础标签元素样式)
+ */table{width:100%;max-width:100%;margin-bottom:20px;background-color:transparent;border-collapse:separate;border-spacing:0;border:1px solid #ddd;border-left:0;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px}table caption+tbody tr:first-child td,table caption+tbody tr:first-child th,table caption+thead tr:first-child th,table colgroup+tbody tr:first-child td,table colgroup+tbody tr:first-child th,table colgroup+thead tr:first-child th,table tbody:first-child tr:first-child td,table tbody:first-child tr:first-child th,table thead:first-child tr:first-child th{border-top:0}table th{font-weight:700}table td,table td[align=center],table th[align=center]{text-align:center}table td[align=left],table th[align=left]{text-align:left}table td[align=right],table th[align=right]{text-align:right}table td,table th{padding:8px;line-height:20px;border:none;border-top:1px solid #ddd;border-left:1px solid #ddd}
+/*# sourceMappingURL=backman.min.css.map */

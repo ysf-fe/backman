@@ -1,12 +1,17 @@
-'use strict';
-var ysf = angular.module('ysf', ['ui.router', 'ysf.router'])
 
-.config(function ($httpProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $filterProvider, $provide) {
+
+var backman = angular.module('backman', ['ui.router']);
+
+backman.config(function ($httpProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $filterProvider, $provide) {
+
+    'use strict';
+
     // 修正angularPost数据payload模式为formData模式
     $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
     $httpProvider.defaults.headers.post['X-Requested-With'] = 'XMLHttpRequest';
-    $httpProvider.defaults.headers.get = { 'X-Requested-With' : 'XMLHttpRequest' };
+    $httpProvider.defaults.headers.get = {'X-Requested-With': 'XMLHttpRequest'};
+
     // Override $http service's default transformRequest
     $httpProvider.defaults.transformRequest = [function (data) {
         /**
@@ -52,102 +57,137 @@ var ysf = angular.module('ysf', ['ui.router', 'ysf.router'])
     //增加angular自动过滤特殊url白名单
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|sms|javascript):/);
 
-    ysf.register = {    //异步controller注册器
+    //异步controller注册器
+    ysf.register = {
         controller: $controllerProvider.register,
         directive: $compileProvider.directive,
         filter: $filterProvider.register,
         factory: $provide.factory,
         service: $provide.service
     };
-})
-.run(function($rootScope, $state, $stateParams){
+
+});
+
+backman.run(function ($rootScope, $state, $stateParams) {
+
+    'use strict';
+
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-})
-.factory('_responePreHandler',function(_tools){ // 服务： 请求预处理服务
+
+});
+
+
+
+
+// 服务：请求预处理
+backman.factory('_responePreHandler', function (_tools) {
+
+    'use strict';
+
     return {
         //正常通行
-        success: function(success, config) {
-            if(success.data.state.code == 20001 && config && config.noVerify == true){
+        success: function (success, config) {
+            if (success.data.state.code == 20001 && config && config.noVerify == true) {
                 return;
-            }else if(success.data.state.code == 20001){
+            }
+            if (success.data.state.code == 20001) {
                 window.location.href = '/usercenter/login-show';
                 return;
             }
             //code级报错
-            else if (success.data.state.code != 10200 && success.data.state.code != 10205) {
+            if (success.data.state.code != 10200 && success.data.state.code != 10205) {
                 success.data.data = null;
                 //throw new Error('Server Error!\n\r   success + '\n\r   Message: ' + data.state.msg);
-                alert(success.msg || (success.data&&success.data.state&&success.data.state.msg));
+                alert(success.msg || (success.data && success.data.state && success.data.state.msg));
                 return null;
             }
             //正常code
-            else {
-                if (success.data.state.code == 10205) {
-                    return {};
-                } else {
-                    var data = success.data.data ? _tools.transKeyName('camel', success.data.data) : {};
-                    data.__state = success.data.state;
-                    return data;
-                }
+            if (success.data.state.code == 10205) {
+                return {};
+            } else {
+                var data = success.data.data ? _tools.transKeyName('camel', success.data.data) : {};
+                data.__state = success.data.state;
+                return data;
             }
         },
         //http级报错
-        error: function(err) {
+        error: function (err) {
             return err;
         }
     };
-})
-.factory('_httpPost', function ($http, _tools, _responePreHandler, _setting) {
+
+});
+
+backman.factory('_httpPost', function ($http, _tools, _responePreHandler, _setting) {
+
+    'use strict';
+
     return function (url, postData, config) {
-        if(!config || !config.ajaxParams){
+        if (!config || !config.ajaxParams) {
             angular.extend(postData, _setting.ajaxParams);
         }
         postData = _tools.transKeyName('underline', postData);
         return $http({
-                method: 'POST',
-                url: url,
-                data: postData
-            })
-            .then(function (success) {
+            method: 'POST',
+            url: url,
+            data: postData
+        }).then(function (success) {
                 return _responePreHandler.success(success, config);
             }, function (err) {
                 return _responePreHandler.error(err);
             }
         );
     };
-})
-.factory('_httpGet', function ($http, _tools, _responePreHandler, _setting) {
+
+});
+
+backman.factory('_httpGet', function ($http, _tools, _responePreHandler, _setting) {
+
+    'use strict';
+
     return function (url, getData, config) {
-        if(!config || !config.ajaxParams){
+        if (!config || !config.ajaxParams) {
             angular.extend(getData, _setting.ajaxParams);
         }
         getData = _tools.transKeyName('underline', getData);
         return $http({
-                    method: 'GET',
-                    url: url,
-                    params: getData
-                }).then(function (success) {
-                    return _responePreHandler.success(success, config);
-                }, function (err) {
-                    return _responePreHandler.error(err);
-                });
-
-
+            method: 'GET',
+            url: url,
+            params: getData
+        }).then(function (success) {
+            return _responePreHandler.success(success, config);
+        }, function (err) {
+            return _responePreHandler.error(err);
+        });
     };
-})
-.factory('_setting', function ($rootScope) {
-    var href = location.href,
-        hostname = location.hostname,
-        idx = href.indexOf(hostname) + hostname.length,
-        base = href.substring(0, idx);
-    return {
-        base: base,
-        path: '/usercenter'  
+
+});
+backman.factory('_setting', function ($rootScope) {
+
+    'use strict';
+
+    var data = {
+        base: location.protocol + '//' + location.host,
+        path: ''
         // ,ajaxParams: {"authClient": "app", "apiVersion": "v1"}
     };
-})
-.factory('_tools', function () {
+
+    return {
+        get: function (key) {
+            return data[key];
+        },
+        set: function (key, val) {
+            data[key] = val
+        }
+    };
+
+});
+
+backman.factory('_tools', function () {
+
+    'use strict';
+
     //获取url参数
     var urlData = null;
     var getUrlParam = function (name) {
@@ -166,6 +206,7 @@ var ysf = angular.module('ysf', ['ui.router', 'ysf.router'])
         }
         return urlData[name];
     };
+
     //峰驼与下划线命名模式转换
     var transKeyName = function (type, json) {
         //下划线字符串转小峰驼
@@ -218,68 +259,60 @@ var ysf = angular.module('ysf', ['ui.router', 'ysf.router'])
         };
         return transform(json, typeof json.length == 'undefined' ? {} : []);
     };
+
+    var loadJs = function (jsList) {
+        return function ($q, $rootScope) {
+            var deferred = $q.defer();
+            $script(jsList, function () {
+                $rootScope.$apply(function () {
+                    deferred.resolve();
+                });
+            });
+            return deferred.promise;
+        };
+    };
+
     return {
         getUrlParam: getUrlParam,
-        transKeyName: transKeyName
+        transKeyName: transKeyName,
+        loadJs: loadJs
     };
-})
-.factory('_validate', function(){
-    var vd = {
-        isMobile:function(val){
+
+});
+backman.factory('_validate', function () {
+
+    'use strict';
+
+    return {
+        isMobile: function (val) {
             var rgx = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i;
             return rgx.test($.trim(val));
         },
-        isRequired:function(val){
-                return $.trim(val)?true : false;
+        isRequired: function (val) {
+            return $.trim(val) ? true : false;
         },
-        isMatchLength:function(val,len){
+        isMatchLength: function (val, len) {
             return (($.trim(val)).length == len);
         },
-        isLengthInRange:function(val,arr){
+        isLengthInRange: function (val, arr) {
             var len = ($.trim(val)).length;
             return (len >= arr[0] && len <= arr[1]);
         },
-        isInRange:function(val,arr){
-            return (val>= arr[0] && val<=arr[1]);
+        isInRange: function (val, arr) {
+            return (val >= arr[0] && val <= arr[1]);
         },
-        isIdCard:function(val){
+        isIdCard: function (val) {
             var rgx = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{4}$/;
             return rgx.test($.trim(val));
         },
-        isTheSame:function(val1,val2){
-            return (val1==val2);
+        isTheSame: function (val1, val2) {
+            return (val1 == val2);
         },
         // 验证密码
-        isCorrectPassword:function(val){
+        isCorrectPassword: function (val) {
             // 只包含数字或字母
             var rgx = /^(?!\d+$)(?![a-z]+$).+$/i;
             return rgx.test($.trim(val));
         }
     };
-    return vd;
 });
-
-/**
- * overwrite: window.alert
- * 复写window的alert方法
- * 不是一个好的做法囧.....
- */
-;(function(window,undefined){
-    window.alert = function(title){
-        var docfrm = document.createElement('div');
-        docfrm.innerHTML = '<div style="position:fixed;z-index:999;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.4);">' +
-            '<div style="position:absolute;width:300px;left:50%;margin-left:-150px;top:38%;background-color:#fff;border-radius:.4rem;">' +
-                '<p style="padding:1.3rem 2rem 1.7rem;font-size:1.03rem;color:#333;text-align:center;">'+ title +'</p>' +
-                '<a href="javascript:;" style="display:block;height:3rem;line-height:3rem;text-align:center;font-size:1.03rem;color:#1a8fc5;border-top:1px solid #e5e5e5;">确定</a>' +
-            '</div>' +
-        '</div>';
-        var alertBox = docfrm.firstChild,
-            closeBtn = alertBox.getElementsByTagName('a')[0];
-
-        closeBtn.addEventListener('click',function(e){
-            document.body.removeChild(alertBox);
-        },false);
-
-        document.body.appendChild(alertBox);
-    };
-})(window);
