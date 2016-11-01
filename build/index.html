@@ -33,6 +33,32 @@
         <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
+                <ul class="sidebar-menu">
+                    <li class="header">MAIN NAVIGATION</li>  <!-- 保留 -->
+                    <!-- 保留 添加active样式子菜单会显示出来-->
+                    <li class="active treeview">  
+                        <!-- icon不知道要不要 -->
+                        <a href="#"> <i class="fa fa-dashboard"></i>
+                            <span>一级目录</span>
+                            <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="active" ui-sref-active="active">
+                                <a href="" ui-sref="home">
+                                    <i class="fa fa-circle-o"></i>
+                                    首页
+                                </a>
+                            </li>
+                            <li class="active" ui-sref-active="active">
+                                <a href="">
+                                    <i class="fa fa-circle-o"></i>
+                                    二级目录项
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </section>
         </aside>
         <!-- Content Wrapper. Contains page content -->
@@ -42,17 +68,7 @@
             <section class="content" ui-view="content">
                 <br>
             </section>
-        </div>
-        <!-- /.content-wrapper -->
-        <footer class="main-footer">
-            <div class="pull-right hidden-xs">
-                <b>Version</b>
-                2.3.7
-            </div> <strong>Copyright &copy; 2014-2016
-                <a href="http://almsaeedstudio.com">Almsaeed Studio</a>
-                .</strong> 
-            All rights reserved.
-        </footer>
+        </div>        
     </div>
 
     <!-- jquery -->
