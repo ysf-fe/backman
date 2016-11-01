@@ -1,3 +1,70 @@
 #!/usr/bin/env node
 
-console.log('backman command')
+var fs = require('fs');
+
+var createDir = function (inPath) {
+    if (inPath.length > 0) {
+        if (!fs.existsSync(workPath + inPath)) {
+            fs.mkdirSync(workPath + inPath, 0777);
+            console.warn('Backman: Create ' + inPath);
+        }
+    }
+};
+var createFile = function (inPath) {
+    var encoding, content;
+    if (/backman(\.min)?\.(css|js)(\.map)?$/.test(inPath)) {
+        encoding = /(\.jpg|\.png)$/.test(inPath) ? 'binary' : 'utf-8';
+        content = fs.readFileSync(assetsPath + inPath, encoding);
+        fs.writeFileSync(workPath + inPath, content, encoding);
+        console.warn('Backman: Create ' + inPath);
+    } else {
+        if (!fs.existsSync(workPath + inPath)) {
+            encoding = /(\.jpg|\.png)$/.test(inPath) ? 'binary' : 'utf-8';
+            content = fs.readFileSync(assetsPath + inPath, encoding);
+            fs.writeFileSync(workPath + inPath, content, encoding);
+            console.warn('Backman: Create ' + inPath);
+        }
+    }
+};
+
+//初始化框架
+var createFramework = function () {
+    if (fs.readdirSync(workPath).length > 0) {
+        console.warn('Backman: This folder is not empty, backman can\'t create project here!');
+    } else {
+        readPath(assetsPath);
+    }
+};
+var readPath = function (fromPath) {
+    if (fs.statSync(fromPath).isDirectory(fromPath)) {
+        createDir(fromPath.split(assetsPath)[1]);
+        var list = fs.readdirSync(fromPath);
+        for (var i = 0, name; name = list[i]; i++) {
+            readPath(fromPath + '\\' + name);
+        }
+    } else {
+        createFile(fromPath.split(assetsPath)[1]);
+    }
+};
+
+//升级框架
+var updateFramework = function () {
+    if (fs.readdirSync(workPath).length == 0) {
+        console.warn('Backman: This folder is empty! You may need to use \'backman init\'.');
+    } else {
+        readPath(assetsPath + '/backman');
+        readPath(assetsPath + '/libs');
+    }
+};
+
+
+//执行命令
+var command = process.argv[2];
+var modulePath = process.argv[1].split('\\bin\\main')[0];
+var assetsPath = modulePath + '\\build';
+var workPath = process.cwd();
+if (command == 'init') {
+    createFramework();
+} else if (command == 'update') {
+    updateFramework();
+}
