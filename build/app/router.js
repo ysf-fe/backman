@@ -1,19 +1,20 @@
 //路由配置模块
 angular
     .module('app.router', [])
-    .config(function ($stateProvider, $urlRouterProvider, _tools) {
+    .config(function ($stateProvider, $urlRouterProvider) {
 
         'use strict';
 
         $urlRouterProvider.otherwise('/home');
 
+        var assest = '/app';
         $stateProvider
             // 首页
-            .state('ysf', {
+            .state('home', {
                 url: '/home',
                 views: {
                     'content': {
-                        templateUrl: './views/example.html'
+                        templateUrl: assest + '/views/example.html'
                     }
                 }
             })

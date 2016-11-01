@@ -1,4 +1,4 @@
-ysf.factory('ExampleService',  function(){
+app.factory('ExampleService',  function(){
     var url = '',
         service = null;
 

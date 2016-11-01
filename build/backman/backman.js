@@ -58,7 +58,7 @@ backman.config(function ($httpProvider, $urlRouterProvider, $controllerProvider,
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|sms|javascript):/);
 
     //异步controller注册器
-    ysf.register = {
+    backman.register = {
         controller: $controllerProvider.register,
         directive: $compileProvider.directive,
         filter: $filterProvider.register,

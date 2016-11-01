@@ -1,4 +1,4 @@
-ysf.directive('xfbExampleDirective',  function($timeout){
+app.directive('xfbExampleDirective',  function($timeout){
     // Runs during compile
     return {
         scope: {lefttime:'='},
