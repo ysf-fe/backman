@@ -7,7 +7,7 @@ angular
 
         $urlRouterProvider.otherwise('/home');
 
-        var assest = '/app';
+        var assest = './app';
         $stateProvider
             // 首页
             .state('home', {
