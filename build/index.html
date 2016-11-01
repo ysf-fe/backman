@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <!-- bootstrap stylesheet -->
     <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css">
-    <!-- admin -->
-    <link rel="stylesheet" href="libs/adminlte/AdminLTE-thin.min.css">
-    <link rel="stylesheet" href="libs/adminlte/skins/skin-blue.min.css"></head>
+    <!-- backman -->
+    <link rel="stylesheet" href="backman/backman.min.css">
 <body  ng-app="app" ng-controller="index" class="skin-blue sidebar-mini">
     
     <div class="wrapper">
@@ -62,10 +61,11 @@
     <script src="libs/bootstrap/js/bootstrap.min.js"></script>
     <!-- angular -->
     <script src="libs/loader/script.min.js"></script>
+    <!-- 生产先不用angular-1.4.10.min.js版，方便调试 -->
     <script src="libs/angular/angular-1.4.10.js"></script>
     <script src="libs/angular/angular-ui-router.min.js"></script>
     <!-- config -->
-    <script src="backman/backman.js"></script>
+    <script src="backman/backman.min.js"></script>
     <script src="app/router.js"></script>
     <script src="app/app.js"></script>
     <!-- controller -->

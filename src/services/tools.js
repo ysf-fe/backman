@@ -1,5 +1,5 @@
 
-backman.factory('_tools', function () {
+backman.constant('_tools', (function () {
 
     'use strict';
 
@@ -93,4 +93,4 @@ backman.factory('_tools', function () {
         loadJs: loadJs
     };
 
-});
+})());

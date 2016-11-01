@@ -58,7 +58,7 @@ backman.config(function ($httpProvider, $urlRouterProvider, $controllerProvider,
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|sms|javascript):/);
 
     //异步controller注册器
-    backman.register = {
+    app.register = {
         controller: $controllerProvider.register,
         directive: $compileProvider.directive,
         filter: $filterProvider.register,
@@ -184,7 +184,7 @@ backman.factory('_setting', function ($rootScope) {
 
 });
 
-backman.factory('_tools', function () {
+backman.constant('_tools', (function () {
 
     'use strict';
 
@@ -278,7 +278,7 @@ backman.factory('_tools', function () {
         loadJs: loadJs
     };
 
-});
+})());
 backman.factory('_validate', function () {
 
     'use strict';

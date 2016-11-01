@@ -25,7 +25,7 @@ gulp.task('backman-js', function () {
         .pipe(sourcemaps.init())
         .pipe(concat('backman.js'))
         .pipe(gulp.dest('build/backman/'))
-        .pipe(uglify())
+        .pipe(uglify({mangle:false})) //不压缩变量名
         .pipe(rename({
             extname: '.min.js'
         }))
