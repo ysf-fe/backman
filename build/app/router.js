@@ -7,8 +7,7 @@ angular
 
         $urlRouterProvider.otherwise('/home');
 
-        var a = _tools.transKeyName('camel',{key_name:1});
-        console.log(a);
+        //var a = _tools.transKeyName('camel',{key_name:1}); console.log(a);
 
         var assest = './app';
         $stateProvider

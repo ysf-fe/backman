@@ -8,21 +8,23 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var cleancss = require('gulp-clean-css');
-var sass = require('gulp-sass');
+var sass = require('gulp-ruby-sass');
 var debug = require('gulp-debug');
 
 //文件列表
 var files = {
+    html: 'src/index.html',
+    css: 'src/css/*',
     config: 'src/config.js',
     services: 'src/services/*',
+    controllers: 'src/controllers/*',
     directives: 'src/directives/*',
-    filters: 'src/filters/*',
-    css: 'src/css/*'
+    filters: 'src/filters/*'
 };
 
 //发布js
 gulp.task('backman-js', function () {
-    return gulp.src([files.config, files.services, files.directives, files.filters])
+    return gulp.src([files.config, files.services, files.controllers, files.directives, files.filters])
         .pipe(sourcemaps.init())
         .pipe(concat('backman.js'))
         .pipe(gulp.dest('build/backman/'))
@@ -38,10 +40,12 @@ gulp.task('backman-js', function () {
 
 //发布css
 gulp.task('backman-css', function () {
-    return gulp.src(files.css)
+    return sass(files.css)
+        .on('error', function (err) {
+            console.error('Error!', err.message);
+        })
         .pipe(sourcemaps.init())
         .pipe(concat('backman.css'))
-        .pipe(sass.sync().on('error', sass.logError))
         .pipe(gulp.dest('build/backman/'))
         .pipe(cleancss())
         .pipe(rename({
@@ -53,5 +57,11 @@ gulp.task('backman-css', function () {
         .pipe(gulp.dest('build/backman/'));
 });
 
+//发布html
+gulp.task('backman-html', function(){
+    return gulp.src(files.html)
+        .pipe(gulp.dest('build/'));
+});
+
 //发布
-gulp.task('build', gulpSequence('backman-js', 'backman-css'));
+gulp.task('build', gulpSequence('backman-js', 'backman-css', 'backman-html'));

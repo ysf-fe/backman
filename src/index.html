@@ -13,14 +13,13 @@
         <body ng-app="app" ng-controller="backmanParent" class="skin-blue sidebar-mini">
 
             <div class="wrapper">
-
                 <header class="main-header">
                     <!-- Logo -->
                     <a href="index2.html" class="logo">
                         <!-- mini logo for sidebar mini 50x50 pixels -->
                         <span class="logo-mini"> <b>Backman</b></span>
                         <!-- logo for regular state and mobile devices -->
-                        <span class="logo-lg"> <b>YSF-Backman</b></span>
+                        <span class="logo-lg"> <b>Backman</b></span>
                     </a>
                     <!-- Header Navbar: style can be found in header.less -->
                     <nav class="navbar navbar-static-top">
@@ -41,10 +40,12 @@
                             <!-- 保留 添加active样式子菜单会显示出来-->
                             <li class="active treeview">
                                 <!-- icon不知道要不要 -->
-                                <a href="#"> <i class="fa fa-dashboard"></i>
+                                <a href="#">
+                                    <i class="fa fa-dashboard"></i>
                                     <span>一级目录</span>
-                                    <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i>
-                            </span>
+                                    <span class="pull-right-container"> 
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
                                 </a>
                                 <ul class="treeview-menu">
                                     <li ui-sref-active="active">
@@ -64,28 +65,27 @@
                 </aside>
                 <!-- Content Wrapper. Contains page content -->
                 <div class="content-wrapper">
-                    <!-- Main content -->
-                    <!-- !!这里是主要内容区域!! -->
+                    <!-- 主内容区 -->
                     <section class="content" ui-view="content">
+                        <!-- 视图 -->
                         <br>
                     </section>
                 </div>
             </div>
 
-            <!-- jquery -->
             <script src="libs/jquery/jquery-2.1.4.min.js"></script>
-            <!-- bootstrap -->
             <script src="libs/bootstrap/js/bootstrap.min.js"></script>
-            <!-- angular -->
             <script src="libs/loader/script.min.js"></script>
             <!-- 生产先不用angular-1.4.10.min.js版，方便调试 -->
             <script src="libs/angular/angular-1.4.10.js"></script>
             <script src="libs/angular/angular-ui-router.min.js"></script>
-            <!-- config -->
+            <!-- Backman -->
             <script src="backman/backman.min.js"></script>
+            <!-- app config -->
             <script src="app/router.js"></script>
             <script src="app/app.js"></script>
             <!-- controller -->
+
         </body>
 
 </html>

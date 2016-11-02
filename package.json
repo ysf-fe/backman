@@ -13,6 +13,7 @@
     "url": "git+https://github.com/ysf-fe/backman.git"
   },
   "keywords": [
+    "backman",
     "后台框架"
   ],
   "author": "遇善房前端攻城小分队",
@@ -20,5 +21,7 @@
   "bugs": {
     "url": "https://github.com/ysf-fe/backman/issues"
   },
-  "homepage": "https://github.com/ysf-fe/backman#readme"
+  "homepage": "https://github.com/ysf-fe/backman#readme",
+  "dependencies": {},
+  "devDependencies": {}
 }
