@@ -8,6 +8,7 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var cleancss = require('gulp-clean-css');
+var sass = require('gulp-sass');
 var debug = require('gulp-debug');
 
 //文件列表
@@ -40,6 +41,7 @@ gulp.task('backman-css', function () {
     return gulp.src(files.css)
         .pipe(sourcemaps.init())
         .pipe(concat('backman.css'))
+        .pipe(sass.sync().on('error', sass.logError))
         .pipe(gulp.dest('build/backman/'))
         .pipe(cleancss())
         .pipe(rename({
