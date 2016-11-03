@@ -4,45 +4,24 @@
     },
     "data":[{
         "order":1, 
-        "text":"一级目录1",
-        "state":"",
-        "hash":"",
-        "children":[{
-            "order":1, 
-            "text":"二级目录11",
-            "state":"secondLV.one",
-            "hash":"/secondlv-one"
-        },{
-            "order":2, 
-            "text":"二级目录12",
-            "state":"secondLV.two",
-            "hash":"/secondlv-two"
-        },{
-            "order":3, 
-            "text":"二级目录13",
-            "state":"secondLV.three",
-            "hash":"/secondlv-three"
-        }]
+        "text":"首页",
+        "state":"home",
+        "hash":"/home"
     },{
         "order":2, 
-        "text":"一级目录2",
+        "text":"页面示范",
         "state":"",
         "hash":"",
         "children":[{
             "order":1, 
-            "text":"二级目录21",
-            "state":"secondLV.one",
-            "hash":"/secondlv-one"
+            "text":"基本元素",
+            "state":"demoBaseElm",
+            "hash":"/demoBaseElm"
         },{
             "order":2, 
-            "text":"二级目录22",
-            "state":"secondLV.two",
-            "hash":"/secondlv-two"
-        },{
-            "order":3, 
-            "text":"二级目录23",
-            "state":"secondLV.three",
-            "hash":"/secondlv-three"
+            "text":"空白页面",
+            "state":"demoBlank",
+            "hash":"/demoBlank"
         }]
     }]
 }

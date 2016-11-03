@@ -320,8 +320,6 @@ backman.controller('backmanParent', function ($scope, _setting, _httpPost, _http
 
     'use strict';
 
-    console.log(_setting.get('navListUrl'));
-
     var getNavData = function(cb, cberr) {
         var apiAddress = _setting.get('navListUrl');
         _httpGet(apiAddress, {})

@@ -16,7 +16,23 @@ angular
                 url: '/home',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/example.html'
+                        templateUrl: assest + '/views/blank.html'
+                    }
+                }
+            })
+            .state('demoBaseElm', {
+                url: '/demoBaseElm',
+                views: {
+                    'conent': {
+                        templateUrl: assest + '/views/base.html'
+                    }
+                }
+            })
+            .state('demoBlank', {
+                url: '/demoBlank',
+                views: {
+                    'conent': {
+                        templateUrl: assest + '/views/blank.html'
                     }
                 }
             })
