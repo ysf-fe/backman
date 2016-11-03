@@ -38,8 +38,7 @@
                             <li class="header">MAIN NAVIGATION</li>
                             <!-- 保留 -->
                             <!-- 保留 添加active样式子菜单会显示出来-->
-                            <li class="active treeview">
-                                <!-- icon不知道要不要 -->
+                            <!-- <li class="active treeview">
                                 <a href="#">
                                     <i class="fa fa-dashboard"></i>
                                     <span>一级目录</span>
@@ -56,6 +55,18 @@
                                     <li ui-sref-active="active">
                                         <a href="">
                                             <i class="fa fa-circle-o"></i> 二级目录项
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li> -->
+                            <li class="treeview active" ng-repeat="lv1Item in navData">
+                                <a href="#">
+                                    <span ng-bind="lv1Item.text">一级目录</span>
+                                </a>
+                                <ul class="treeview-menu" ng-if="lv1Item.children.length">
+                                    <li ui-sref-active="active" ng-repeat="lv2Item in lv1Item.children">
+                                        <a href="" ui-sref="home" ng-bind="lv2Item.text">
+                                            首页
                                         </a>
                                     </li>
                                 </ul>

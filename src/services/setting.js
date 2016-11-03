@@ -15,7 +15,7 @@ backman.factory('_setting', function ($rootScope) {
             return _data[key];
         },
         set: function (key, val) {
-            _data[key] = val
+            _data[key] = val;
         }
     };
 
