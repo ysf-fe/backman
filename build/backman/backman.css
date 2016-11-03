@@ -644,6 +644,8 @@ a:focus {
   .navbar-custom-menu > .navbar-nav > li {
     position: static; } }
 
+
+
 /*
  * Skin: Blue
  * ----------
@@ -780,6 +782,8 @@ a:focus {
 
 .skin-blue.layout-top-nav .main-header > .logo:hover {
   background-color: #3b8ab8; }
+
+
 
 @charset "UTF-8";
 /*!
@@ -1303,3 +1307,5 @@ button.btn-warning:focus,
 a.ui-btn.btn-warning:hover,
 a.ui-btn.btn-warning:focus {
   background-color: #e08e0b; }
+
+

@@ -1,8 +1,6 @@
 var gulp = require('gulp');
 var gulpSequence = require('gulp-sequence');
-var del = require('del');
 var rename = require('gulp-rename');
-var fileinclude = require('gulp-file-include');
 var changed = require('gulp-changed');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
@@ -40,11 +38,10 @@ gulp.task('backman-js', function () {
 
 //发布css
 gulp.task('backman-css', function () {
-    return sass(files.css)
+    return sass(files.css, {sourcemap: true})
         .on('error', function (err) {
             console.error('Error!', err.message);
         })
-        .pipe(sourcemaps.init())
         .pipe(concat('backman.css'))
         .pipe(gulp.dest('build/backman/'))
         .pipe(cleancss())
