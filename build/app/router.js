@@ -23,7 +23,7 @@ angular
             .state('demoBaseElm', {
                 url: '/demoBaseElm',
                 views: {
-                    'conent': {
+                    'content': {
                         templateUrl: assest + '/views/base.html'
                     }
                 }
@@ -31,7 +31,7 @@ angular
             .state('demoBlank', {
                 url: '/demoBlank',
                 views: {
-                    'conent': {
+                    'content': {
                         templateUrl: assest + '/views/blank.html'
                     }
                 }

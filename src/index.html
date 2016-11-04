@@ -5,68 +5,52 @@
         <meta charset="UTF-8">
         <title>后台管理中心</title>
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <!-- bootstrap -->
         <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css">
-        <!-- backman -->
         <link rel="stylesheet" href="backman/backman.min.css">
 
         <body ng-app="app" ng-controller="backmanParent" class="skin-blue sidebar-mini">
 
             <div class="wrapper">
-                <header class="main-header">
-                    <a href="index2.html" class="logo">
-                        <!-- mini logo for sidebar mini 50x50 pixels -->
-                        <span class="logo-mini"> <b>Backman</b></span>
-                        <span class="logo-lg"> <b>Backman</b></span>
+                <!--
+                    Header
+                -->
+                <header class="backman-header">
+                    <a class="logo" ui-sref="home">
+                        <img src="backman/images/BACKMAN.png" />
+                        <b>Backman</b>
                     </a>
-                    <nav class="navbar navbar-static-top">
-                        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                            <span class="sr-only">Toggle navigation</span>
-                        </a>
+                    <nav class="navbar">
+                        <a class="sidebar-toggle" href="javascript:;" data-toggle="offcanvas" role="button"></a>
+                        <div class="navbar-right">欢迎您！<strong>admin</strong> |
+                            <a class="ui-btn" ng-href="">退出</a>
+                        </div>
                     </nav>
                 </header>
-                <!-- slidebar-open 加到wrapper或body上就打开菜单 -->
-                <aside class="main-sidebar">
-                    <section class="sidebar">
-                        <ul class="sidebar-menu">
-                            <li class="header">MAIN NAVIGATION</li>
-                            <!-- 保留 -->
-                            <!-- 保留 添加active样式子菜单会显示出来-->
-                            <!-- <li class="active treeview">
-                                <a href="#">
-                                    <i class="fa fa-dashboard"></i>
-                                    <span>一级目录</span>
-                                    <span class="pull-right-container"> 
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li ui-sref-active="active">
-                                        <a href="" ui-sref="home">
-                                            <i class="fa fa-circle-o"></i> 首页
-                                        </a>
-                                    </li>
-                                    <li ui-sref-active="active">
-                                        <a href="">
-                                            <i class="fa fa-circle-o"></i> 二级目录项
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li> -->
-                            <li class="treeview active" ng-repeat="lv1Item in navData">
-                                <a href="#">
-                                    <span ng-bind="lv1Item.text"></span>
-                                </a>
-                                <ul class="treeview-menu" ng-if="lv1Item.children.length">
-                                    <li ui-sref-active="active" ng-repeat="lv2Item in lv1Item.children">
-                                        <a href="" ui-sref="home" ng-bind="lv2Item.text"></a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </section>
+
+                <!--
+                    Sidebar
+                    mobi 端加 slidebar-open 到 wrapper 上打开菜单
+                 -->
+                <aside class="backman-sidebar">
+                    <ul class="sidebar-menu">
+                        <li class="header">MAIN NAVIGATION</li>
+                        <li>
+                            <a ui-sref="home"><span>管理中心首页</span></a>
+                        </li>
+                        <!-- 保留 添加active样式子菜单会显示出来-->
+                        <li class="treeview active" ng-repeat="lv1Item in navData">
+                            <div>
+                                <span ng-bind="lv1Item.text"></span>
+                            </div>
+                            <ul class="treeview-menu" ng-if="lv1Item.children.length">
+                                <li ui-sref-active="active" ng-repeat="lv2Item in lv1Item.children">
+                                    <a ui-sref="{{lv2Item.state}}" ng-bind="lv2Item.text"></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </aside>
-                <div class="content-wrapper">
+                <div class="wrapper-content">
                     <!-- 主内容区 -->
                     <section class="content" ui-view="content">
                         <!-- 视图 -->

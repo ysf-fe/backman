@@ -6,13 +6,18 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var cleancss = require('gulp-clean-css');
-var sass = require('gulp-ruby-sass');
+var sass = require('gulp-sass');
 var debug = require('gulp-debug');
 
 //文件列表
 var files = {
     html: 'src/index.html',
-    css: 'src/css/*',
+    css: [
+        'src/css/layout-*.scss',
+        'src/css/skin-blue.scss',
+        'src/css/element-*.scss',
+        'src/css/directive-*.scss'
+    ],
     config: 'src/config.js',
     services: 'src/services/*',
     controllers: 'src/controllers/*',
@@ -38,10 +43,9 @@ gulp.task('backman-js', function () {
 
 //发布css
 gulp.task('backman-css', function () {
-    return sass(files.css, {sourcemap: true})
-        .on('error', function (err) {
-            console.error('Error!', err.message);
-        })
+    return gulp.src(files.css)
+        .pipe(sass())
+        .pipe(sourcemaps.init())
         .pipe(concat('backman.css'))
         .pipe(gulp.dest('build/backman/'))
         .pipe(cleancss())

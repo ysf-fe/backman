@@ -3,12 +3,7 @@
         "msg":"ok"
     },
     "data":[{
-        "order":1, 
-        "text":"首页",
-        "state":"home",
-        "hash":"/home"
-    },{
-        "order":2, 
+        "order":1,
         "text":"页面示范",
         "state":"",
         "hash":"",

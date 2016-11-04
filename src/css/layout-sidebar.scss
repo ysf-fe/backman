@@ -1,0 +1,164 @@
+/*
+ * Sidebar
+ */
+
+.backman-sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 810;
+    min-height: 100%;
+    width: 230px;
+    padding-top: 50px;
+    -webkit-transition: -webkit-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    -moz-transition: -moz-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    -o-transition: -o-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+@media (max-width: 767px) {
+    .backman-sidebar {
+        position: fixed;
+        padding-bottom: 10px;
+        padding-top: 100px;
+        -webkit-transform: translate(-230px, 0);
+        -ms-transform: translate(-230px, 0);
+        -o-transform: translate(-230px, 0);
+        transform: translate(-230px, 0);
+    }
+    .sidebar-open .backman-sidebar {
+        -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        -o-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
+}
+
+/*
+ * Sidebar menu 
+ */
+
+.sidebar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    &> li {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        &.header {
+            padding: 10px 25px 10px 15px;
+            font-size: 12px;
+        }
+        &.active {
+            > .treeview-menu {
+                display: block;
+            }
+            > a {
+                > .fa-angle-left,
+                > .pull-right-container> .fa-angle-left {
+                    -webkit-transform: rotate(-90deg);
+                    -ms-transform: rotate(-90deg);
+                    -o-transform: rotate(-90deg);
+                    transform: rotate(-90deg);
+                }
+            }
+        }
+        > a {
+            padding: 12px 5px 12px 15px;
+            display: block;
+            > .fa,
+            > .glyphicon,
+            > .ion {
+                width: 20px;
+            }
+            > .fa-angle-left,
+            > .pull-right-container> .fa-angle-left {
+                width: auto;
+                height: auto;
+                padding: 0;
+                margin-right: 10px;
+            }
+        }
+        .label,
+        .badge {
+            margin-right: 5px;
+            margin-top: 3px;
+        }
+    }
+    .treeview-menu {
+        display: none;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        padding-left: 5px;
+        .treeview-menu {
+            padding-left: 20px;
+        }
+        > li {
+            margin: 0;
+        }
+        > li> a {
+            padding: 5px 5px 5px 15px;
+            display: block;
+            font-size: 14px;
+        }
+        > li> a> .fa,
+        > li> a> .glyphicon,
+        > li> a> .ion {
+            width: 20px;
+        }
+        > li> a> .pull-right-container> .fa-angle-left,
+        > li> a> .pull-right-container> .fa-angle-down,
+        > li> a> .fa-angle-left,
+        > li> a> .fa-angle-down {
+            width: auto;
+        }
+    }
+}
+
+
+
+/*.sidebar .sidebar-menu{padding: 15px 0px;}
+.sidebar .sidebar-menu>li+li{margin-top: 5px;}
+.sidebar .sidebar-menu>li>a{display: block;height: 100%;position: relative;margin-left: 15px;}
+.sidebar .sidebar-menu>li.active{background-color: #627c88;}
+.sidebar .sidebar-menu>li.active>a{color:#fff;}
+@media (min-width: 768px){
+  .sidebar .sidebar-menu>li.active>a:after{content:"";position: absolute;right:0;top:50%;border:8px solid transparent;border-left: 8px solid #fff;
+  -webkit-transform: translate(0,-50%);
+  -ms-transform: translate(0,-50%);
+  -o-transform: translate(0,-50%);
+  transform: translate(0,-50%);}
+}*/
+
+
+
+.sidebar-menu,
+.main-sidebar .user-panel,
+.sidebar-menu> li.header {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sidebar-menu:hover {
+    overflow: visible;
+}
+
+.sidebar-form,
+.sidebar-menu> li.header {
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+.sidebar-menu li> a {
+    position: relative;
+}
+
+.sidebar-menu li> a> .pull-right-container {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -7px;
+}
