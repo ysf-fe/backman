@@ -34,6 +34,7 @@
     }
 }
 
+
 /*
  * Sidebar menu 
  */
@@ -42,25 +43,35 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    &> li {
+    white-space: nowrap;
+    overflow: hidden;
+    &:hover {
+        overflow: visible;
+    }
+    > li {
         position: relative;
         margin: 0;
         padding: 0;
+        overflow: hidden;
         list-style: none;
+        white-space: nowrap;
         &.header {
             padding: 10px 25px 10px 15px;
+            overflow: hidden;
             font-size: 12px;
+            text-overflow: clip;
         }
         &.active {
             > .treeview-menu {
-                display: block;
+                > li {
+                    height: 30px;
+                }
             }
             > a {
-                > .fa-angle-left,
-                > .pull-right-container> .fa-angle-left {
+                .pull-right-container .fa-angle-left {
                     -webkit-transform: rotate(-90deg);
+                    -moz-transform: rotate(-90deg);
                     -ms-transform: rotate(-90deg);
-                    -o-transform: rotate(-90deg);
                     transform: rotate(-90deg);
                 }
             }
@@ -68,27 +79,18 @@
         > a {
             padding: 12px 5px 12px 15px;
             display: block;
-            > .fa,
-            > .glyphicon,
-            > .ion {
+            .fa {
                 width: 20px;
             }
-            > .fa-angle-left,
-            > .pull-right-container> .fa-angle-left {
+            .pull-right-container .fa-angle-left {
                 width: auto;
                 height: auto;
                 padding: 0;
                 margin-right: 10px;
             }
         }
-        .label,
-        .badge {
-            margin-right: 5px;
-            margin-top: 3px;
-        }
     }
     .treeview-menu {
-        display: none;
         list-style: none;
         padding: 0;
         margin: 0;
@@ -97,27 +99,26 @@
             padding-left: 20px;
         }
         > li {
+            height: 0;
             margin: 0;
-        }
-        > li> a {
-            padding: 5px 5px 5px 15px;
-            display: block;
-            font-size: 14px;
-        }
-        > li> a> .fa,
-        > li> a> .glyphicon,
-        > li> a> .ion {
-            width: 20px;
-        }
-        > li> a> .pull-right-container> .fa-angle-left,
-        > li> a> .pull-right-container> .fa-angle-down,
-        > li> a> .fa-angle-left,
-        > li> a> .fa-angle-down {
-            width: auto;
+            overflow: hidden;
+            -webkit-transition-duration: .3s;
+            -moz-transition-duration: .3s;
+            -ms-transition-duration: .3s;
+            transition-duration: .3s;
+            > a {
+                position: relative;
+                padding: 5px 5px 5px 15px;
+                display: block;
+                font-size: 14px;
+                > .fa {
+                    width: 20px;
+                    text-align: center;
+                }
+            }
         }
     }
 }
-
 
 
 /*.sidebar .sidebar-menu{padding: 15px 0px;}
@@ -132,33 +133,3 @@
   -o-transform: translate(0,-50%);
   transform: translate(0,-50%);}
 }*/
-
-
-
-.sidebar-menu,
-.main-sidebar .user-panel,
-.sidebar-menu> li.header {
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.sidebar-menu:hover {
-    overflow: visible;
-}
-
-.sidebar-form,
-.sidebar-menu> li.header {
-    overflow: hidden;
-    text-overflow: clip;
-}
-
-.sidebar-menu li> a {
-    position: relative;
-}
-
-.sidebar-menu li> a> .pull-right-container {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    margin-top: -7px;
-}

@@ -1,183 +1,248 @@
-<style type="text/css">
-/* 以下样式为仅仅是展示 */
-
-body {
-    background: #f4f4f4;
-}
-
-.base-element-block {
-    background: #fff;
-    padding: 20px;
-}
-
-.base-element-block+ .base-element-block {
-    margin-top: 20px;
-}
-</style>
-<div class="container">
-    <h1>常用标签元素样式</h1>
-    <div class="base-element-block">
-        <h3>标题</h3>
-        <hr />
-        <p>从 <code>&lt;h1&gt;</code> 到 <code>&lt;h6&gt;</code> 标签</p>
-        <h1>h1.Heading 标题</h1>
-        <h2>h2.Heading 标题</h2>
-        <h3>h3.Heading 标题</h3>
-        <h4>h4.Heading 标题</h4>
-        <h5>h5.Heading 标题</h5>
-        <h6>h6.Heading 标题</h6>
-    </div>
-    <div class="base-element-block">
-        <h3>段落</h3>
-        <hr />
-        <p><code>&lt;p&gt;</code>标签</p>
-        <p>这是一段文字段落</p>
-    </div>
-    <div class="base-element-block">
-        <h3>水平线</h3>
-        <hr>
-        <p><code>&lt;hr&gt;</code>标签</p>
-        <hr />
-    </div>
-    <div class="base-element-block">
-        <h3>行内代码</h3>
-        <hr>
-        <p><code>&lt;code&gt;</code>标签</p>
-        <code>javascript</code>
-        <code>alert('Hello World!');</code>
-    </div>
-    <div class="base-element-block">
-        <h3>链接</h3>
-        <hr>
-        <p><code>&lt;a&gt;</code>标签, 带有默认颜色，悬浮颜色变浅</p>
-        <a href="#">这是一个a标签链接</a>
-    </div>
-    <div class="base-element-block">
-        <h3>列表</h3>
-        <hr>
-        <p><code>&lt;ul&gt;&lt;li&gt;</code>无序列表标签，默认样式如下：</p>
-        <ul>
-            <li>云渠道</li>
-            <li>云成交</li>
-            <li>云到访</li>
-            <li>云报备</li>
-            <li>鑫房宝</li>
-        </ul>
-        <p><code>&lt;ol&gt;&lt;li&gt;</code>有序列表标签，默认样式如下</p>
-        <ol>
-            <li>云渠道</li>
-            <li>云成交</li>
-            <li>云到访</li>
-            <li>云报备</li>
-            <li>鑫房宝</li>
-        </ol>
-        <hr />
-        <p>无样式<code>&lt;ul&gt;&lt;li&gt;</code><code>&lt;ol&gt;&lt;li&gt;</code>,通过添加<code>.list-unstyled</code> (注意：该类为Bootstrap的类,只是针对 <strong>直接子元素</strong> )，样式效果如下：</p>
-        <p><code>&lt;ul&gt;&lt;li&gt;</code>无序列表无样式如下</p>
-        <ul class="list-unstyled">
-            <li>
-                云渠道
-                <ul>
-                    <li>商家版</li>
-                    <li>经纪人版</li>
-                    <li>天眼版</li>
-                    <li>机构主版</li>
-                </ul>
-            </li>
-            <li>云成交</li>
-            <li>云到访</li>
-            <li>云报备</li>
-            <li>鑫房宝</li>
-        </ul>
-        <hr />
-        <p><code>&lt;ol&gt;&lt;li&gt;</code>有序列表无样式如下</p>
-        <ol class="list-unstyled">
-            <li>
-                云渠道
-                <ol>
-                    <li>商家版</li>
-                    <li>经纪人版</li>
-                    <li>天眼版</li>
-                    <li>机构主版</li>
-                </ol>
-            </li>
-            <li>云成交</li>
-            <li>云到访</li>
-            <li>云报备</li>
-            <li>鑫房宝</li>
-        </ol>
-        <hr/>
-        <p>内联<code>&lt;ul&gt;&lt;li&gt;</code><code>&lt;ol&gt;&lt;li&gt;</code>,通过添加<code>.list-inline</code> (注意：该类为Bootstrap的类,只是针对 <strong>直接子元素</strong> )，样式效果如下：</p>
-        <ul class="list-inline">
-            <li>云渠道</li>
-            <li>云成交</li>
-            <li>云到访</li>
-            <li>云报备</li>
-            <li>鑫房宝</li>
-        </ul>
-    </div>
-    <div class="base-element-block">
-        <h3>表格</h3>
-        <hr>
-        <p><code>&lt;table&gt;</code>标签 默认<code>&lt;th&gt;</code>为居左，<code>&lt;td&gt;</code>为居中</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-            </tbody>
-        </table>
-        <hr>
-        <p>支持大部分table属性：</p>
-        <table>
-            <thead>
-                <tr>
-                    <th width="30%" align="left" bgcolor="#f2f2f2">Header</th>
-                    <th width="50%" bgcolor="#f2f2f2">Header2</th>
-                    <th align="right" bgcolor="#f2f2f2">Header3</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td align="left" rowspan="2">Data</td>
-                    <td align="left">Data</td>
-                    <td align="right">Data</td>
-                </tr>
-                <tr>
-                    <td align="center" colspan="2">Data</td>
-                </tr>
-                <tr>
-                    <td height="50" valign="top" bgcolor="#f0fefc">Data</td>
-                    <td valign="middle">Data</td>
-                    <td valign="bottom">Data</td>
-                </tr>
-            </tbody>
-        </table>
-        <hr/>
-        <p>通过添加 <code>.table-hover</code> 类可以让 <code>&lt;tbody&gt;</code> 中的每一行对鼠标悬停状态作出响应。(注意：该类为Bootstrap的类)</p>
+<h1>常用标签元素样式</h1>
+<div>
+    <h3>标题</h3>
+    <hr />
+    <p>从 <code>&lt;h1&gt;</code> 到 <code>&lt;h6&gt;</code> 标签</p>
+    <h1>h1.Heading 标题</h1>
+    <h2>h2.Heading 标题</h2>
+    <h3>h3.Heading 标题</h3>
+    <h4>h4.Heading 标题</h4>
+    <h5>h5.Heading 标题</h5>
+    <h6>h6.Heading 标题</h6>
+</div>
+<div>
+    <h3>段落</h3>
+    <hr />
+    <p><code>&lt;p&gt;</code>标签</p>
+    <p>这是一段文字段落</p>
+</div>
+<div>
+    <h3>水平线</h3>
+    <hr>
+    <p><code>&lt;hr&gt;</code>标签</p>
+    <hr />
+</div>
+<div>
+    <h3>行内代码</h3>
+    <hr>
+    <p><code>&lt;code&gt;</code>标签</p>
+    <code>javascript</code>
+    <code>alert('Hello World!');</code>
+</div>
+<div>
+    <h3>链接</h3>
+    <hr>
+    <p><code>&lt;a&gt;</code>标签, 带有默认颜色，悬浮颜色变浅</p>
+    <a href="#">这是一个a标签链接</a>
+</div>
+<div>
+    <h3>列表</h3>
+    <hr>
+    <p><code>&lt;ul&gt;&lt;li&gt;</code>无序列表标签，默认样式如下：</p>
+    <ul>
+        <li>云渠道</li>
+        <li>云成交</li>
+        <li>云到访</li>
+        <li>云报备</li>
+        <li>鑫房宝</li>
+    </ul>
+    <p><code>&lt;ol&gt;&lt;li&gt;</code>有序列表标签，默认样式如下</p>
+    <ol>
+        <li>云渠道</li>
+        <li>云成交</li>
+        <li>云到访</li>
+        <li>云报备</li>
+        <li>鑫房宝</li>
+    </ol>
+    <hr />
+    <p>无样式<code>&lt;ul&gt;&lt;li&gt;</code><code>&lt;ol&gt;&lt;li&gt;</code>,通过添加<code>.list-unstyled</code> (注意：该类为Bootstrap的类,只是针对 <strong>直接子元素</strong> )，样式效果如下：</p>
+    <p><code>&lt;ul&gt;&lt;li&gt;</code>无序列表无样式如下</p>
+    <ul class="list-unstyled">
+        <li>
+            云渠道
+            <ul>
+                <li>商家版</li>
+                <li>经纪人版</li>
+                <li>天眼版</li>
+                <li>机构主版</li>
+            </ul>
+        </li>
+        <li>云成交</li>
+        <li>云到访</li>
+        <li>云报备</li>
+        <li>鑫房宝</li>
+    </ul>
+    <hr />
+    <p><code>&lt;ol&gt;&lt;li&gt;</code>有序列表无样式如下</p>
+    <ol class="list-unstyled">
+        <li>
+            云渠道
+            <ol>
+                <li>商家版</li>
+                <li>经纪人版</li>
+                <li>天眼版</li>
+                <li>机构主版</li>
+            </ol>
+        </li>
+        <li>云成交</li>
+        <li>云到访</li>
+        <li>云报备</li>
+        <li>鑫房宝</li>
+    </ol>
+    <hr/>
+    <p>内联<code>&lt;ul&gt;&lt;li&gt;</code><code>&lt;ol&gt;&lt;li&gt;</code>,通过添加<code>.list-inline</code> (注意：该类为Bootstrap的类,只是针对 <strong>直接子元素</strong> )，样式效果如下：</p>
+    <ul class="list-inline">
+        <li>云渠道</li>
+        <li>云成交</li>
+        <li>云到访</li>
+        <li>云报备</li>
+        <li>鑫房宝</li>
+    </ul>
+</div>
+<div>
+    <h3>表格</h3>
+    <hr>
+    <p><code>&lt;table&gt;</code>标签，文本默认居中</p>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <p>支持大部分table属性：</p>
+    <table>
+        <thead>
+            <tr>
+                <th width="30%" align="left" bgcolor="#f2f2f2">Header</th>
+                <th width="50%" bgcolor="#f2f2f2">Header2</th>
+                <th align="right" bgcolor="#f2f2f2">Header3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td align="left" rowspan="2">Data</td>
+                <td align="left">Data</td>
+                <td align="right">Data</td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2">Data</td>
+            </tr>
+            <tr>
+                <td height="50" valign="top" bgcolor="#f0fefc">Data</td>
+                <td valign="middle">Data</td>
+                <td valign="bottom">Data</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <p>通过添加 <code>.table-hover</code> 类可以让 <code>&lt;tbody&gt;</code> 中的每一行对鼠标悬停状态作出响应。(注意：该类为Bootstrap的类)</p>
+    <table class="table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>通过添加 <code>.table-condensed</code> 可以让表格更加紧凑，单元格中的内补（padding）均会减半。(注意：该类为Bootstrap的类)</p>
+    <table class="table-condensed">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>通过添加 <code>.table-unborder</code> 可以让表格无边框</p>
+    <table class="table-unborder">
+        <thead>
+            <tr>
+                <th width="10%" align="right">item</th>
+                <th>content</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td align="right">姓名</td>
+                <td>遇善房</td>
+            </tr>
+            <tr>
+                <td align="right">地址</td>
+                <td>时代TIT广场</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>通过在<strong>外层包囊</strong> <code>&lt;div class="table-responsive"&gt;&lt;/div&gt;</code> 可以让内容较多的表格当屏幕较小无法友好的显示全部内容时，在下方显示左右滚动条，让表格可以左右滚动！</p>
+    <div class="table-responsive">
         <table class="table-hover">
             <thead>
                 <tr>
@@ -185,179 +250,149 @@ body {
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Username</th>
+                    <th>age</th>
+                    <th>email</th>
+                    <th>job</th>
+                    <th>join-time</th>
+                    <th>address</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td>Mark</td>
+                    <td>Mark1</td>
                     <td>Otto</td>
                     <td>@mdo</td>
+                    <td>23</td>
+                    <td>mdo@hotmail.com</td>
+                    <td>Customer Service Specialist</td>
+                    <td>2016/11/11</td>
+                    <td>Rome1232, Youth building, No.34 West Beisanhuan Road, Beijing, China</td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>Jacob</td>
                     <td>Thornton</td>
                     <td>@fat</td>
+                    <td>27</td>
+                    <td>thornton@163.com</td>
+                    <td>Senior PHP Engineer</td>
+                    <td>2016/11/11</td>
+                    <td>Room 403, No.37, SiFan Residential Quarter, BaoShan District</td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td>Larry</td>
                     <td>the Bird</td>
                     <td>@twitter</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>通过添加 <code>.table-condensed</code> 可以让表格更加紧凑，单元格中的内补（padding）均会减半。(注意：该类为Bootstrap的类)</p>
-        <table class="table-condensed">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>通过添加 <code>.table-unborder</code> 可以让表格无边框</p>
-        <table class="table-unborder">
-            <thead>
-                <tr>
-                    <th width="10%" align="right">item</th>
-                    <th>content</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td align="right">姓名</td>
-                    <td>遇善房</td>
-                </tr>
-                <tr>
-                    <td align="right">地址</td>
-                    <td>时代TIT广场</td>
+                    <td>26</td>
+                    <td>Larry@gmail.com</td>
+                    <td>Web Software Engineer</td>
+                    <td>2016/11/11</td>
+                    <td>Room 204, building No.102, East TaiShan Residential, BaoYin, JiangSu</td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="base-element-block">
-        <h3>输入框</h3>
-        <hr />
-        <p><code>&lt;input&gt;</code>标签</p>
-        <input type="text" name="" placeholder="type='text'">
-        <input type="text" placeholder="text size=30" size="30">
-        <input type="number" placeholder="number" size="30">
-        <input type="search" placeholder="search">
-        <p><code>disabled</code> <code>readonly</code></p>
-        <input type="text" name="" value="disabled" disabled>
-        <input type="text" name="" value="readonly" readonly>
-    </div>
-    <div class="base-element-block">
-        <h3>文本域</h3>
-        <hr />
-        <p><code>&lt;textarea&gt;</code>标签</p>
-        <textarea rows="5" cols="60" placeholder="textarea rows=5 cols=60"></textarea>
-    </div>
-    <div class="base-element-block">
-        <h3>单选框和复选框</h3>
-        <hr />
-        <p><code>&lt;input type="radio"&gt;</code>，<code>&lt;input type="checkbox"&gt;</code> 标签
-            <br>单选框和复选框存在说明文本时，须使用 <code>&lt;label&gt;</code> 标签将选框和说明文本同时包含在内！
-        </p>
-        <label>
+</div>
+<div>
+    <h3>输入框</h3>
+    <hr />
+    <p><code>&lt;input&gt;</code>标签</p>
+    <input type="text" name="" placeholder="type='text'">
+    <input type="text" placeholder="text size=30" size="30">
+    <input type="number" placeholder="number" size="30">
+    <input type="search" placeholder="search">
+    <p><code>disabled</code> <code>readonly</code></p>
+    <input type="text" name="" value="disabled" disabled>
+    <input type="text" name="" value="readonly" readonly>
+</div>
+<div>
+    <h3>文本域</h3>
+    <hr />
+    <p><code>&lt;textarea&gt;</code>标签</p>
+    <textarea rows="5" cols="60" placeholder="textarea rows=5 cols=60"></textarea>
+</div>
+<div>
+    <h3>单选框和复选框</h3>
+    <hr />
+    <p><code>&lt;input type="radio"&gt;</code>，<code>&lt;input type="checkbox"&gt;</code> 标签
+        <br>单选框和复选框存在说明文本时，须使用 <code>&lt;label&gt;</code> 标签将选框和说明文本同时包含在内！
+    </p>
+    <label>
                 <input type="radio" name="radioBox" value="1"> 1
             </label>
-        <label>
+    <label>
                 <input type="radio" name="radioBox" value="2"> 2
             </label>
-        <label>
+    <label>
                 <input type="radio" name="radioBox" value="3"> 3
             </label>
-        <br />
-        <label>
+    <br />
+    <label>
                 <input type="checkbox" name="checkBox" value="option1"> A
             </label>
-        <label>
+    <label>
                 <input type="checkbox" name="checkBox" value="option2"> B
             </label>
-        <label>
+    <label>
                 <input type="checkbox" name="checkBox" value="option3"> C
             </label>
-        <br />无说明文本的选框：
-        <input type="radio" name="radioBox" value="">
-        <input type="checkbox" name="checkBox" value="">
-    </div>
-    <div class="base-element-block">
-        <h3>下拉选择框</h3>
-        <hr />
-        <p><code>&lt;select&gt;</code>标签</p>
-        <select>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-        <br />
-        <select multiple="multiple">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-        </select>
-    </div>
-    <div class="base-element-block">
-        <h3>按钮</h3>
-        <hr />
-        <p><code>&lt;button&gt;</code><code>&lt;input type="button"&gt;</code><code>&lt;input type="submit"&gt;</code><code>&lt;a class="ui-btn"&gt;</code>标签</p>
-        <button>button标签按钮</button>
-        <input type="button" name="" value="button">
-        <input type="submit" name="" value="submit按钮">
-        <a class="ui-btn">链接按钮</a>
-        <br />
-        <p>通过属性 <code>disabled</code> 让按钮处于禁用按钮，<span class="ui-label-info">注意！</span> <code>&lt;a&gt;</code> 标签的按钮设置 <code>disabled</code> 属性仅能影响外观，需要自行拟写禁止链接行为的js</p>
-        <input type="button" value="按钮" disabled/>
-        <input class="ui-btn-info" type="button" value="保存" disabled/>
-        <a class="ui-btn" href="javascript:;" disabled>链接</a>
-        <hr>
-        <p>通过样式 .btn-default、.btn-primary、.btn-success、.btn-info、 可以给按钮添加颜色
-            <br>
-            <strong>(注意 对于<code>&lt;a&gt;</code> 标签需求添加<code>.ui-btn</code>eg.<code>&lt;a class="ui-btn btn-danger"&gt;</code></strong>)</p>
-        <input type="button" class="btn-default" value="Default">
-        <input type="button" class="btn-primary" value="Primary">
-        <button type="button" class="btn-success">Success</button>
-        <button type="button" class="btn-info">Info</button>
-        <a type="button" class="ui-btn btn-warning">Warning</a>
-        <a type="button" class="ui-btn btn-danger">Danger</a>
-        <hr>
-        <p>保留Bootstrap相关btn的类，也可以直接使用其 <code>.btn .btn-default</code></p>
-        <button type="button" class="btn btn-default">Default</button>
-        <button type="button" class="btn btn-primary">Primary</button>
-        <button type="button" class="btn btn-success">Success</button>
-        <button type="button" class="btn btn-info">Info</button>
-        <button type="button" class="btn btn-warning">Warning</button>
-        <button type="button" class="btn btn-danger">Danger</button>
-    </div>
+    <br />无说明文本的选框：
+    <input type="radio" name="radioBox" value="">
+    <input type="checkbox" name="checkBox" value="">
+</div>
+<div>
+    <h3>下拉选择框</h3>
+    <hr />
+    <p><code>&lt;select&gt;</code>标签</p>
+    <select>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+    </select>
+    <br />
+    <select multiple="multiple">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+    </select>
+</div>
+<div>
+    <h3>按钮</h3>
+    <hr />
+    <p><code>&lt;button&gt;</code><code>&lt;input type="button"&gt;</code><code>&lt;input type="submit"&gt;</code><code>&lt;a class="ui-btn"&gt;</code>标签</p>
+    <button>button标签按钮</button>
+    <input type="button" name="" value="button">
+    <input type="submit" name="" value="submit按钮">
+    <a class="ui-btn">链接按钮</a>
+    <br />
+    <p>通过属性 <code>disabled</code> 让按钮处于禁用按钮，<span class="ui-label-info">注意！</span> <code>&lt;a&gt;</code> 标签的按钮设置 <code>disabled</code> 属性仅能影响外观，需要自行拟写禁止链接行为的js</p>
+    <input type="button" value="按钮" disabled/>
+    <input class="ui-btn-info" type="button" value="保存" disabled/>
+    <a class="ui-btn" href="javascript:;" disabled>链接</a>
+    <hr>
+    <p>通过样式 .btn-default、.btn-primary、.btn-success、.btn-info、 可以给按钮添加颜色
+        <br>
+        <strong>(注意 对于<code>&lt;a&gt;</code> 标签需求添加<code>.ui-btn</code>eg.<code>&lt;a class="ui-btn btn-danger"&gt;</code></strong>)</p>
+    <input type="button" class="btn-default" value="Default">
+    <input type="button" class="btn-primary" value="Primary">
+    <button type="button" class="btn-success">Success</button>
+    <button type="button" class="btn-info">Info</button>
+    <a type="button" class="ui-btn btn-warning">Warning</a>
+    <a type="button" class="ui-btn btn-danger">Danger</a>
+    <hr>
+    <p>保留Bootstrap相关btn的类，也可以直接使用其 <code>.btn .btn-default</code></p>
+    <button type="button" class="btn btn-default">Default</button>
+    <button type="button" class="btn btn-primary">Primary</button>
+    <button type="button" class="btn btn-success">Success</button>
+    <button type="button" class="btn btn-info">Info</button>
+    <button type="button" class="btn btn-warning">Warning</button>
+    <button type="button" class="btn btn-danger">Danger</button>
 </div>

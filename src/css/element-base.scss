@@ -30,6 +30,7 @@ table tbody:first-child tr:first-child td {
   border-top: 0; }
 
 table th {
+  text-align: center;
   font-weight: bold; }
 
 table td {
@@ -60,6 +61,24 @@ table td {
 .table-unborder td {
   text-align: left;
   border: none; }
+  .table-responsive{
+      table {
+          
+        margin-bottom: 0;
+      }
+  }
+@media (max-width: 767px) {
+    
+.table-responsive{
+    table{
+        border: none;
+        tr th:first-child,
+        tr td:first-child {
+            border-left: none;
+        }
+    }
+}
+}
 
 /* 输入框 */
 select,

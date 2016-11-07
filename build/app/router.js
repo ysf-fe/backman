@@ -16,7 +16,7 @@ angular
                 url: '/home',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: assest + '/views/home.html'
                     }
                 }
             })

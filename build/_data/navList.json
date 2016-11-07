@@ -18,5 +18,26 @@
             "state":"demoBlank",
             "hash":"/demoBlank"
         }]
+    },{
+        "order":2,
+        "text":"栏位2",
+        "state":"",
+        "hash":"",
+        "children":[{
+            "order":1,
+            "text":"页面1",
+            "state":"demoBlank",
+            "hash":"/demoBlank"
+        },{
+            "order":2,
+            "text":"页面2",
+            "state":"demoBlank",
+            "hash":"/demoBlank"
+        },{
+            "order":3,
+            "text":"页面3",
+            "state":"demoBlank",
+            "hash":"/demoBlank"
+        }]
     }]
 }
