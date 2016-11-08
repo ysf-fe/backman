@@ -1,194 +1,160 @@
 @charset "UTF-8";
-/*
- * author： Mak
- * date: 2016-10-28
- * des: base element style (基础标签元素样式)
+/**
+ * 表格
  */
-/* table 样式 */
-table {
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: 20px;
-  background-color: transparent;
-  border-collapse: separate;
-  border-spacing: 0;
-  border: #ddd 1px solid;
-  border-left: 0;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px; }
-
-table caption + thead tr:first-child th,
-table caption + tbody tr:first-child th,
-table caption + tbody tr:first-child td,
-table colgroup + thead tr:first-child th,
-table colgroup + tbody tr:first-child th,
-table colgroup + tbody tr:first-child td,
-table thead:first-child tr:first-child th,
-table tbody:first-child tr:first-child th,
-table tbody:first-child tr:first-child td {
-  border-top: 0; }
-
-table th {
-  text-align: center;
-  font-weight: bold; }
-
-table td {
-  text-align: center; }
-
-table th[align="left"],
-table td[align="left"] {
-  text-align: left; }
-
-table th[align="right"],
-table td[align="right"] {
-  text-align: right; }
-
-table th[align="center"],
-table td[align="center"] {
-  text-align: center; }
-
-table th,
-table td {
-  padding: 8px;
-  line-height: 20px;
-  border: none;
-  border-top: 1px solid #ddd;
-  border-left: 1px solid #ddd; }
-
-.table-unborder,
-.table-unborder th,
-.table-unborder td {
-  text-align: left;
-  border: none; }
-  .table-responsive{
-      table {
-          
-        margin-bottom: 0;
-      }
-  }
-@media (max-width: 767px) {
-    
-.table-responsive{
-    table{
+table:not(.table) {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    background-color: transparent;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: #ddd 1px solid;
+    border-left: 0;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    caption + thead tr:first-child th,
+    caption + tbody tr:first-child th,
+    caption + tbody tr:first-child td,
+    colgroup + thead tr:first-child th,
+    colgroup + tbody tr:first-child th,
+    colgroup + tbody tr:first-child td,
+    thead:first-child tr:first-child th,
+    tbody:first-child tr:first-child th,
+    tbody:first-child tr:first-child td {
+        border-top: 0;
+    }
+    th {
+        font-weight: bold;
+    }
+    th,
+    td {
+        padding: 8px;
+        line-height: 20px;
+        text-align: center;
         border: none;
-        tr th:first-child,
-        tr td:first-child {
-            border-left: none;
+        border-top: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+    }
+    @each $tableTdAlin in (left, right, center) {
+        th[align="#{$tableTdAlin}"],
+        td[align="#{$tableTdAlin}"] {
+            text-align: $tableTdAlin;
+        }
+    }
+    &.table-unborder,
+    &.table-unborder th,
+    &.table-unborder td {
+        text-align: left;
+        border: none;
+    }
+}
+.table-responsive {
+    margin-bottom: 20px;
+    table {
+        margin-bottom: 0;
+    }
+}
+@media (max-width: 767px) {
+    .table-responsive {
+        table:not(.table) {
+            border: none;
+            tr th:first-child,
+            tr td:first-child {
+                border-left: none;
+            }
         }
     }
 }
+/**
+ * 输入元素
+ */
+@mixin inputNormals ($state) {
+    input[type="text"]#{$state},
+    input[type="password"]#{$state},
+    input[type="datetime"]#{$state},
+    input[type="datetime-local"]#{$state},
+    input[type="date"]#{$state},
+    input[type="month"]#{$state},
+    input[type="time"]#{$state},
+    input[type="week"]#{$state},
+    input[type="number"]#{$state},
+    input[type="email"]#{$state},
+    input[type="url"]#{$state},
+    input[type="search"]#{$state},
+    input[type="tel"]#{$state},
+    input[type="color"]#{$state} {
+        @content;
+    }
 }
-
-/* 输入框 */
+%inputBase1,
 select,
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"] {
-  display: inline-block;
-  padding: 4px 6px;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  font-size: 14px;
-  color: #555;
-  vertical-align: middle;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px; }
-
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"] {
-  background-color: white;
-  border: 1px solid #CCC;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border linear .2s, box-shadow linear .2s;
-  -moz-transition: border linear .2s, box-shadow linear .2s;
-  -o-transition: border linear .2s, box-shadow linear .2s;
-  transition: border linear .2s, box-shadow linear .2s; }
-
+textarea {
+    display: inline-block;
+    padding: 4px 6px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    font-size: 14px;
+    color: #555;
+    vertical-align: middle;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+%inputBase2,
+textarea {
+    background-color: white;
+    border: 1px solid #CCC;
+    -webkit-box-shadow: inset 0 1px 1px rgba(#000, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(#000, 0.075);
+    box-shadow: inset 0 1px 1px rgba(#000, 0.075);
+    -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+    -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+    -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+    transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+%inputFoucus,
 textarea:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="datetime"]:focus,
-input[type="datetime-local"]:focus,
-input[type="date"]:focus,
-input[type="month"]:focus,
-input[type="time"]:focus,
-input[type="week"]:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-input[type="url"]:focus,
-input[type="search"]:focus,
-input[type="tel"]:focus,
-input[type="color"]:focus,
 .uneditable-input:focus {
-  border-color: rgba(82, 168, 236, 0.8);
-  outline: 0;
-  outline: thin dotted \9;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6); }
-
+    border-color: rgba(82, 168, 236, 0.8);
+    outline: 0;
+    outline: thin dotted \9;
+    -webkit-box-shadow: inset 0 1px 1px rgba(#000, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(#000, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow: inset 0 1px 1px rgba(#000, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+@include inputNormals('') {
+    @extend %inputBase1;
+}
+@include inputNormals('') {
+    @extend %inputBase2;
+}
+@include inputNormals(':focus') {
+    @extend %inputFoucus;
+}
 input[type="search"] {
-  padding-right: 14px;
-  padding-right: 4px \9;
-  padding-left: 14px;
-  padding-left: 4px \9;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
-  -webkit-appearance: textfield;
-  -webkit-box-sizing: content-box; }
-
-label {
-  display: inline-block;
-  min-height: 20px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  vertical-align: middle;
-  font-weight: normal; }
-
+    padding-right: 14px;
+    padding-right: 4px \9;
+    padding-left: 14px;
+    padding-left: 4px \9;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    -webkit-appearance: textfield;
+    -webkit-box-sizing: content-box;
+}
 input[type="radio"],
 input[type="checkbox"] {
-  line-height: normal;
-  vertical-align: middle; }
-
+    line-height: normal;
+    vertical-align: middle;
+}
 label input[type="radio"],
 label input[type="checkbox"] {
-  float: left;
-  margin: 4px 0 0;
-  margin-top: 1px \9;
-  *margin-top: 0;
-  margin-right: 3px;
-  margin-left: 0; }
-
+    float: left;
+    margin: 1px \9 3px 0 0;
+    margin-left: 0;
+}
 label,
 select,
 button,
@@ -197,8 +163,8 @@ input[type="reset"],
 input[type="submit"],
 input[type="radio"],
 input[type="checkbox"] {
-  cursor: pointer; }
-
+    cursor: pointer;
+}
 input[type="file"],
 input[type="image"],
 input[type="submit"],
@@ -206,163 +172,96 @@ input[type="reset"],
 input[type="button"],
 input[type="radio"],
 input[type="checkbox"] {
-  width: auto; }
-
+    width: auto;
+}
 select,
 input[type="file"] {
-  height: 30px;
-  *margin-top: 4px;
-  line-height: 30px; }
-
+    height: 30px;
+    *margin-top: 4px;
+    line-height: 30px;
+}
 select {
-  min-width: 167px;
-  background-color: #ffffff;
-  border: 1px solid #cccccc; }
-
+    min-width: 167px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
 select[multiple],
 select[size] {
-  height: auto; }
-
-input[disabled],
-select[disabled],
-textarea[disabled] {
-  background-color: #EEE;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  cursor: not-allowed; }
-
-input[readonly],
-select[readonly],
-textarea[readonly] {
-  background-color: #EEE; }
-
-input[type="radio"][disabled],
-input[type="checkbox"][disabled],
-input[type="radio"][readonly],
-input[type="checkbox"][readonly] {
-  opacity: .5; }
-
+    height: auto;
+}
 input,
 select,
 button,
 a {
-  outline: none !important; }
-
+    outline: none !important;
+}
 textarea {
-  width: auto;
-  height: auto;
-  outline: none;
-  resize: none; }
-
+    width: auto;
+    height: auto;
+    outline: none;
+    resize: none;
+}
+input[disabled],
+select[disabled],
+textarea[disabled] {
+    background-color: #eee;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: not-allowed;
+}
+input[readonly],
+select[readonly],
+textarea[readonly] {
+    background-color: #eee;
+}
+input[type="radio"][disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][readonly],
+input[type="checkbox"][readonly] {
+    opacity: 0.5;
+}
 input:focus:invalid:focus,
 textarea:focus:invalid:focus,
 select:focus:invalid:focus {
-  border-color: #e9322d;
-  -webkit-box-shadow: 0 0 6px #f8b9b7;
-  -moz-box-shadow: 0 0 6px #f8b9b7;
-  box-shadow: 0 0 6px #f8b9b7; }
-
-input[type="number"][size="1"] {
-  width: 20px; }
-
-input[type="number"][size="2"] {
-  width: 27px; }
-
-input[type="number"][size="3"] {
-  width: 34px; }
-
-input[type="number"][size="4"] {
-  width: 41px; }
-
-input[type="number"][size="5"] {
-  width: 48px; }
-
-input[type="number"][size="6"] {
-  width: 55px; }
-
-input[type="number"][size="7"] {
-  width: 62px; }
-
-input[type="number"][size="8"] {
-  width: 69px; }
-
-input[type="number"][size="9"] {
-  width: 76px; }
-
-input[type="number"][size="10"] {
-  width: 83px; }
-
-input[type="number"][size="11"] {
-  width: 90px; }
-
-input[type="number"][size="12"] {
-  width: 97px; }
-
-input[type="number"][size="13"] {
-  width: 104px; }
-
-input[type="number"][size="14"] {
-  width: 111px; }
-
-input[type="number"][size="15"] {
-  width: 118px; }
-
-input[type="number"][size="16"] {
-  width: 125px; }
-
-input[type="number"][size="17"] {
-  width: 132px; }
-
-input[type="number"][size="18"] {
-  width: 139px; }
-
-input[type="number"][size="19"] {
-  width: 146px; }
-
-input[type="number"][size="20"] {
-  width: 153px; }
-
-input[type="number"][size="21"] {
-  width: 160px; }
-
-input[type="number"][size="22"] {
-  width: 167px; }
-
-input[type="number"][size="23"] {
-  width: 174px; }
-
-input[type="number"][size="24"] {
-  width: 181px; }
-
-input[type="number"][size="25"] {
-  width: 188px; }
-
-/*按钮*/
+    border-color: #e9322d;
+    -webkit-box-shadow: 0 0 6px #f8b9b7;
+    -moz-box-shadow: 0 0 6px #f8b9b7;
+    box-shadow: 0 0 6px #f8b9b7;
+}
+//修复number类型size无效
+@for $inputsize from 1 to 75 {
+    input[type="number"][size="#{$inputsize}"] {
+        width: 13 + $inputsize * 7 + px;
+    }
+}
+/**
+ * 按钮基本
+ */
 input[type="button"],
 input[type="submit"],
 button,
-a.ui-btn {
-  display: inline-block;
-  *display: inline;
-  padding: 6px 12px;
-  *margin-left: .3em;
-  margin-right: 10px;
-  font-size: 14px;
-  line-height: 20px;
-  color: #333333;
-  text-align: center;
-  vertical-align: middle;
-  background-color: #fff;
-  *background-color: #fff;
-  border: 1px solid #cccccc;
-  *border: 0;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  *zoom: 1;
-  cursor: pointer; }
-
+a[class*="btn-"] {
+    display: inline-block;
+    *display: inline;
+    padding: 6px 12px;
+    *margin-left: 0.3em;
+    margin-right: 10px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333333;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #fff;
+    *background-color: #fff;
+    border: 1px solid #ccc;
+    *border: 0;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    *zoom: 1;
+    cursor: pointer;
+}
 input[type="button"]:hover,
 input[type="button"]:focus,
 input[type="button"]:active,
@@ -375,167 +274,99 @@ button:hover,
 button:focus,
 button:active,
 button[disabled],
-a.ui-btn:hover,
-a.ui-btn:focus,
-a.ui-btn:active,
-a.ui-btn[disabled] {
-  color: #333333;
-  background-color: #e6e6e6;
-  *background-color: #d9d9d9; }
-
+a[class*="btn-"]:hover,
+a[class*="btn-"]:focus,
+a[class*="btn-"]:active,
+a[class*="btn-"][disabled] {
+    color: #333;
+    background-color: #e6e6e6;
+    *background-color: #d9d9d9;
+}
 input[type="button"]:active,
 input[type="submit"]:active,
 button:active,
-a.ui-btn:active {
-  background-color: #cccccc \9; }
-
+a[class*="btn-"]:active {
+    background-color: #ccc \9;
+}
 input[type="button"]:first-child,
 input[type="submit"]:first-child,
 button:first-child,
-a.ui-btn:first-child {
-  *margin-left: 0; }
-
+a[class*="btn-"]:first-child {
+    *margin-left: 0;
+}
 input[type="button"]:hover,
 input[type="button"]:focus,
 input[type="submit"]:hover,
 input[type="submit"]:focus,
 button:hover,
 button:focus,
-a.ui-btn:hover,
-a.ui-btn:focus {
-  color: #333333;
-  text-decoration: none;
-  background-position: 0 -15px;
-  -webkit-transition: background-position 0.1s linear;
-  -moz-transition: background-position 0.1s linear;
-  -o-transition: background-position 0.1s linear;
-  transition: background-position 0.1s linear; }
-
+a[class*="btn-"]:hover,
+a[class*="btn-"]:focus {
+    color: #333;
+    text-decoration: none;
+    background-position: 0 -15px;
+    -webkit-transition: background-position 0.1s linear;
+    -moz-transition: background-position 0.1s linear;
+    -o-transition: background-position 0.1s linear;
+    transition: background-position 0.1s linear;
+}
 input[type="button"]:active,
 input[type="submit"]:active,
 button:active,
-a.ui-btn:active {
-  background-image: none;
-  outline: 0;
-  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05); }
-
+a[class*="btn-"]:active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 2px 4px rgba(#000, 0.15), 0 1px 2px rgba(#000, 0.05);
+    -moz-box-shadow: inset 0 2px 4px rgba(#000, 0.15), 0 1px 2px rgba(#000, 0.05);
+    box-shadow: inset 0 2px 4px rgba(#000, 0.15), 0 1px 2px rgba(#000, 0.05);
+}
 input[type="button"][disabled],
 input[type="submit"][disabled],
 button[disabled],
-a.ui-btn[disabled] {
-  pointer-events: none;
-  cursor: not-allowed;
-  filter: alpha(opacity=65);
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  opacity: .65; }
-
-input[type="button"].btn-default,
-input[type="submit"].btn-default,
-button.btn-default,
-a.ui-btn.btn-default {
-  background-color: #fff;
-  color: #444;
-  border-color: #ddd; }
-
-input[type="button"].btn-default:hover,
-input[type="button"].btn-default:focus,
-input[type="submit"].btn-default:hover,
-input[type="submit"].btn-default:focus,
-button.btn-default:hover,
-button.btn-default:focus,
-a.ui-btn.btn-default:hover,
-a.ui-btn.btn-default:focus {
-  background-color: #e7e7e7; }
-
-input[type="button"].btn-primary,
-input[type="submit"].btn-primary,
-button.btn-primary,
-a.ui-btn.btn-primary {
-  color: #fff;
-  background-color: #3c8dbc;
-  border-color: #367fa9; }
-
-input[type="button"].btn-primary:hover,
-input[type="button"].btn-primary:focus,
-input[type="submit"].btn-primary:hover,
-input[type="submit"].btn-primary:focus,
-button.btn-primary:hover,
-button.btn-primary:focus,
-a.ui-btn.btn-primary:hover,
-a.ui-btn.btn-primary:focus {
-  background-color: #367fa9; }
-
-input[type="button"].btn-success,
-input[type="submit"].btn-success,
-button.btn-success,
-a.ui-btn.btn-success {
-  color: #fff;
-  background-color: #00a65a;
-  border-color: #008d4c; }
-
-input[type="button"].btn-success:hover,
-input[type="button"].btn-success:focus,
-input[type="submit"].btn-success:hover,
-input[type="submit"].btn-success:focus,
-button.btn-success:hover,
-button.btn-success:focus,
-a.ui-btn.btn-success:hover,
-a.ui-btn.btn-success:focus {
-  background-color: #008d4c; }
-
-input[type="button"].btn-info,
-input[type="submit"].btn-info,
-button.btn-info,
-a.ui-btn.btn-info {
-  color: #fff;
-  background-color: #00c0ef;
-  border-color: #00acd6; }
-
-input[type="button"].btn-info:hover,
-input[type="button"].btn-info:focus,
-input[type="submit"].btn-info:hover,
-input[type="submit"].btn-info:focus,
-button.btn-info:hover,
-button.btn-info:focus,
-a.ui-btn.btn-info:hover,
-a.ui-btn.btn-info:focus {
-  background-color: #00acd6; }
-
-input[type="button"].btn-danger,
-input[type="submit"].btn-danger,
-button.btn-danger,
-a.ui-btn.btn-danger {
-  color: #fff;
-  background-color: #dd4b39;
-  border-color: #d73925; }
-
-input[type="button"].btn-danger:hover,
-input[type="button"].btn-danger:focus,
-input[type="submit"].btn-danger:hover,
-input[type="submit"].btn-danger:focus,
-button.btn-danger:hover,
-button.btn-danger:focus,
-a.ui-btn.btn-danger:hover,
-a.ui-btn.btn-danger:focus {
-  background-color: #d73925; }
-
-input[type="button"].btn-warning,
-input[type="submit"].btn-warning,
-button.btn-warning,
-a.ui-btn.btn-warning {
-  color: #fff;
-  background-color: #f39c12;
-  border-color: #e08e0b; }
-
-input[type="button"].btn-warning:hover,
-input[type="button"].btn-warning:focus,
-input[type="submit"].btn-warning:hover,
-input[type="submit"].btn-warning:focus,
-button.btn-warning:hover,
-button.btn-warning:focus,
-a.ui-btn.btn-warning:hover,
-a.ui-btn.btn-warning:focus {
-  background-color: #e08e0b; }
+a[class*="btn-"][disabled] {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter:alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: 0.65;
+}
+/**
+ * 按钮颜色
+ * 依次是：文本色、背景色、边框色、悬停背景色、悬停边框色
+ */
+$buttonTypes: ('default': (#444, #fff, #ccc, #e7e7e7, #adadad), 'primary': (#fff, #3c8dbc, #367fa9, #367fa9, #204d74), 'success': (#fff, #00a65a, #008d4c, #008d4c, #398439), 'info': (#fff, #00c0ef, #00acd6, #00acd6, #269abc), 'danger': (#fff, #dd4b39, #d73925, #d73925, #ac2925), 'warning': (#fff, #f39c12, #e08e0b, #e08e0b, #d58512));
+@each $buttonType,
+$buttonColors in $buttonTypes {
+    input[type="button"].btn-#{$buttonType},
+    input[type="submit"].btn-#{$buttonType},
+    button.btn-#{$buttonType},
+    a.btn-#{$buttonType} {
+        color: nth($buttonColors, 1);
+        background-color: nth($buttonColors, 2);
+        border-color: nth($buttonColors, 3);
+    }
+    input[type="button"].btn-#{$buttonType}:hover,
+    input[type="button"].btn-#{$buttonType}:focus,
+    input[type="submit"].btn-#{$buttonType}:hover,
+    input[type="submit"].btn-#{$buttonType}:focus,
+    button.btn-#{$buttonType}:hover,
+    button.btn-#{$buttonType}:focus,
+    a.btn-#{$buttonType}:hover,
+    a.btn-#{$buttonType}:focus {
+        color: nth($buttonColors, 1);
+        background-color: nth($buttonColors, 4);
+        border-color: nth($buttonColors, 5);
+    }
+}
+/**
+ * 其他元素
+ */
+label {
+    display: inline-block;
+    min-height: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    vertical-align: middle;
+    font-weight: normal;
+}
