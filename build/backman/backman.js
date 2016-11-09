@@ -1,5 +1,3 @@
-
-
 var backman = angular.module('backman', ['ui.router']);
 
 backman.config(function ($httpProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $filterProvider, $provide) {
@@ -58,7 +56,7 @@ backman.config(function ($httpProvider, $urlRouterProvider, $controllerProvider,
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|sms|javascript):/);
 
     //异步controller注册器
-    app.register = {
+    backman.register = {
         controller: $controllerProvider.register,
         directive: $compileProvider.directive,
         filter: $filterProvider.register,
@@ -167,18 +165,20 @@ backman.factory('_setting', function ($rootScope) {
 
     'use strict';
 
-    var data = {
+    var _data = {
         base: location.protocol + '//' + location.host,
-        path: ''
-        // ,ajaxParams: {"authClient": "app", "apiVersion": "v1"}
+        path: '',
+        ajaxParams: null,
+        navListUrl: ''
     };
+    _data.navListUrl = _data.base + '/_data/navList.json';
 
     return {
         get: function (key) {
-            return data[key];
+            return _data[key];
         },
         set: function (key, val) {
-            data[key] = val
+            _data[key] = val;
         }
     };
 
@@ -315,4 +315,112 @@ backman.factory('_validate', function () {
             return rgx.test($.trim(val));
         }
     };
+});
+backman.controller('backmanFramework', function ($scope, _setting) {
+
+    'use strict';
+
+    //移动端导航栏显示隐藏
+    $scope.sidebarOpen = false;
+
+    $scope.act = {
+        //导航栏移动端显示隐藏
+        toggleSidebar: function () {
+            $scope.sidebarOpen = !$scope.sidebarOpen;
+        }
+    }
+
+});
+backman.controller('backmanNavigation', function ($scope, _setting, _httpPost, _httpGet) {
+
+    'use strict';
+
+    var getNavData = function (cb, cberr) {
+            var apiAddress = _setting.get('navListUrl');
+            _httpGet(apiAddress, {})
+                .then(function (data) {
+                    if ($.type(cb) === 'function') {
+                        var navList = [];
+                        for (var i = 0, item1; item1 = data[i]; i++) {
+                            //第一级不允许使用连接
+                            if (item1.state || item1.hash) {
+                                continue;
+                            }
+                            //检查children属性
+                            if ($.type(item1.children) != 'array') {
+                                item1.children = [];
+                            } else {
+                                for (var j = 0, item2; item2 = item1[j]; j++) {
+                                    if ($.type(item2.children) != 'array') {
+                                        item2.children = [];
+                                    }
+                                }
+                            }
+                            navList.push(item1);
+                        }
+                        cb(navList);
+                    }
+                }, function (data) {
+                    if ($.type(cberr) === 'function') {
+                        cberr(data);
+                    }
+                });
+        },
+        renderNavigation = function (data) {
+            //第一层排序
+            data = data.sort(sortNavigation);
+            for (var i = 0, item; item = data[i]; i++) {
+                if (item.children && item.children.length) {
+                    //第二层排序
+                    item.children.sort(sortNavigation);
+                }
+            }
+            $scope.navData = data;
+        },
+        sortNavigation = function (item1, item2) {
+            return item1.order > item2.order;
+        };
+    getNavData(renderNavigation);
+
+    $scope.act = {
+    }
+
+});
+backman.directive('bmSidebar', function () {
+    return {
+        scope: false,
+        restrict: 'A',
+        link: function ($scope, iElm, iAttrs) {
+            iElm.on('click', '.treeview-title', function () {
+                var $this = $(this);
+                if ($this.parent().hasClass('active')) {
+                    $this.parent().removeClass('active').end()
+                        .next('ul.treeview-menu').slideUp('fast');
+                } else {
+                    $this.parent().addClass('active').end()
+                        .next('ul.treeview-menu').slideDown('fast');
+                }
+            });
+            var navInitHandler = $scope.$watch('navData', function (newValue, oldValue) {
+                if (newValue) {
+                    navInitHandler();  //仅运行一次
+                    var hash = window.location.hash;
+                    setTimeout(function () {
+                        iElm.find('.treeview-link').each(function () {
+                            var $this = $(this);
+                            if ($this.attr('href') == hash) {
+                                var $parent1 = $this.parent().parent().show().parent().addClass('active');
+                                if ($parent1.hasClass('treeview')) {
+                                    var $parent2 = $parent1.parent().show().parent().addClass('active');
+                                    if ($parent2.hasClass('treeview')) {
+                                        $parent2.addClass('active');
+                                    }
+                                }
+                            }
+                        });
+                    }, 0);
+                }
+            });
+        }
+    }
 });

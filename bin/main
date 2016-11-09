@@ -9,10 +9,22 @@ var child_process = require("child_process");
 var backman = (function () {
 
     var Backman = function () {
+        //模块地址
         this._modulePath = process.argv[1].split('\\bin\\main')[0];
+        //资源地址
         this._assetsPath = this._modulePath + '\\build';
+        //工作目录
         this._workPath = process.cwd();
+        //项目描述
+        this._package = null;
+        //缓存服务器实例
         this._server = null;
+        //初始化
+        this._init();
+    };
+
+    Backman.prototype._init = function () {
+        this._package = JSON.parse(fs.readFileSync(this._modulePath + '\\package.json'));
     };
 
     Backman.prototype._createDir = function (inPath) {
@@ -26,7 +38,7 @@ var backman = (function () {
 
     Backman.prototype._createFile = function (inPath) {
         var encoding, content;
-        if (/backman(\.min)?\.(css|js)(\.map)?$/.test(inPath)) {
+        if (/backman(\.min)?\.(css|js)(\.map)?$/.test(inPath) || /index\.html$/.test(inPath)) {
             encoding = /(\.jpg|\.png)$/.test(inPath) ? 'binary' : 'utf-8';
             content = fs.readFileSync(this._assetsPath + inPath, encoding);
             fs.writeFileSync(this._workPath + inPath, content, encoding);
@@ -137,6 +149,7 @@ var backman = (function () {
         } else {
             this._readPath(this._assetsPath + '/backman');
             this._readPath(this._assetsPath + '/libs');
+            this._readPath(this._assetsPath + '/index.html');
         }
     };
 
@@ -171,6 +184,10 @@ var backman = (function () {
         this._browser();
     };
 
+    Backman.prototype.showVersion = function () {
+        console.info('Backman: v' + this._package.version);
+    };
+
     return new Backman();
 
 })();
@@ -183,4 +200,6 @@ if (command == 'init') {
     backman.updateFramework();
 } else if (command == 'run') {
     backman.createServer();
+} else if (command == '-v' || command == 'version') {
+    backman.showVersion();
 }

@@ -1,5 +1,3 @@
-
-
 var backman = angular.module('backman', ['ui.router']);
 
 backman.config(function ($httpProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $filterProvider, $provide) {
@@ -58,7 +56,7 @@ backman.config(function ($httpProvider, $urlRouterProvider, $controllerProvider,
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|sms|javascript):/);
 
     //异步controller注册器
-    app.register = {
+    backman.register = {
         controller: $controllerProvider.register,
         directive: $compileProvider.directive,
         filter: $filterProvider.register,

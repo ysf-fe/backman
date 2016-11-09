@@ -1,0 +1,95 @@
+/*
+ * Header
+ */
+
+.backman-header {
+    position: relative;
+    max-height: 100px;
+    z-index: 1030;
+    .logo {
+        display: block;
+        float: left;
+        width: 230px;
+        height: 50px;
+        padding: 0 15px;
+        overflow: hidden;
+        font-size: 20px;
+        line-height: 50px;
+        text-align: center;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 300;
+        -webkit-transition: width 0.3s ease-in-out;
+        -o-transition: width 0.3s ease-in-out;
+        transition: width 0.3s ease-in-out;
+        img {
+            width: 50px;
+            margin: 0 3px;
+            vertical-align: bottom;
+        }
+    }
+    .navbar {
+        min-height: 50px;
+        margin-bottom: 0;
+        margin-left: 230px;
+        border-radius: 0;
+        border: none;
+        -webkit-transition: margin-left 0.3s ease-in-out;
+        -o-transition: margin-left 0.3s ease-in-out;
+        transition: margin-left 0.3s ease-in-out;
+    }
+    .sidebar-toggle {
+        display: none;
+        float: left;
+        margin: 0;
+        padding: 15px;
+        font-family: fontAwesome;
+        color: #fff;
+        background-color: transparent;
+        background-image: none;
+        border: 0;
+        &:before {
+            content: "\f0c9";
+        }
+        &:focus,
+        &:active {
+            background: transparent;
+        }
+    }
+    .navbar-right {
+        float: right;
+        padding-right: 20px;
+        color: #fff;
+        line-height: 50px;
+        strong {
+            margin-right: 5px;
+        }
+        a {
+            padding: 2px 8px;
+            margin-left: 5px;
+            &:active {
+                padding: 3px 8px 1px;
+            }
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .backman-header {
+        position: relative;
+        .logo {
+            width: 100%;
+            float: none;
+        }
+        .navbar {
+            width: 100%;
+            float: none;
+            margin: 0;
+            .sidebar-toggle {
+                display: block;
+            }
+            .navbar-right {
+                padding-right: 0px;
+            }
+        }
+    }
+}
