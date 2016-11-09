@@ -36,5 +36,53 @@ angular
                     }
                 }
             })
+            .state('demoBlank1', {
+                url: '/demoBlank1',
+                views: {
+                    'content': {
+                        templateUrl: assest + '/views/blank.html'
+                    }
+                }
+            })
+            .state('demoBlank2', {
+                url: '/demoBlank2',
+                views: {
+                    'content': {
+                        templateUrl: assest + '/views/blank.html'
+                    }
+                }
+            })
+            .state('demoBlank3', {
+                url: '/demoBlank3',
+                views: {
+                    'content': {
+                        templateUrl: assest + '/views/blank.html'
+                    }
+                }
+            })
+            .state('demoBlank4', {
+                url: '/demoBlank4',
+                views: {
+                    'content': {
+                        templateUrl: assest + '/views/blank.html'
+                    }
+                }
+            })
+            .state('demoBlank5', {
+                url: '/demoBlank5',
+                views: {
+                    'content': {
+                        templateUrl: assest + '/views/blank.html'
+                    }
+                }
+            })
+            .state('demoBlank6', {
+                url: '/demoBlank6',
+                views: {
+                    'content': {
+                        templateUrl: assest + '/views/blank.html'
+                    }
+                }
+            })
         ;
     });

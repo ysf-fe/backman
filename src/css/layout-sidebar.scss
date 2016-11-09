@@ -45,10 +45,7 @@
     padding: 0;
     white-space: nowrap;
     overflow: hidden;
-    &:hover {
-        overflow: visible;
-    }
-    > li {
+    li {
         position: relative;
         margin: 0;
         padding: 0;
@@ -61,14 +58,100 @@
             font-size: 12px;
             text-overflow: clip;
         }
-        &.active {
-            > .treeview-menu {
-                > li {
-                    height: 30px;
+        &.home {
+            a {
+                display: block;
+                padding: 12px 5px 12px 15px;
+                border-left: 3px solid;
+                .fa {
+                    width: 20px;
                 }
             }
-            > a {
-                .pull-right-container .fa-angle-left {
+        }
+    }
+    li.treeview {
+        > a.treeview-link,
+        > a.treeview-title {
+            display: block;
+            padding: 12px 5px 12px 15px;
+            .fa {
+                width: 20px;
+            }
+            .fa-folder,
+            .fa-folder-o {
+                display: inline-block;
+            }
+            .fa-folder-open,
+            .fa-folder-open-o {
+                display: none;
+            }
+            .fa-angle-left {
+                width: auto;
+                height: auto;
+                padding: 0;
+                margin-right: 10px;
+                line-height: 20px;
+            }
+            .fa-caret-right {
+                display: inline-block;
+            }
+            .fa-chevron-right {
+                display: none;
+                text-align: center;
+                font-size: 12px;
+                vertical-align: middle;
+            }
+            &.cur {
+                .fa-caret-right {
+                    display: none;
+                }
+                .fa-chevron-right {
+                    display: inline-block;
+                }
+            }
+        }
+        > ul.treeview-menu {
+            display: none;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            padding-left: 10px;
+            > li.treeview {
+                margin: 0;
+                overflow: hidden;
+                -webkit-transition-duration: .3s;
+                -moz-transition-duration: .3s;
+                -ms-transition-duration: .3s;
+                transition-duration: .3s;
+                > a.treeview-link,
+                > a.treeview-title {
+                    position: relative;
+                    padding: 5px 5px 5px 15px;
+                    display: block;
+                    font-size: 14px;
+                    > .fa-folder-o,
+                    > .fa-folder-open-o,
+                    > .fa-caret-right {
+                        width: 20px;
+                        text-align: center;
+                    }
+                }
+                ul.treeview-menu {
+                    padding-left: 15px;
+                }
+            }
+        }
+        &.active {
+            > a.treeview-title {
+                .fa-folder,
+                .fa-folder-o {
+                    display: none;
+                }
+                .fa-folder-open,
+                .fa-folder-open-o {
+                    display: inline-block;
+                }
+                .fa-angle-left {
                     -webkit-transform: rotate(-90deg);
                     -moz-transform: rotate(-90deg);
                     -ms-transform: rotate(-90deg);
@@ -76,60 +159,5 @@
                 }
             }
         }
-        > a {
-            padding: 12px 5px 12px 15px;
-            display: block;
-            .fa {
-                width: 20px;
-            }
-            .pull-right-container .fa-angle-left {
-                width: auto;
-                height: auto;
-                padding: 0;
-                margin-right: 10px;
-            }
-        }
-    }
-    .treeview-menu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        padding-left: 5px;
-        .treeview-menu {
-            padding-left: 20px;
-        }
-        > li {
-            height: 0;
-            margin: 0;
-            overflow: hidden;
-            -webkit-transition-duration: .3s;
-            -moz-transition-duration: .3s;
-            -ms-transition-duration: .3s;
-            transition-duration: .3s;
-            > a {
-                position: relative;
-                padding: 5px 5px 5px 15px;
-                display: block;
-                font-size: 14px;
-                > .fa {
-                    width: 20px;
-                    text-align: center;
-                }
-            }
-        }
     }
 }
-
-
-/*.sidebar .sidebar-menu{padding: 15px 0px;}
-.sidebar .sidebar-menu>li+li{margin-top: 5px;}
-.sidebar .sidebar-menu>li>a{display: block;height: 100%;position: relative;margin-left: 15px;}
-.sidebar .sidebar-menu>li.active{background-color: #627c88;}
-.sidebar .sidebar-menu>li.active>a{color:#fff;}
-@media (min-width: 768px){
-  .sidebar .sidebar-menu>li.active>a:after{content:"";position: absolute;right:0;top:50%;border:8px solid transparent;border-left: 8px solid #fff;
-  -webkit-transform: translate(0,-50%);
-  -ms-transform: translate(0,-50%);
-  -o-transform: translate(0,-50%);
-  transform: translate(0,-50%);}
-}*/

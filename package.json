@@ -1,6 +1,6 @@
 {
   "name": "backman",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "基于Angluar与bootstrap进行后台管理系统快速搭建的前端框架",
   "bin": {
     "backman": "./bin/main"

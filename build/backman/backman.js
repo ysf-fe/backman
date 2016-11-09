@@ -316,24 +316,49 @@ backman.factory('_validate', function () {
         }
     };
 });
-backman.controller('backmanParent', function ($scope, _setting, _httpPost, _httpGet) {
+backman.controller('backmanFramework', function ($scope, _setting) {
 
     'use strict';
 
     //移动端导航栏显示隐藏
     $scope.sidebarOpen = false;
 
+    $scope.act = {
+        //导航栏移动端显示隐藏
+        toggleSidebar: function () {
+            $scope.sidebarOpen = !$scope.sidebarOpen;
+        }
+    }
+
+});
+backman.controller('backmanNavigation', function ($scope, _setting, _httpPost, _httpGet) {
+
+    'use strict';
+
     var getNavData = function (cb, cberr) {
             var apiAddress = _setting.get('navListUrl');
             _httpGet(apiAddress, {})
                 .then(function (data) {
                     if ($.type(cb) === 'function') {
-                        for (var i = 0, item; item = data[i]; i++) {
-                            if ($.type(item.children) != 'array') {
-                                item.children = [];
+                        var navList = [];
+                        for (var i = 0, item1; item1 = data[i]; i++) {
+                            //第一级不允许使用连接
+                            if (item1.state || item1.hash) {
+                                continue;
                             }
+                            //检查children属性
+                            if ($.type(item1.children) != 'array') {
+                                item1.children = [];
+                            } else {
+                                for (var j = 0, item2; item2 = item1[j]; j++) {
+                                    if ($.type(item2.children) != 'array') {
+                                        item2.children = [];
+                                    }
+                                }
+                            }
+                            navList.push(item1);
                         }
-                        cb(data);
+                        cb(navList);
                     }
                 }, function (data) {
                     if ($.type(cberr) === 'function') {
@@ -348,12 +373,6 @@ backman.controller('backmanParent', function ($scope, _setting, _httpPost, _http
                 if (item.children && item.children.length) {
                     //第二层排序
                     item.children.sort(sortNavigation);
-                    //打开页面时高亮
-                    for (var j = 0, child; child = item.children[j]; j++) {
-                        if (child.hash == window.location.hash.split('#')[1]) {
-                            item.actived = true;
-                        }
-                    }
                 }
             }
             $scope.navData = data;
@@ -364,24 +383,44 @@ backman.controller('backmanParent', function ($scope, _setting, _httpPost, _http
     getNavData(renderNavigation);
 
     $scope.act = {
-        //导航展栏位开折叠
-        toggleItem: function (index) {
-            for (var i = 0, item; item = $scope.navData[i]; i++) {
-                if (index == -1) {
-                    $scope.navData[i].actived = false;
-                } else {
-                    if (i == index) {
-                        $scope.navData[i].actived = !$scope.navData[i].actived;
-                    } else {
-                        $scope.navData[i].actived = false;
-                    }
-                }
-            }
-        },
-        //导航栏移动端显示隐藏
-        toggleSidebar: function () {
-            $scope.sidebarOpen = !$scope.sidebarOpen;
-        }
     }
 
+});
+backman.directive('bmSidebar', function () {
+    return {
+        scope: false,
+        restrict: 'A',
+        link: function ($scope, iElm, iAttrs) {
+            iElm.on('click', '.treeview-title', function () {
+                var $this = $(this);
+                if ($this.parent().hasClass('active')) {
+                    $this.parent().removeClass('active').end()
+                        .next('ul.treeview-menu').slideUp('fast');
+                } else {
+                    $this.parent().addClass('active').end()
+                        .next('ul.treeview-menu').slideDown('fast');
+                }
+            });
+            var navInitHandler = $scope.$watch('navData', function (newValue, oldValue) {
+                if (newValue) {
+                    navInitHandler();  //仅运行一次
+                    var hash = window.location.hash;
+                    setTimeout(function () {
+                        iElm.find('.treeview-link').each(function () {
+                            var $this = $(this);
+                            if ($this.attr('href') == hash) {
+                                var $parent1 = $this.parent().parent().show().parent().addClass('active');
+                                if ($parent1.hasClass('treeview')) {
+                                    var $parent2 = $parent1.parent().show().parent().addClass('active');
+                                    if ($parent2.hasClass('treeview')) {
+                                        $parent2.addClass('active');
+                                    }
+                                }
+                            }
+                        });
+                    }, 0);
+                }
+            });
+        }
+    }
 });

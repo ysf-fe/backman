@@ -27,21 +27,66 @@
     .backman-sidebar {
         background-color: #222d32;
     }
+    .wrapper-content {
+        .container-fluid {
+            border-top-color: #3c8dbc;
+        }
+    }
+    // Sidebar
     .sidebar-menu {
         > li {
             &.header {
                 color: #4b646f;
                 background: #1a2226;
             }
-            > a {
+            &.home {
+                a {
+                    border-left-color: #222d32;
+                }
+                &:hover,
+                &.cur {
+                    a {
+                        color: #d5e9f2;
+                        background: #1e282c;
+                        border-left-color: #3c8dbc;
+                    }
+                }
+                &.cur {
+                    a {
+                        span {
+                            color: #40b9ff;
+                        }
+                    }
+                }
+            }
+            > a.treeview-title {
                 color: #8aa4af;
                 border-left: 3px solid transparent;
             }
-            &:hover > a,
-            &.active > a {
-                color: #ffffff;
-                background: #1e282c;
-                border-left-color: #3c8dbc;
+            &:hover,
+            &.active {
+                > a.treeview-title {
+                    color: #ffffff;
+                    background: #1e282c;
+                    border-left-color: #3c8dbc;
+                }
+                .active {
+                    overflow: visible !important;
+                    > a {
+                        position: relative;
+                        color: #ffffff;
+                        background: lighten(#1e282c, 4%);
+                        &:before {
+                            position: absolute;
+                            top: 0;
+                            left: -10px;
+                            width: 10px;
+                            height: 30px;
+                            content: ' ';
+                            background: lighten(#1e282c, 4%);
+                        }
+                    }
+                }
             }
             > .treeview-menu {
                 margin: 0 1px;
@@ -51,14 +96,13 @@
         a {
             color: #b8c7ce;
             &:hover {
-                color: #ffffff;
+                color: #d5e9f2;
                 text-decoration: none;
             }
-        }
-    }
-    .wrapper-content {
-        .container-fluid {
-            border-top-color: #3c8dbc
+            &.cur {
+                color: #40b9ff;
+                text-shadow: lighten(#1e282c, 4%) 1px 1px 0;
+            }
         }
     }
 }

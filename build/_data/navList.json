@@ -1,43 +1,80 @@
-{   "state":{
-        "code":10200,
-        "msg":"ok"
+{
+    "state": {
+        "code": 10200,
+        "msg": "ok"
     },
-    "data":[{
-        "order":1,
-        "text":"页面示范",
-        "state":"",
-        "hash":"",
-        "children":[{
-            "order":1, 
-            "text":"基本元素",
-            "state":"demoBaseElm",
-            "hash":"/demoBaseElm"
-        },{
-            "order":2, 
-            "text":"空白页面",
-            "state":"demoBlank",
-            "hash":"/demoBlank"
-        }]
-    },{
-        "order":2,
-        "text":"栏位2",
-        "state":"",
-        "hash":"",
-        "children":[{
-            "order":1,
-            "text":"页面1",
-            "state":"demoBlank",
-            "hash":"/demoBlank"
-        },{
-            "order":2,
-            "text":"页面2",
-            "state":"demoBlank",
-            "hash":"/demoBlank"
-        },{
-            "order":3,
-            "text":"页面3",
-            "state":"demoBlank",
-            "hash":"/demoBlank"
-        }]
-    }]
+    "data": [
+        {
+            "order": 1,
+            "text": "页面示范",
+            "children": [
+                {
+                    "order": 1,
+                    "text": "基本元素",
+                    "state": "demoBaseElm",
+                    "hash": "/demoBaseElm"
+                },
+                {
+                    "order": 2,
+                    "text": "空白页面",
+                    "state": "demoBlank",
+                    "hash": "/demoBlank"
+                }
+            ]
+        },
+        {
+            "order": 2,
+            "text": "一级栏位2",
+            "children": [
+                {
+                    "order": 1,
+                    "text": "页面1",
+                    "state": "demoBlank1",
+                    "hash": "/demoBlank1"
+                },
+                {
+                    "order": 2,
+                    "text": "页面2",
+                    "state": "demoBlank2",
+                    "hash": "/demoBlank2"
+                },
+                {
+                    "order": 3,
+                    "text": "二级栏位1",
+                    "children": [
+                        {
+                            "order": 1,
+                            "text": "页面1",
+                            "state": "demoBlank3",
+                            "hash": "/demoBlank3"
+                        },
+                        {
+                            "order": 2,
+                            "text": "页面2",
+                            "state": "demoBlank4",
+                            "hash": "/demoBlank4"
+                        }
+                    ]
+                },
+                {
+                    "order": 4,
+                    "text": "二级栏位2",
+                    "children": [
+                        {
+                            "order": 1,
+                            "text": "页面1",
+                            "state": "demoBlank5",
+                            "hash": "/demoBlank5"
+                        },
+                        {
+                            "order": 2,
+                            "text": "页面2",
+                            "state": "demoBlank6",
+                            "hash": "/demoBlank6"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

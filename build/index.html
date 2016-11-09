@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="app/css/font-awesome.min.css" />
         <link rel="stylesheet" href="backman/backman.min.css">
 
-        <body ng-app="app" ng-controller="backmanParent" class="skin-blue sidebar-mini">
+        <body ng-app="app" ng-controller="backmanFramework" class="skin-blue sidebar-mini">
 
             <div class="wrapper" ng-class="{'sidebar-open': sidebarOpen}">
                 <!-- Header -->
@@ -26,30 +26,54 @@
                     </nav>
                 </header>
                 <!-- Sidebar -->
-                <aside class="backman-sidebar">
-                    <ul class="sidebar-menu">
+                <aside class="backman-sidebar" ng-controller="backmanNavigation">
+                    <ul class="sidebar-menu" bm:sidebar data-nav="navData">
                         <li class="header">MAIN NAVIGATION</li>
-                        <li ui-sref-active="active">
-                            <a ui-sref="home" ng-click="act.toggleItem(-1);">
+                        <!-- Home -->
+                        <li class="home" ui-sref-active="cur">
+                            <a ui-sref="home">
                                 <i class="fa fa-home"></i>
                                 <span>管理中心首页</span>
                             </a>
                         </li>
-                        <!-- 保留 添加active样式子菜单会显示出来-->
-                        <li class="treeview" ng-class="{active: lv1Item.actived}" ng-repeat="lv1Item in navData">
-                            <a ng-click="act.toggleItem($index);">
-                                <i class="fa" ng-class="{'fa-folder': !lv1Item.actived, 'fa-folder-open': lv1Item.actived}"></i>
-                                <span ng-bind="lv1Item.text"></span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
+                        <!-- Level-1 -->
+                        <li class="treeview" ng-repeat="itemLv1 in navData">
+                            <!-- Level-1 title -->
+                            <a class="treeview-title" href="javascript:;">
+                                <i class="fa fa-folder"></i>
+                                <i class="fa fa-folder-open"></i>
+                                <span ng-bind="itemLv1.text"></span>
+                                <i class="fa fa-angle-left pull-right"></i>
                             </a>
-                            <ul class="treeview-menu" ng-if="lv1Item.children.length">
-                                <li ui-sref-active="active" ng-repeat="lv2Item in lv1Item.children">
-                                    <a ui-sref="{{lv2Item.state}}">
+                            <!-- Level-1 menu -->
+                            <ul class="treeview-menu" ng-if="itemLv1.children.length">
+                                <!-- Level-2 -->
+                                <li class="treeview" ng-repeat="itemLv2 in itemLv1.children">
+                                    <!-- Level-2 link -->
+                                    <a class="treeview-link" ui-sref="{{itemLv2.state}}" ui-sref-active="cur" ng-if="!itemLv2.children.length">
                                         <i class="fa fa-caret-right"></i>
-                                        <span ng-bind="lv2Item.text"></span>
+                                        <i class="fa fa-chevron-right"></i>
+                                        <span ng-bind="itemLv2.text"></span>
                                     </a>
+                                    <!-- Level-2 title -->
+                                    <a class="treeview-title" ng-if="itemLv2.children.length" href="javascript:;">
+                                        <i class="fa fa-folder-o"></i>
+                                        <i class="fa fa-folder-open-o"></i>
+                                        <span ng-bind="itemLv2.text"></span>
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </a>
+                                    <!-- Level-2 menu -->
+                                    <ul class="treeview-menu" ng-if="itemLv2.children.length">
+                                        <!-- Level-3 -->
+                                        <li class="treeview" ng-repeat="itemLv3 in itemLv2.children">
+                                            <!-- Level-3 link -->
+                                            <a class="treeview-link" ui-sref="{{itemLv3.state}}" ui-sref-active="cur" ng-if="itemLv2.children.length">
+                                                <i class="fa fa-caret-right"></i>
+                                                <i class="fa fa-chevron-right"></i>
+                                                <span ng-bind="itemLv3.text"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         </li>
