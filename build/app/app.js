@@ -1,11 +1,11 @@
-var app = angular.module('app', ['backman', 'app.router']);
+var app = backman.module('app', ['app.router']);
+
 
 app.config(function () {
 
     'use strict';
 
     //your config here
-
 });
 
 app.run(function (_setting, _httpGet) {
@@ -13,5 +13,5 @@ app.run(function (_setting, _httpGet) {
 
     //修改左侧导航栏接口地址
     //_setting.set('navListUrl', '/api/nav');
-    
+
 });
