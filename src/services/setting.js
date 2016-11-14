@@ -4,11 +4,11 @@ backman.factory('_setting', function ($rootScope) {
 
     var _data = {
         base: location.protocol + '//' + location.host,
-        path: '',
+        path: '/' + location.pathname.split('/index.html')[0],
         ajaxParams: null,
         navListUrl: ''
     };
-    _data.navListUrl = '_data/navList.json';
+    _data.navListUrl = _data.base + _data.path + '/_data/navList.json';
 
     return {
         get: function (key) {

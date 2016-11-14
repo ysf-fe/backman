@@ -179,11 +179,11 @@ backman.factory('_setting', function ($rootScope) {
 
     var _data = {
         base: location.protocol + '//' + location.host,
-        path: '',
+        path: '/' + location.pathname.split('/index.html')[0],
         ajaxParams: null,
         navListUrl: ''
     };
-    _data.navListUrl = '_data/navList.json';
+    _data.navListUrl = _data.base + _data.path + '/_data/navList.json';
 
     return {
         get: function (key) {
@@ -332,9 +332,6 @@ backman.controller('backmanFramework', function ($scope, _setting) {
 
     'use strict';
 
-    //左上角管理员名称
-    $scope.adminName = window.localStorage['adminName@' + window.location.href.split('#')[0]] || 'anonymous';
-
     //移动端导航栏显示隐藏
     $scope.sidebarOpen = false;
 
@@ -346,13 +343,13 @@ backman.controller('backmanFramework', function ($scope, _setting) {
     };
 
 });
-backman.controller('backmanNavigation', function ($scope, _setting, _httpPost) {
+backman.controller('backmanNavigation', function ($scope, _setting, _httpGet) {
 
     'use strict';
 
     var getNavData = function (cb, cberr) {
             var apiAddress = _setting.get('navListUrl');
-            _httpPost(apiAddress, {})
+            _httpGet(apiAddress, {})
                 .then(function (data) {
                     if ($.type(cb) === 'function') {
                         var navList = [];
@@ -397,6 +394,57 @@ backman.controller('backmanNavigation', function ($scope, _setting, _httpPost) {
         };
     getNavData(renderNavigation);
 
+});
+backman.directive('bmEditor', function () {
+
+    'use strict';
+
+    return {
+        scope: {
+            contentBind: '='
+        },
+        restrict: 'A',
+        link: function ($scope, iElm, iAttrs) {
+            var eid = 'editor' + (Date.now() % 1e7) + parseInt(Math.random() * 1000);
+            iElm.attr('id', eid);
+            var editor = KindEditor.create('#' + eid, {
+                items: [
+                    "source", "|",
+                    "undo", "redo", "|",
+                    "template", "code", "|",
+                    "cut", "copy", "paste", "plainpaste", "wordpaste", "|",
+                    "justifyleft", "justifycenter", "justifyright", "justifyfull", "insertorderedlist",
+                    "insertunorderedlist", "indent", "outdent", "subscript", "superscript", "clearhtml",
+                    "quickformat", "|", "selectall", "fullscreen", "/",
+                    "formatblock", "fontname", "fontsize", "|",
+                    "forecolor", "hilitecolor", "bold", "italic", "underline", "strikethrough", "lineheight",
+                    "removeformat", "|",
+                    "image", "table", "hr", "emoticons", "baidumap", "pagebreak", "anchor", "link", "unlink", "|",
+                    "preview", "print", "about"
+                ],
+                width: '100%',
+                height: '270px',
+                resizeMode: 1,
+                allowFileManager: false,
+                imageUploadJson: iAttrs.imageUploadUrl || '',
+                afterChange: function () {
+                    if (editor && editor.html()) {
+                        $scope.contentBind = editor.html();
+                        if (!$scope.$$phase && !$scope.$root.$$phase) {
+                            $scope.$apply();
+                        }
+                    }
+                }
+            });
+            //初次数据
+            var initW = $scope.$watch('contentBind', function (newVal, oldVal) {
+                if (newVal) {
+                    initW();
+                    editor.html(newVal + '');
+                }
+            });
+        }
+    }
 });
 backman.directive('bmSidebar', function () {
     return {

@@ -1,10 +1,10 @@
-backman.controller('backmanNavigation', function ($scope, _setting, _httpPost) {
+backman.controller('backmanNavigation', function ($scope, _setting, _httpGet) {
 
     'use strict';
 
     var getNavData = function (cb, cberr) {
             var apiAddress = _setting.get('navListUrl');
-            _httpPost(apiAddress, {})
+            _httpGet(apiAddress, {})
                 .then(function (data) {
                     if ($.type(cb) === 'function') {
                         var navList = [];

@@ -38,7 +38,7 @@ a {
         clear: both;
     }
 }
-.wrapper-content {
+.backman-content {
     z-index: 800;
     min-height: 100%;
     margin-left: 230px;
@@ -60,7 +60,7 @@ a {
     }
 }
 @media (max-width: 767px) {
-    .wrapper-content {
+    .backman-content {
         margin-left: 0;
         .container-fluid {
             margin: 0;
@@ -70,7 +70,7 @@ a {
             border-radius: 0;
         }
     }
-    .sidebar-open .wrapper-content {
+    .sidebar-open .backman-content {
         -webkit-transform: translate(230px, 0);
         -ms-transform: translate(230px, 0);
         -o-transform: translate(230px, 0);
@@ -89,7 +89,7 @@ a {
         height: 100%;
         overflow-y: auto;
     }
-    .wrapper-content {
+    .backman-content {
         overflow-y: auto;
         padding: 50px 0 0;
         margin-top: -50px;

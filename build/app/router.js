@@ -9,14 +9,13 @@ angular
 
         //var a = _tools.transKeyName('camel',{key_name:1}); console.log(a);
 
-        var assest = './app';
         $stateProvider
             // 首页
             .state('home', {
                 url: '/home',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/home.html'
+                        templateUrl: './app/views/home.html'
                     }
                 }
             })
@@ -24,7 +23,7 @@ angular
                 url: '/demo/baseElm',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/base.html'
+                        templateUrl: './app/views/base.html'
                     }
                 }
             })
@@ -32,7 +31,7 @@ angular
                 url: '/demo/list',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/list.html'
+                        templateUrl: './app/views/list.html'
                     }
                 }
             })
@@ -40,7 +39,7 @@ angular
                 url: '/demo/detail/:id',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/.html'
+                        templateUrl: './app/views/.html'
                     }
                 }
             })
@@ -48,15 +47,21 @@ angular
                 url: '/demo/submit',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/submit.html'
+                        templateUrl: './app/views/submit.html',
+                        controller: 'demoSubmit'
                     }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/demoSubmit.js'
+                    ])
                 }
             })
             .state('demoBlank', {
                 url: '/demo/blank',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
@@ -64,7 +69,7 @@ angular
                 url: '/demoBlank1',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
@@ -72,7 +77,7 @@ angular
                 url: '/demoBlank2',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
@@ -80,7 +85,7 @@ angular
                 url: '/demoBlank3',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
@@ -88,7 +93,7 @@ angular
                 url: '/demoBlank4',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
@@ -96,7 +101,7 @@ angular
                 url: '/demoBlank5',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
@@ -104,7 +109,7 @@ angular
                 url: '/demoBlank6',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
