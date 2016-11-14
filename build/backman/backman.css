@@ -18,7 +18,10 @@ a {
     outline: none;
     text-decoration: none; }
 
-/* Layout */
+/**
+ * 基础布局 
+ * -------
+ */
 .wrapper {
   min-height: 100%;
   position: relative;
@@ -79,8 +82,10 @@ a {
     padding: 50px 0 0;
     margin-top: -50px; } }
 
+@charset "UTF-8";
 /*
- * Header
+ * 头部
+ * ----
  */
 .backman-header {
   position: relative;
@@ -156,8 +161,10 @@ a {
       .backman-header .navbar .navbar-right {
         padding-right: 0px; } }
 
+@charset "UTF-8";
 /*
- * Sidebar
+ * 导航栏
+ * ------
  */
 .backman-sidebar {
   position: absolute;
@@ -188,7 +195,8 @@ a {
     transform: translate(0, 0); } }
 
 /*
- * Sidebar menu 
+ * 导航栏菜单
+ * ---------
  */
 .sidebar-menu {
   list-style: none;
@@ -294,8 +302,9 @@ a {
     -ms-transform: rotate(-90deg);
     transform: rotate(-90deg); }
 
+@charset "UTF-8";
 /*
- * Skin: Blue
+ * 皮肤：蓝色
  * ----------
  */
 .skin-blue .backman-header .navbar {
@@ -375,6 +384,7 @@ a {
 @charset "UTF-8";
 /**
  * 表格
+ * ----
  */
 table:not(.table) {
   width: 100%;
@@ -437,6 +447,7 @@ table:not(.table) {
 
 /**
  * 输入元素
+ * -------
  */
 input[type="text"],
 input[type="password"],
@@ -833,6 +844,7 @@ input[type="number"][size="74"] {
 
 /**
  * 按钮基本
+ * -------
  */
 input[type="button"],
 input[type="submit"],
@@ -929,6 +941,7 @@ a[class*="btn-"][disabled] {
 
 /**
  * 按钮颜色
+ * -------
  * 依次是：文本色、背景色、边框色、悬停背景色、悬停边框色
  */
 input[type="button"].btn-default,
@@ -1053,6 +1066,7 @@ a.btn-warning:focus {
 
 /**
  * 其他元素
+ * -------
  */
 label {
   display: inline-block;

@@ -8,7 +8,8 @@ app.config(function () {
     //your config here
 });
 
-app.run(function (_setting, _httpGet) {
+app.run(function (_setting) {
+
     'use strict';
 
     //修改左侧导航栏接口地址

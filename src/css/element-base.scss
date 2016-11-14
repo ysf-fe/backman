@@ -1,6 +1,6 @@
-@charset "UTF-8";
 /**
  * 表格
+ * ----
  */
 table:not(.table) {
     width: 100%;
@@ -67,8 +67,10 @@ table:not(.table) {
         }
     }
 }
+
 /**
  * 输入元素
+ * -------
  */
 @mixin inputNormals ($state) {
     input[type="text"]#{$state},
@@ -235,8 +237,10 @@ select:focus:invalid:focus {
         width: 13 + $inputsize * 7 + px;
     }
 }
+
 /**
  * 按钮基本
+ * -------
  */
 input[type="button"],
 input[type="submit"],
@@ -331,8 +335,10 @@ a[class*="btn-"][disabled] {
     box-shadow: none;
     opacity: 0.65;
 }
+
 /**
  * 按钮颜色
+ * -------
  * 依次是：文本色、背景色、边框色、悬停背景色、悬停边框色
  */
 $buttonTypes: ('default': (#444, #fff, #ccc, #e7e7e7, #adadad), 'primary': (#fff, #3c8dbc, #367fa9, #367fa9, #204d74), 'success': (#fff, #00a65a, #008d4c, #008d4c, #398439), 'info': (#fff, #00c0ef, #00acd6, #00acd6, #269abc), 'danger': (#fff, #dd4b39, #d73925, #d73925, #ac2925), 'warning': (#fff, #f39c12, #e08e0b, #e08e0b, #d58512));
@@ -359,8 +365,10 @@ $buttonColors in $buttonTypes {
         border-color: nth($buttonColors, 5);
     }
 }
+
 /**
  * 其他元素
+ * -------
  */
 label {
     display: inline-block;

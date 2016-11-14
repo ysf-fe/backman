@@ -21,15 +21,39 @@ angular
                 }
             })
             .state('demoBaseElm', {
-                url: '/demoBaseElm',
+                url: '/demo/baseElm',
                 views: {
                     'content': {
                         templateUrl: assest + '/views/base.html'
                     }
                 }
             })
+            .state('demoList', {
+                url: '/demo/list',
+                views: {
+                    'content': {
+                        templateUrl: assest + '/views/list.html'
+                    }
+                }
+            })
+            .state('demoList.detail', {
+                url: '/demo/detail/:id',
+                views: {
+                    'content': {
+                        templateUrl: assest + '/views/.html'
+                    }
+                }
+            })
+            .state('demoSubmit', {
+                url: '/demo/submit',
+                views: {
+                    'content': {
+                        templateUrl: assest + '/views/submit.html'
+                    }
+                }
+            })
             .state('demoBlank', {
-                url: '/demoBlank',
+                url: '/demo/blank',
                 views: {
                     'content': {
                         templateUrl: assest + '/views/blank.html'

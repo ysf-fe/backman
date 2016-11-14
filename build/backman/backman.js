@@ -183,7 +183,7 @@ backman.factory('_setting', function ($rootScope) {
         ajaxParams: null,
         navListUrl: ''
     };
-    _data.navListUrl = _data.base + '/_data/navList.json';
+    _data.navListUrl = '_data/navList.json';
 
     return {
         get: function (key) {
@@ -332,6 +332,9 @@ backman.controller('backmanFramework', function ($scope, _setting) {
 
     'use strict';
 
+    //左上角管理员名称
+    $scope.adminName = window.localStorage['adminName@' + window.location.href.split('#')[0]] || 'anonymous';
+
     //移动端导航栏显示隐藏
     $scope.sidebarOpen = false;
 
@@ -343,13 +346,13 @@ backman.controller('backmanFramework', function ($scope, _setting) {
     };
 
 });
-backman.controller('backmanNavigation', function ($scope, _setting, _httpPost, _httpGet) {
+backman.controller('backmanNavigation', function ($scope, _setting, _httpPost) {
 
     'use strict';
 
     var getNavData = function (cb, cberr) {
             var apiAddress = _setting.get('navListUrl');
-            _httpGet(apiAddress, {})
+            _httpPost(apiAddress, {})
                 .then(function (data) {
                     if ($.type(cb) === 'function') {
                         var navList = [];
@@ -393,9 +396,6 @@ backman.controller('backmanNavigation', function ($scope, _setting, _httpPost, _
             return item1.order > item2.order;
         };
     getNavData(renderNavigation);
-
-    $scope.act = {
-    }
 
 });
 backman.directive('bmSidebar', function () {

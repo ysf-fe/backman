@@ -1,10 +1,10 @@
-backman.controller('backmanNavigation', function ($scope, _setting, _httpPost, _httpGet) {
+backman.controller('backmanNavigation', function ($scope, _setting, _httpPost) {
 
     'use strict';
 
     var getNavData = function (cb, cberr) {
             var apiAddress = _setting.get('navListUrl');
-            _httpGet(apiAddress, {})
+            _httpPost(apiAddress, {})
                 .then(function (data) {
                     if ($.type(cb) === 'function') {
                         var navList = [];
@@ -48,8 +48,5 @@ backman.controller('backmanNavigation', function ($scope, _setting, _httpPost, _
             return item1.order > item2.order;
         };
     getNavData(renderNavigation);
-
-    $scope.act = {
-    }
 
 });

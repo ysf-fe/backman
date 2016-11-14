@@ -12,13 +12,25 @@
                     "order": 1,
                     "text": "基本元素",
                     "state": "demoBaseElm",
-                    "hash": "/demoBaseElm"
+                    "hash": "/demo/baseElm"
                 },
                 {
                     "order": 2,
-                    "text": "空白页面",
+                    "text": "列表页",
+                    "state": "demoList",
+                    "hash": "/demo/list"
+                },
+                {
+                    "order": 3,
+                    "text": "提交数据页",
+                    "state": "demoSubmit",
+                    "hash": "/demo/submit"
+                },
+                {
+                    "order": 20,
+                    "text": "空白页",
                     "state": "demoBlank",
-                    "hash": "/demoBlank"
+                    "hash": "/demo/blank"
                 }
             ]
         },

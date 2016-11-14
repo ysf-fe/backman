@@ -8,7 +8,7 @@ backman.factory('_setting', function ($rootScope) {
         ajaxParams: null,
         navListUrl: ''
     };
-    _data.navListUrl = _data.base + '/_data/navList.json';
+    _data.navListUrl = '_data/navList.json';
 
     return {
         get: function (key) {
