@@ -10,9 +10,9 @@
         <link rel="stylesheet" href="backman/backman.min.css">
     </head>
 
-    <body class="backman skin-blue sidebar-mini">
+    <body class="skin-blue sidebar-mini">
 
-        <div class="wrapper" ng-class="{'sidebar-open': sidebarOpen}">
+        <div class="backman" ng-class="{'sidebar-open': sidebarOpen}">
             <!-- Header -->
             <header class="backman-header">
                 <a class="logo" ui-sref="home">
@@ -90,17 +90,22 @@
         </div>
 
         <script src="libs/jquery/jquery-2.1.4.min.js"></script>
-        <script src="libs/bootstrap/js/bootstrap.min.js"></script>
-        <script src="libs/loader/script.min.js"></script>
-        <!-- 生产先不用angular-1.4.10.min.js版，方便调试 -->
+        <!-- Bootstrap -->
+        <script src="libs/bootstrap/js/bootstrap-3.3.0.min.js"></script>
+        <!-- Angular 生产先不用angular-1.4.10.min.js版，方便调试 -->
         <script src="libs/angular/angular-1.4.10.js"></script>
-        <script src="libs/angular/angular-ui-router.min.js"></script> 
+        <script src="libs/angular/angular-ui-router.min.js"></script>
+        <!-- js加载器 -->
+        <script src="libs/loader/script-2.5.8.min.js"></script>
+        <!-- KindEditor富文本编辑器 -->
+        <script src="libs/kindeditor/kindeditor-4.1.10.min.js"></script>
+        <script src="libs/kindeditor/lang/zh_CN.js"></script>
+        <!-- 弹窗、日期 -->
+        <script src="libs/layer/layer-3.0.1.min.js"></script>
+        <script src="libs/laydate/laydate-1.1.min.js"></script>
         <!-- Backman -->
         <script src="backman/backman.min.js"></script>
-        <!-- KindEditor 富文本编辑器 -->
-        <script src="libs/kindeditor/kindeditor-min.js"></script>
-        <script src="libs/kindeditor/lang/zh_CN.js"></script>
-        <!-- app config -->
+        <!-- app -->
         <script src="app/router.js"></script>
         <script src="app/app.js"></script>
         <script src="app/js/services.js"></script>

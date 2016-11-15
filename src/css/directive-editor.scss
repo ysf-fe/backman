@@ -2,61 +2,34 @@
  * 指令：富文本编辑器
  * -----------------
  */
-.backman {
-    .ke-container {
-        border-radius: 4px;
-        .ke-toolbar {
-            background-color: #fafafa;
-            background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
-            background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
-            background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
-            background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
-            background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-            .ke-outline {
-                &:not(.ke-selected):not(.ke-on) {
-                    border-color: transparent;
-                }
-            }
-        }
-        .ke-statusbar {
-            background: #fafafa;
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 4px;
-        }
-        .ke-statusbar-right-icon {
-            display: none;
-        }
-    }
-    .ke-dialog {
-        input[type="button"].ke-button {
-            background-position: right -26px;
-            padding: 0 14px 0 12px;
-            margin: 0 0 0 2px;
-            color: #333;
-            font-size: 12px;
-            line-height: 23px;
-            background-color: transparent;
-            border: none;
-            border-radius: 0;
-        }
-        input[type="text"].ke-input-text {
-            height: 23px;
-            margin: 0;
-        }
-        .ke-dialog-row {
-            label {
-                margin: 0;
-            }
-        }
-        .ke-upload-area {
-            input[type="button"].ke-button {
-                padding: 0 12px 0 10px;
+.ke-container {
+    border-radius: 4px;
+    .ke-toolbar {
+        background-color: #fafafa;
+        background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
+        background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
+        background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
+        background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        .ke-outline {
+            &:not(.ke-selected):not(.ke-on) {
+                border-color: transparent;
             }
         }
     }
-    .ke-menu {
-        background-color: #f7f7f7;
+    .ke-statusbar {
+        background: #fafafa;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+    .ke-statusbar-right-icon {
+        display: none;
+    }
+}
+.ke-dialog {
+    input[type="text"].ke-input-text {
+        height: 23px;
     }
 }

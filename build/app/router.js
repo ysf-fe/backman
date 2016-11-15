@@ -31,8 +31,14 @@ angular
                 url: '/demo/list',
                 views: {
                     'content': {
-                        templateUrl: './app/views/list.html'
+                        templateUrl: './app/views/list.html',
+                        controller: 'demoList'
                     }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/demoList.js'
+                    ])
                 }
             })
             .state('demoList.detail', {
