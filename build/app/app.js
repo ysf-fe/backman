@@ -16,11 +16,11 @@ app.run(function ($rootScope, _setting) {
     //修改左侧导航栏接口地址
     //_setting.set('navListUrl', '/api/nav');
 
-    //修改退出按钮链接地址
+    //修改退出按钮接口地址
     //_setting.set('logoutUrl', '/api/logout');
 
-    //左上角logo地址
-    //左上角系统名称
+    //修改登录页地址
+    //_setting.set('loginUrl', 'login.html');
 
     //右上角管理员名称
     $rootScope.adminName = window.localStorage['adminName@' + window.location.href.split('#')[0]] || 'anonymous';

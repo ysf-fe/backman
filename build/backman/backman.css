@@ -322,7 +322,7 @@ a {
   .skin-blue .backman-header .logo:hover {
     background-color: #357ca5; }
 
-.skin-blue .wrapper,
+.skin-blue .backman,
 .skin-blue .backman-sidebar {
   background-color: #222d32; }
 
@@ -930,7 +930,7 @@ a {
  * 指令：时间选择器
  * -----------------
  */
-.layinput input.laydate-icon {
+input.laydate-icon {
   height: 30px; }
 
 .laydate_box {

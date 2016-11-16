@@ -14,13 +14,27 @@ backman.directive('bmDatepick', function () {
             iElm.attr('id', eid)
                 .attr('placeholder', format)
                 .addClass('laydate-icon')
-                .wrap('<div class="layinput"></div>')
                 .on('click', function () {
                     var $this = $(this);
                     if (!$this.attr('readonly')) {
-                        $this[0].dispatchEvent(new MouseEvent('dblclick', {bubbles: true, cancelable: true, view: window}))
+                        $this[0].dispatchEvent(new MouseEvent('dblclick', {
+                            bubbles: true,
+                            cancelable: true,
+                            view: window
+                        }))
                     }
                 });
+            $('#' + eid).one('dblclick', function () {
+                var $this = $(this);
+                setTimeout(function(){
+                    $('#laydate_today').on('click', function () {
+                        $scope.dateBind = $this.val();
+                        if (!$scope.$$phase && !$scope.$root.$$phase) {
+                            $scope.$apply();
+                        }
+                    });
+                }, 0);
+            });
             laydate({
                 elem: '#' + eid,
                 format: format,

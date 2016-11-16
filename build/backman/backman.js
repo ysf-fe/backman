@@ -91,25 +91,24 @@ backman.module = function (name, dependences) {
 
 
 // 服务：请求预处理
-backman.factory('_responePreHandler', function (_tools) {
+backman.factory('_responePreHandler', function (_tools, _setting) {
 
     'use strict';
 
     return {
         //正常通行
         success: function (success, config) {
-            if (success.data.state.code == 20001 && config && config.noVerify == true) {
-                return;
-            }
             if (success.data.state.code == 20001) {
-                window.location.href = '/usercenter/login-show';
+                if (config && config.noVerify == true) {
+                    return;
+                }
+                window.location.href = _setting.get('loginUrl');
                 return;
             }
             //code级报错
             if (success.data.state.code != 10200 && success.data.state.code != 10205) {
                 success.data.data = null;
-                //throw new Error('Server Error!\n\r   success + '\n\r   Message: ' + data.state.msg);
-                alert(success.msg || (success.data && success.data.state && success.data.state.msg));
+                layer.alert(success.msg || (success.data && success.data.state && success.data.state.msg));
                 return null;
             }
             //正常code
@@ -134,8 +133,8 @@ backman.factory('_httpPost', function ($http, _tools, _responePreHandler, _setti
     'use strict';
 
     return function (url, postData, config) {
-        if (!config || !config.ajaxParams) {
-            angular.extend(postData, _setting.ajaxParams);
+        if (!config || !config.globAjaxParams) {
+            angular.extend(postData, _setting.globAjaxParams);
         }
         postData = _tools.transKeyName('underline', postData);
         return $http({
@@ -157,8 +156,8 @@ backman.factory('_httpGet', function ($http, _tools, _responePreHandler, _settin
     'use strict';
 
     return function (url, getData, config) {
-        if (!config || !config.ajaxParams) {
-            angular.extend(getData, _setting.ajaxParams);
+        if (!config || !config.globAjaxParams) {
+            angular.extend(getData, _setting.globAjaxParams);
         }
         getData = _tools.transKeyName('underline', getData);
         return $http({
@@ -180,17 +179,28 @@ backman.factory('_setting', function ($rootScope) {
     var _data = {
         base: location.protocol + '//' + location.host,
         path: '/' + location.pathname.split('/index.html')[0],
-        ajaxParams: null,
-        navListUrl: ''
+        globAjaxParams: {}
     };
+    _data.path = _data.path == '/' ? '' : _data.path;
+    //左侧导航栏接口地址
     _data.navListUrl = _data.base + _data.path + '/_data/navList.json';
+    //登录页地址
+    _data.loginUrl = _data.base + _data.path + '/login.html';
+    //退出登录接口地址
+    _data.logoutUrl = _data.base + _data.path + '';
 
     return {
         get: function (key) {
             return _data[key];
         },
         set: function (key, val) {
-            _data[key] = val;
+            if (key == 'globAjaxParams') {
+                if ($.type(val) == 'object') {
+                    angular.extend(_data.globAjaxParams, val);
+                }
+            } else {
+                _data[key] = val;
+            }
         }
     };
 
@@ -411,13 +421,27 @@ backman.directive('bmDatepick', function () {
             iElm.attr('id', eid)
                 .attr('placeholder', format)
                 .addClass('laydate-icon')
-                .wrap('<div class="layinput"></div>')
                 .on('click', function () {
                     var $this = $(this);
                     if (!$this.attr('readonly')) {
-                        $this[0].dispatchEvent(new MouseEvent('dblclick', {bubbles: true, cancelable: true, view: window}))
+                        $this[0].dispatchEvent(new MouseEvent('dblclick', {
+                            bubbles: true,
+                            cancelable: true,
+                            view: window
+                        }))
                     }
                 });
+            $('#' + eid).one('dblclick', function () {
+                var $this = $(this);
+                setTimeout(function(){
+                    $('#laydate_today').on('click', function () {
+                        $scope.dateBind = $this.val();
+                        if (!$scope.$$phase && !$scope.$root.$$phase) {
+                            $scope.$apply();
+                        }
+                    });
+                }, 0);
+            });
             laydate({
                 elem: '#' + eid,
                 format: format,
