@@ -1,4 +1,4 @@
-backman.controller('backmanNavigation', function ($scope, _setting, _httpPost, _httpGet) {
+backman.controller('backmanNavigation', function ($scope, _setting, _httpGet) {
 
     'use strict';
 
@@ -48,8 +48,5 @@ backman.controller('backmanNavigation', function ($scope, _setting, _httpPost, _
             return item1.order > item2.order;
         };
     getNavData(renderNavigation);
-
-    $scope.act = {
-    }
 
 });

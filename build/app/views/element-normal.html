@@ -1,0 +1,324 @@
+<h1>常用标签元素样式</h1>
+<hr /> Backman 支持所有 Bootstrap3 的样式与功能，但是却又与 Bootstrap 有所不同，比如许多元素默认就被带上了样式，因此很多地方不再需要记忆繁多的 Bootstrap 样式名与页面结构，从而降低了新手的上手条件也提高了平均开发效率
+<br />
+<div>
+    <h3>标题</h3>
+    <hr />
+    <p>从 <code>&lt;h1&gt;</code> 到 <code>&lt;h6&gt;</code> 标签</p>
+    <h1>h1.Heading 标题</h1>
+    <h2>h2.Heading 标题</h2>
+    <h3>h3.Heading 标题</h3>
+    <h4>h4.Heading 标题</h4>
+    <h5>h5.Heading 标题</h5>
+    <h6>h6.Heading 标题</h6>
+</div>
+<br />
+<div>
+    <h3>段落</h3>
+    <hr />
+    <p><code>&lt;p&gt;</code>标签</p>
+    <p>这是一段文字段落</p>
+</div>
+<br />
+<div>
+    <h3>水平线</h3>
+    <hr>
+    <p><code>&lt;hr&gt;</code>标签</p>
+</div>
+<br />
+<div>
+    <h3>行内代码</h3>
+    <hr>
+    <p><code>&lt;code&gt;</code>标签</p>
+    <code>javascript</code>
+    <code>alert('Hello World!');</code>
+</div>
+<br />
+<div>
+    <h3>链接</h3>
+    <hr>
+    <p><code>&lt;a&gt;</code>标签, 带有默认颜色，悬浮颜色变浅</p>
+    <a href="#">这是一个a标签链接</a>
+</div>
+<br />
+<div>
+    <h3>列表</h3>
+    <hr>
+    <p><code>&lt;ul&gt;&lt;li&gt;</code>无序列表标签，默认样式如下：</p>
+    <ul>
+        <li>云渠道</li>
+        <li>云成交</li>
+        <li>云到访</li>
+        <li>云报备</li>
+        <li>鑫房宝</li>
+    </ul>
+    <p><code>&lt;ol&gt;&lt;li&gt;</code>有序列表标签，默认样式如下</p>
+    <ol>
+        <li>云渠道</li>
+        <li>云成交</li>
+        <li>云到访</li>
+        <li>云报备</li>
+        <li>鑫房宝</li>
+    </ol>
+    <p>通过添加<code>.list-unstyled</code> 可取消列表样式，样式效果如下：
+        <br />
+        <span class="label label-default">说明</span> 该样式只影响<mark>直接子元素</mark></p>
+    <div class="well">
+        <ul class="list-unstyled">
+            <li>
+                云渠道
+                <ol>
+                    <li>商家版</li>
+                    <li>经纪人版</li>
+                    <li>天眼版</li>
+                    <li>机构主版</li>
+                </ol>
+            </li>
+            <li>云成交</li>
+            <li>云到访</li>
+            <li>云报备</li>
+            <li>鑫房宝</li>
+        </ul>
+    </div>
+    <p>通过添加<code>.list-inline</code> 可以让列表内联，样式效果如下：
+        <br />
+        <span class="label label-default">说明</span> 该样式只影响<mark>直接子元素</mark></p>
+    <div class="well">
+        <ul class="list-inline">
+            <li>云渠道</li>
+            <li>云成交</li>
+            <li>云到访</li>
+            <li>云报备</li>
+            <li>鑫房宝</li>
+        </ul>
+    </div>
+</div>
+<br />
+<div>
+    <h3>表格</h3>
+    <hr>
+    <p><code>&lt;table&gt;</code> 标签，表格文本默认居中</p>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>支持大部分table属性：</p>
+    <table>
+        <thead>
+            <tr>
+                <th width="30%" align="left" bgcolor="#f2f2f2">Header</th>
+                <th width="50%" bgcolor="#f2f2f2">Header2</th>
+                <th align="right" bgcolor="#f2f2f2">Header3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td align="left" rowspan="2">Data</td>
+                <td align="left">Data</td>
+                <td align="right">Data</td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2">Data</td>
+            </tr>
+            <tr>
+                <td height="50" valign="top" bgcolor="#f0fefc">Data</td>
+                <td valign="middle">Data</td>
+                <td valign="bottom">Data</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>通过添加 <code>.table-hover</code> 类可以让 <code>&lt;tbody&gt;</code> 中的每一行对鼠标悬停状态作出响应。</p>
+    <table class="table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>通过添加 <code>.table-condensed</code> 可以让表格更加紧凑，单元格中的内补（padding）均会减半。</p>
+    <table class="table-condensed">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>通过添加 <code>.table-unborder</code> 可以让表格无边框</p>
+    <table class="table-unborder">
+        <thead>
+            <tr>
+                <th width="10%" align="right">item</th>
+                <th>content</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td align="right">姓名</td>
+                <td>遇善房</td>
+            </tr>
+            <tr>
+                <td align="right">地址</td>
+                <td>时代TIT广场</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>通过在<strong>外层包囊</strong> <code>&lt;div class="table-responsive"&gt;&lt;/div&gt;</code> 可以让表格具有响应式特性，也就是说内容较多的表格在屏幕较小无法友好的显示全部内容时，在下方显示左右滚动条，让表格可以左右滚动！
+        <br />
+        <span class="label label-default">说明</span> 该样式由 Bootstrap 提供，且已做兼容 Backman 处理</p>
+    <div class="table-responsive">
+        <table class="table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                    <th>age</th>
+                    <th>email</th>
+                    <th>job</th>
+                    <th>join-time</th>
+                    <th>address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark1</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>23</td>
+                    <td>mdo@hotmail.com</td>
+                    <td>Customer Service Specialist</td>
+                    <td>2016/11/11</td>
+                    <td>Rome1232, Youth building, No.34 West Beisanhuan Road, Beijing, China</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                    <td>27</td>
+                    <td>thornton@163.com</td>
+                    <td>Senior PHP Engineer</td>
+                    <td>2016/11/11</td>
+                    <td>Room 403, No.37, SiFan Residential Quarter, BaoShan District</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                    <td>26</td>
+                    <td>Larry@gmail.com</td>
+                    <td>Web Software Engineer</td>
+                    <td>2016/11/11</td>
+                    <td>Room 204, building No.102, East TaiShan Residential, BaoYin, JiangSu</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><span class="label label-info">注意</span> 当给表格添加样式 <code>.table</code> 时，将显示为 Bootstrap3 的表格效果。两种表格显示模式相互独立互不影响！</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br />

@@ -6,25 +6,61 @@
     "data": [
         {
             "order": 1,
-            "text": "页面示范",
+            "text": "组件示范",
             "children": [
                 {
                     "order": 1,
-                    "text": "基本元素",
-                    "state": "demoBaseElm",
-                    "hash": "/demoBaseElm"
+                    "text": "普通元素",
+                    "state": "elementNormal",
+                    "hash": "/element/normal"
                 },
                 {
                     "order": 2,
-                    "text": "空白页面",
-                    "state": "demoBlank",
-                    "hash": "/demoBlank"
+                    "text": "表单元素",
+                    "state": "elementForm",
+                    "hash": "/element/form"
+                },
+                {
+                    "order": 3,
+                    "text": "富文本编辑器",
+                    "state": "elementEditor",
+                    "hash": "/element/editor"
+                },
+                {
+                    "order": 4,
+                    "text": "时间日期选择器",
+                    "state": "elementDatepick",
+                    "hash": "/element/datepick"
                 }
             ]
         },
         {
             "order": 2,
-            "text": "一级栏位2",
+            "text": "页面示范",
+            "children": [
+                {
+                    "order": 1,
+                    "text": "列表页",
+                    "state": "demoList",
+                    "hash": "/demo/list"
+                },
+                {
+                    "order": 2,
+                    "text": "添加数据页",
+                    "state": "demoAdd",
+                    "hash": "/demo/add"
+                },
+                {
+                    "order": 20,
+                    "text": "空白页",
+                    "state": "demoBlank",
+                    "hash": "/demo/blank"
+                }
+            ]
+        },
+        {
+            "order": 3,
+            "text": "一级栏位",
             "children": [
                 {
                     "order": 1,

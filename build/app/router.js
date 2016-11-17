@@ -9,30 +9,107 @@ angular
 
         //var a = _tools.transKeyName('camel',{key_name:1}); console.log(a);
 
-        var assest = './app';
         $stateProvider
             // 首页
             .state('home', {
                 url: '/home',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/home.html'
+                        templateUrl: './app/views/home.html'
                     }
                 }
             })
-            .state('demoBaseElm', {
-                url: '/demoBaseElm',
+            .state('elementNormal', {
+                url: '/element/normal',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/base.html'
+                        templateUrl: './app/views/element-normal.html'
                     }
+                }
+            })
+            .state('elementForm', {
+                url: '/element/form',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/element-form.html'
+                    }
+                }
+            })
+            .state('elementEditor', {
+                url: '/element/editor',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/element-editor.html',
+                        controller: 'elementEditor'
+                    }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/element-editor.js'
+                    ])
+                }
+            })
+            .state('elementDatepick', {
+                url: '/element/datepick',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/element-datepick.html',
+                        controller: 'elementDatepick'
+                    }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/element-datepick.js'
+                    ])
+                }
+            })
+            .state('demoList', {
+                url: '/demo/list',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/demo-list.html',
+                        controller: 'demoList'
+                    }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/demo-list.js'
+                    ])
+                }
+            })
+            .state('demoDetail', {
+                url: '/demo/detail/:id',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/demo-detail.html',
+                        controller: 'demoDetail'
+                    }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/demo-detail.js'
+                    ])
+                }
+            })
+            .state('demoAdd', {
+                url: '/demo/add',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/demo-detail.html',
+                        controller: 'demoAdd'
+                    }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/demo-add.js'
+                    ])
                 }
             })
             .state('demoBlank', {
-                url: '/demoBlank',
+                url: '/demo/blank',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
@@ -40,7 +117,7 @@ angular
                 url: '/demoBlank1',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
@@ -48,7 +125,7 @@ angular
                 url: '/demoBlank2',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
@@ -56,7 +133,7 @@ angular
                 url: '/demoBlank3',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
@@ -64,7 +141,7 @@ angular
                 url: '/demoBlank4',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
@@ -72,7 +149,7 @@ angular
                 url: '/demoBlank5',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })
@@ -80,7 +157,7 @@ angular
                 url: '/demoBlank6',
                 views: {
                     'content': {
-                        templateUrl: assest + '/views/blank.html'
+                        templateUrl: './app/views/blank.html'
                     }
                 }
             })

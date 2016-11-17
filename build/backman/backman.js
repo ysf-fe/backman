@@ -55,17 +55,9 @@ backman.config(function ($httpProvider, $urlRouterProvider, $controllerProvider,
     //增加angular自动过滤特殊url白名单
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|sms|javascript):/);
 
-    //异步controller注册器
-    backman.register = {
-        controller: $controllerProvider.register,
-        directive: $compileProvider.directive,
-        filter: $filterProvider.register,
-        factory: $provide.factory,
-        service: $provide.service
-    };
-
 });
 
+//路由转接
 backman.run(function ($rootScope, $state, $stateParams) {
 
     'use strict';
@@ -75,29 +67,48 @@ backman.run(function ($rootScope, $state, $stateParams) {
 
 });
 
+//backman创建模块
+backman.module = function (name, dependences) {
+
+    'use strict';
+
+    var app = angular.module(name, ['backman'].concat(dependences));
+    app.config(function($controllerProvider, $compileProvider, $filterProvider, $provide){
+        //异步controller注册器
+        app.register = {
+            controller: $controllerProvider.register,
+            directive: $compileProvider.directive,
+            filter: $filterProvider.register,
+            factory: $provide.factory,
+            service: $provide.service
+        };
+    });
+    return app;
+
+};
+
 
 
 
 // 服务：请求预处理
-backman.factory('_responePreHandler', function (_tools) {
+backman.factory('_responePreHandler', function (_tools, _setting) {
 
     'use strict';
 
     return {
         //正常通行
         success: function (success, config) {
-            if (success.data.state.code == 20001 && config && config.noVerify == true) {
-                return;
-            }
             if (success.data.state.code == 20001) {
-                window.location.href = '/usercenter/login-show';
+                if (config && config.noVerify == true) {
+                    return;
+                }
+                window.location.href = _setting.get('loginUrl');
                 return;
             }
             //code级报错
             if (success.data.state.code != 10200 && success.data.state.code != 10205) {
                 success.data.data = null;
-                //throw new Error('Server Error!\n\r   success + '\n\r   Message: ' + data.state.msg);
-                alert(success.msg || (success.data && success.data.state && success.data.state.msg));
+                layer.alert(success.msg || (success.data && success.data.state && success.data.state.msg));
                 return null;
             }
             //正常code
@@ -122,8 +133,8 @@ backman.factory('_httpPost', function ($http, _tools, _responePreHandler, _setti
     'use strict';
 
     return function (url, postData, config) {
-        if (!config || !config.ajaxParams) {
-            angular.extend(postData, _setting.ajaxParams);
+        if (!config || !config.globAjaxParams) {
+            angular.extend(postData, _setting.globAjaxParams);
         }
         postData = _tools.transKeyName('underline', postData);
         return $http({
@@ -145,8 +156,8 @@ backman.factory('_httpGet', function ($http, _tools, _responePreHandler, _settin
     'use strict';
 
     return function (url, getData, config) {
-        if (!config || !config.ajaxParams) {
-            angular.extend(getData, _setting.ajaxParams);
+        if (!config || !config.globAjaxParams) {
+            angular.extend(getData, _setting.globAjaxParams);
         }
         getData = _tools.transKeyName('underline', getData);
         return $http({
@@ -167,18 +178,29 @@ backman.factory('_setting', function ($rootScope) {
 
     var _data = {
         base: location.protocol + '//' + location.host,
-        path: '',
-        ajaxParams: null,
-        navListUrl: ''
+        path: '/' + location.pathname.split('/index.html')[0],
+        globAjaxParams: {}
     };
-    _data.navListUrl = _data.base + '/_data/navList.json';
+    _data.path = _data.path == '/' ? '' : _data.path;
+    //左侧导航栏接口地址
+    _data.navListUrl = _data.base + _data.path + '/_data/navList.json';
+    //登录页地址
+    _data.loginUrl = _data.base + _data.path + '/login.html';
+    //退出登录接口地址
+    _data.logoutUrl = _data.base + _data.path + '';
 
     return {
         get: function (key) {
             return _data[key];
         },
         set: function (key, val) {
-            _data[key] = val;
+            if (key == 'globAjaxParams') {
+                if ($.type(val) == 'object') {
+                    angular.extend(_data.globAjaxParams, val);
+                }
+            } else {
+                _data[key] = val;
+            }
         }
     };
 
@@ -239,25 +261,37 @@ backman.constant('_tools', (function () {
             for (var p in json) {
                 if (json.hasOwnProperty(p)) {
                     var key;
-                    if (typeof p == 'string') {
+                    //字符串进行键名转换
+                    if (!/^\d+$/.test(p)) {
                         if (type == 'camel') {
                             key = toCamel(p);
                         } else if (type == 'underline') {
                             key = toUnderline(p);
                         }
-                    } else {
-                        key = p;
                     }
+                    //数值直接传递
+                    else {
+                        key = parseInt(p);
+                    }
+                    //属性为对象时，递归转换
                     if (json[p] instanceof Object) {
-                        json2[key] = transform(json[p], typeof json[p].length == 'undefined' ? {} : []);
-                    } else {
+                        json2[key] = transform(json[p], $.type(json[p]) == 'array' ? [] : {});
+                    }
+                    //属性非对象，为字符串但内容符合json格式，递归转换
+                    else if ($.type(json[p]) == 'string' && /^[\{\[]+("([a-zA-Z][a-zA-Z0-9\-_]*?)"\:(.+?))+[\}\]]+$/.test(json[p])) {
+                        json2[key] = JSON.parse(json[p]);
+                        json2[key] = transform(json2[key], $.type(json2[key]) == 'array' ? [] : {});
+                        json2[key] = JSON.stringify(json2[key]);
+                    }
+                    //属性非对象，非json字符串，直接传递
+                    else {
                         json2[key] = json[p];
                     }
                 }
             }
             return json2;
         };
-        return transform(json, typeof json.length == 'undefined' ? {} : []);
+        return transform(json, $.type(json) == 'array' ? [] : {});
     };
 
     var loadJs = function (jsList) {
@@ -328,10 +362,10 @@ backman.controller('backmanFramework', function ($scope, _setting) {
         toggleSidebar: function () {
             $scope.sidebarOpen = !$scope.sidebarOpen;
         }
-    }
+    };
 
 });
-backman.controller('backmanNavigation', function ($scope, _setting, _httpPost, _httpGet) {
+backman.controller('backmanNavigation', function ($scope, _setting, _httpGet) {
 
     'use strict';
 
@@ -382,9 +416,116 @@ backman.controller('backmanNavigation', function ($scope, _setting, _httpPost, _
         };
     getNavData(renderNavigation);
 
-    $scope.act = {
-    }
+});
+backman.directive('bmDatepick', function () {
 
+    'use strict';
+
+    return {
+        scope: {
+            bindDate: '='
+        },
+        restrict: 'A',
+        link: function ($scope, iElm, iAttrs) {
+            var format = iAttrs.dateFormat || 'YYYY-MM-DD hh:mm:ss'; //日期格式
+            var timePick = /(hh|mm|ss)+/g.test(format); //是否开启时间选择
+            var eid = 'datepick' + (Date.now() % 1e7) + parseInt(Math.random() * 1000);
+            iElm.attr('id', eid)
+                .attr('placeholder', format)
+                .addClass('laydate-icon')
+                .on('click', function () {
+                    var $this = $(this);
+                    if (!$this.attr('readonly')) {
+                        $this[0].dispatchEvent(new MouseEvent('dblclick', {
+                            bubbles: true,
+                            cancelable: true,
+                            view: window
+                        }))
+                    }
+                });
+            $('#' + eid).one('dblclick', function () {
+                var $this = $(this);
+                setTimeout(function(){
+                    $('#laydate_today').on('click', function () {
+                        $scope.bindDate = $this.val();
+                        if (!$scope.$$phase && !$scope.$root.$$phase) {
+                            $scope.$apply();
+                        }
+                    });
+                }, 0);
+            });
+            laydate({
+                elem: '#' + eid,
+                format: format,
+                istime: timePick,
+                event: 'dblclick',
+                choose: function (dates) {
+                    $scope.bindDate = dates;
+                    if (!$scope.$$phase && !$scope.$root.$$phase) {
+                        $scope.$apply();
+                    }
+                }
+            });
+            //初次数据
+            var initW = $scope.$watch('bindDate', function (newVal, oldVal) {
+                if (newVal) {
+                    initW();
+                    iElm.val(newVal);
+                }
+            });
+        }
+    }
+});
+backman.directive('bmEditor', function () {
+
+    'use strict';
+
+    return {
+        scope: {
+            bindContent: '='
+        },
+        restrict: 'A',
+        link: function ($scope, iElm, iAttrs) {
+            var eid = 'editor' + (Date.now() % 1e7) + parseInt(Math.random() * 1000);
+            iElm.attr('id', eid);
+            var editor = KindEditor.create('#' + eid, {
+                items: [
+                    "source", "|",
+                    "undo", "redo", "|",
+                    "template", "code", "|",
+                    "cut", "copy", "paste", "plainpaste", "wordpaste", "|",
+                    "justifyleft", "justifycenter", "justifyright", "justifyfull", "insertorderedlist",
+                    "insertunorderedlist", "indent", "outdent", "subscript", "superscript", "clearhtml",
+                    "quickformat", "|", "selectall", "fullscreen", "/",
+                    "formatblock", "fontname", "fontsize", "|",
+                    "forecolor", "hilitecolor", "bold", "italic", "underline", "strikethrough", "lineheight",
+                    "removeformat", "|",
+                    "image", "table", "hr", "emoticons", "baidumap", "pagebreak", "anchor", "link", "unlink", "|",
+                    "preview", "print", "about"
+                ],
+                width: '100%',
+                height: '270px',
+                resizeMode: 1,
+                allowFileManager: false,
+                imageUploadJson: iAttrs.imageUploadUrl || '',
+                afterChange: function () {
+                    if (editor && editor.html()) {
+                        $scope.bindContent = editor.html();
+                        if (!$scope.$$phase && !$scope.$root.$$phase) {
+                            $scope.$apply();
+                        }
+                    }
+                }
+            });
+            //初次数据
+            var initW = $scope.$watch('bindContent', function (newVal, oldVal) {
+                if (newVal) {
+                    initW();
+                    editor.html(newVal + '');
+                }
+            });
+        }
+    }
 });
 backman.directive('bmSidebar', function () {
     return {

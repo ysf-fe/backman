@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html,
 body {
     min-height: 100%;
@@ -20,8 +21,11 @@ a {
         text-decoration: none;
     }
 }
-/* Layout */
-.wrapper {
+/**
+ * 基础布局 
+ * -------
+ */
+.backman {
     min-height: 100%;
     position: relative;
     overflow: hidden;
@@ -34,7 +38,7 @@ a {
         clear: both;
     }
 }
-.wrapper-content {
+.backman-content {
     z-index: 800;
     min-height: 100%;
     margin-left: 230px;
@@ -56,7 +60,7 @@ a {
     }
 }
 @media (max-width: 767px) {
-    .wrapper-content {
+    .backman-content {
         margin-left: 0;
         .container-fluid {
             margin: 0;
@@ -66,7 +70,7 @@ a {
             border-radius: 0;
         }
     }
-    .sidebar-open .wrapper-content {
+    .sidebar-open .backman-content {
         -webkit-transform: translate(230px, 0);
         -ms-transform: translate(230px, 0);
         -o-transform: translate(230px, 0);
@@ -79,13 +83,13 @@ a {
         min-height: 100%;
         width: 100%;
     }
-    .wrapper {
+    .backman {
         position: absolute;
         width: 100%;
         height: 100%;
         overflow-y: auto;
     }
-    .wrapper-content {
+    .backman-content {
         overflow-y: auto;
         padding: 50px 0 0;
         margin-top: -50px;

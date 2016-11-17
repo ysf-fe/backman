@@ -66,8 +66,10 @@ var backman = (function () {
     };
 
     Backman.prototype._serverConfig = {
+        port: 8090,
         //文件类型
         mimeType: {
+            "eot": "application/vnd.ms-fontobject",
             'txt': 'text/plain',
             'html': 'text/html',
             'css': 'text/css',
@@ -77,13 +79,18 @@ var backman = (function () {
             'jpg': 'image/jpeg',
             'jpeg': 'image/jpeg',
             'gif': 'image/gif',
+            "otf": "application/x-font-otf",
             'png': 'image/png',
             'svg': 'image/svg+xml',
             "swf": "application/x-shockwave-flash",
             "tiff": "image/tiff",
+            "ttf": "application/x-font-ttf",
+            "ttc": "application/x-font-ttf",
             "wav": "audio/x-wav",
             "wma": "audio/x-ms-wma",
-            "wmv": "video/x-ms-wmv"
+            "wmv": "video/x-ms-wmv",
+            "woff": "application/font-woff",
+            "woff2": "application/font-woff2"
         },
         //404未找到页面
         page_404: function (req, res, path) {
@@ -115,7 +122,7 @@ var backman = (function () {
     //浏览当前文档
     Backman.prototype._browser = function () {
         //解析地址
-        var host = 'http://localhost:8090/index.html';
+        var host = 'http://localhost:' + this._server.address().port + '/index.html';
         //呼起默认浏览器打开页面
         var cmd;
         //windows
@@ -159,6 +166,11 @@ var backman = (function () {
             return;
         }
         var that = this;
+        var finish = function(){
+            finish = null;
+            console.info('Backman: Server running at http://localhost:' + that._serverConfig.port + '/');
+            that._browser();
+        };
         this._server = http.createServer(function (req, res) {
             var pathname = url.parse(req.url).pathname;
             //真实地址
@@ -179,9 +191,22 @@ var backman = (function () {
                     });
                 }
             });
-        }).listen(8090);
-        console.info('Backman: Server running at http://localhost:8090/');
-        this._browser();
+        }).listen(that._serverConfig.port, function () {
+            finish && finish();
+        });
+        this._server.on('error', function (e) {
+            if (e.code == 'EADDRINUSE') {
+                console.info('Backman: The port ' + that._serverConfig.port + ' is already in use.');
+            }
+            that._server.close();
+            setTimeout(function () {
+                if (that._serverConfig.port <= 8100) {
+                    that._server.listen(++that._serverConfig.port, function () {
+                        finish && finish();
+                    });
+                }
+            }, 0);
+        });
     };
 
     Backman.prototype.showVersion = function () {

@@ -1,23 +1,22 @@
 // 服务：请求预处理
-backman.factory('_responePreHandler', function (_tools) {
+backman.factory('_responePreHandler', function (_tools, _setting) {
 
     'use strict';
 
     return {
         //正常通行
         success: function (success, config) {
-            if (success.data.state.code == 20001 && config && config.noVerify == true) {
-                return;
-            }
             if (success.data.state.code == 20001) {
-                window.location.href = '/usercenter/login-show';
+                if (config && config.noVerify == true) {
+                    return;
+                }
+                window.location.href = _setting.get('loginUrl');
                 return;
             }
             //code级报错
             if (success.data.state.code != 10200 && success.data.state.code != 10205) {
                 success.data.data = null;
-                //throw new Error('Server Error!\n\r   success + '\n\r   Message: ' + data.state.msg);
-                alert(success.msg || (success.data && success.data.state && success.data.state.msg));
+                layer.alert(success.msg || (success.data && success.data.state && success.data.state.msg));
                 return null;
             }
             //正常code
@@ -42,8 +41,8 @@ backman.factory('_httpPost', function ($http, _tools, _responePreHandler, _setti
     'use strict';
 
     return function (url, postData, config) {
-        if (!config || !config.ajaxParams) {
-            angular.extend(postData, _setting.ajaxParams);
+        if (!config || !config.globAjaxParams) {
+            angular.extend(postData, _setting.globAjaxParams);
         }
         postData = _tools.transKeyName('underline', postData);
         return $http({
@@ -65,8 +64,8 @@ backman.factory('_httpGet', function ($http, _tools, _responePreHandler, _settin
     'use strict';
 
     return function (url, getData, config) {
-        if (!config || !config.ajaxParams) {
-            angular.extend(getData, _setting.ajaxParams);
+        if (!config || !config.globAjaxParams) {
+            angular.extend(getData, _setting.globAjaxParams);
         }
         getData = _tools.transKeyName('underline', getData);
         return $http({

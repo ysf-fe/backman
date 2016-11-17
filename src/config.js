@@ -55,17 +55,9 @@ backman.config(function ($httpProvider, $urlRouterProvider, $controllerProvider,
     //增加angular自动过滤特殊url白名单
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|sms|javascript):/);
 
-    //异步controller注册器
-    backman.register = {
-        controller: $controllerProvider.register,
-        directive: $compileProvider.directive,
-        filter: $filterProvider.register,
-        factory: $provide.factory,
-        service: $provide.service
-    };
-
 });
 
+//路由转接
 backman.run(function ($rootScope, $state, $stateParams) {
 
     'use strict';
@@ -74,6 +66,26 @@ backman.run(function ($rootScope, $state, $stateParams) {
     $rootScope.$stateParams = $stateParams;
 
 });
+
+//backman创建模块
+backman.module = function (name, dependences) {
+
+    'use strict';
+
+    var app = angular.module(name, ['backman'].concat(dependences));
+    app.config(function($controllerProvider, $compileProvider, $filterProvider, $provide){
+        //异步controller注册器
+        app.register = {
+            controller: $controllerProvider.register,
+            directive: $compileProvider.directive,
+            filter: $filterProvider.register,
+            factory: $provide.factory,
+            service: $provide.service
+        };
+    });
+    return app;
+
+};
 
 
 

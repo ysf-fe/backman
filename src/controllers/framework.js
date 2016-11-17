@@ -10,6 +10,6 @@ backman.controller('backmanFramework', function ($scope, _setting) {
         toggleSidebar: function () {
             $scope.sidebarOpen = !$scope.sidebarOpen;
         }
-    }
+    };
 
 });
