@@ -32,7 +32,7 @@ backman.directive('bmEditor', function () {
                 imageUploadJson: iAttrs.imageUploadUrl || '',
                 afterChange: function () {
                     if (editor && editor.html()) {
-                        $scope.contentBind = editor.html();
+                        $scope.bindContent = editor.html();
                         if (!$scope.$$phase && !$scope.$root.$$phase) {
                             $scope.$apply();
                         }
@@ -40,7 +40,7 @@ backman.directive('bmEditor', function () {
                 }
             });
             //初次数据
-            var initW = $scope.$watch('contentBind', function (newVal, oldVal) {
+            var initW = $scope.$watch('bindContent', function (newVal, oldVal) {
                 if (newVal) {
                     initW();
                     editor.html(newVal + '');

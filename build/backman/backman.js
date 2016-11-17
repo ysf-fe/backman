@@ -447,7 +447,7 @@ backman.directive('bmDatepick', function () {
                 var $this = $(this);
                 setTimeout(function(){
                     $('#laydate_today').on('click', function () {
-                        $scope.dateBind = $this.val();
+                        $scope.bindDate = $this.val();
                         if (!$scope.$$phase && !$scope.$root.$$phase) {
                             $scope.$apply();
                         }
@@ -460,14 +460,14 @@ backman.directive('bmDatepick', function () {
                 istime: timePick,
                 event: 'dblclick',
                 choose: function (dates) {
-                    $scope.dateBind = dates;
+                    $scope.bindDate = dates;
                     if (!$scope.$$phase && !$scope.$root.$$phase) {
                         $scope.$apply();
                     }
                 }
             });
             //初次数据
-            var initW = $scope.$watch('dateBind', function (newVal, oldVal) {
+            var initW = $scope.$watch('bindDate', function (newVal, oldVal) {
                 if (newVal) {
                     initW();
                     iElm.val(newVal);
@@ -510,7 +510,7 @@ backman.directive('bmEditor', function () {
                 imageUploadJson: iAttrs.imageUploadUrl || '',
                 afterChange: function () {
                     if (editor && editor.html()) {
-                        $scope.contentBind = editor.html();
+                        $scope.bindContent = editor.html();
                         if (!$scope.$$phase && !$scope.$root.$$phase) {
                             $scope.$apply();
                         }
@@ -518,7 +518,7 @@ backman.directive('bmEditor', function () {
                 }
             });
             //初次数据
-            var initW = $scope.$watch('contentBind', function (newVal, oldVal) {
+            var initW = $scope.$watch('bindContent', function (newVal, oldVal) {
                 if (newVal) {
                     initW();
                     editor.html(newVal + '');

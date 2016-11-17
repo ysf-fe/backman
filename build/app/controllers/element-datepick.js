@@ -1,4 +1,4 @@
-app.register.controller('demoList', function ($scope, _httpPost) {
+app.register.controller('elementDatepick', function ($scope, _httpPost) {
 
     'use strict';
 

@@ -6,25 +6,49 @@
     "data": [
         {
             "order": 1,
+            "text": "组件示范",
+            "children": [
+                {
+                    "order": 1,
+                    "text": "普通元素",
+                    "state": "elementNormal",
+                    "hash": "/element/normal"
+                },
+                {
+                    "order": 2,
+                    "text": "表单元素",
+                    "state": "elementForm",
+                    "hash": "/element/form"
+                },
+                {
+                    "order": 3,
+                    "text": "富文本编辑器",
+                    "state": "elementEditor",
+                    "hash": "/element/editor"
+                },
+                {
+                    "order": 4,
+                    "text": "时间日期选择器",
+                    "state": "elementDatepick",
+                    "hash": "/element/datepick"
+                }
+            ]
+        },
+        {
+            "order": 2,
             "text": "页面示范",
             "children": [
                 {
                     "order": 1,
-                    "text": "基本元素",
-                    "state": "demoBaseElm",
-                    "hash": "/demo/baseElm"
-                },
-                {
-                    "order": 2,
                     "text": "列表页",
                     "state": "demoList",
                     "hash": "/demo/list"
                 },
                 {
-                    "order": 3,
-                    "text": "提交数据页",
-                    "state": "demoSubmit",
-                    "hash": "/demo/submit"
+                    "order": 2,
+                    "text": "添加数据页",
+                    "state": "demoAdd",
+                    "hash": "/demo/add"
                 },
                 {
                     "order": 20,
@@ -35,8 +59,8 @@
             ]
         },
         {
-            "order": 2,
-            "text": "一级栏位2",
+            "order": 3,
+            "text": "一级栏位",
             "children": [
                 {
                     "order": 1,

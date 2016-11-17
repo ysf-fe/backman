@@ -1,4 +1,4 @@
-app.register.controller('demoSubmit', function ($scope, _httpPost) {
+app.register.controller('elementEditor', function ($scope, _httpPost) {
 
     'use strict';
 

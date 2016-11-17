@@ -1,0 +1,105 @@
+<h1>常用标签元素样式</h1>
+<hr />
+<br />
+<div>
+    <h3>输入框</h3>
+    <hr />
+    <p><code>&lt;input&gt;</code> 标签</p>
+    <input type="text" name="" placeholder="text">
+    <input type="number" placeholder="number size=50" size="50">
+    <input type="search" placeholder="search">
+    <p><code>disabled</code>、<code>readonly</code></p>
+    <input type="text" name="" value="disabled" disabled>
+    <input type="text" name="" value="readonly" readonly="readonly">
+</div>
+<br />
+<div>
+    <h3>文本域</h3>
+    <hr />
+    <p><code>&lt;textarea&gt;</code> 标签</p>
+    <textarea rows="5" cols="60" placeholder="textarea rows=5 cols=60"></textarea>
+</div>
+<br />
+<div>
+    <h3>单选框和复选框</h3>
+    <hr />
+    <p><code>&lt;input type="radio"&gt;</code>，<code>&lt;input type="checkbox"&gt;</code> 标签
+        <br>单选框和复选框存在说明文本时，须使用 <code>&lt;label&gt;</code> 标签将选框和说明文本同时包含在内！
+    </p>
+    <label>
+                <input type="radio" name="radioBox" value="1"> 1
+            </label>
+    <label>
+                <input type="radio" name="radioBox" value="2"> 2
+            </label>
+    <label>
+                <input type="radio" name="radioBox" value="3"> 3
+            </label>
+    <br />
+    <label>
+                <input type="checkbox" name="checkBox" value="option1"> A
+            </label>
+    <label>
+                <input type="checkbox" name="checkBox" value="option2"> B
+            </label>
+    <label>
+                <input type="checkbox" name="checkBox" value="option3"> C
+            </label>
+    <br />无说明文本的选框：
+    <input type="radio" name="radioBox" value="">
+    <input type="checkbox" name="checkBox" value="">
+</div>
+<br />
+<div>
+    <h3>下拉选择框</h3>
+    <hr />
+    <p><code>&lt;select&gt;</code>标签</p>
+    <select>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+    </select>
+    <br />
+    <select multiple="multiple">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+    </select>
+</div>
+<br />
+<div>
+    <h3>按钮</h3>
+    <hr />
+    <p><code>&lt;button&gt;</code>，<code>&lt;input type="button"&gt;</code>，<code>&lt;input type="submit"&gt;</code>，<code>&lt;a class="btn-default"&gt;</code>标签</p>
+    <button>button标签按钮</button>
+    <input type="button" name="" value="button">
+    <input type="submit" name="" value="submit按钮">
+    <a class="btn-default">链接按钮</a>
+    <br />
+    <br />
+    <p>通过属性 <code>disabled</code> 让按钮处于禁用按钮
+        <br />
+        <span class="label label-info">注意！</span> <code>&lt;a&gt;</code> 标签的按钮设置 <code>disabled</code> 属性仅能影响外观，需要自行拟写禁止链接行为的js</p>
+    <input type="button" value="按钮" disabled/>
+    <input class="ui-btn-info" type="button" value="保存" disabled/>
+    <a class="btn-default" href="javascript:;" disabled>链接</a>
+    <br />
+    <br />
+    <p>通过样式 <code>.btn-default</code>、<code>.btn-primary</code>、<code>.btn-success</code>、<code>.btn-info</code> 可以给按钮添加颜色</p>
+    <input type="button" class="btn-default" value="Default">
+    <input type="button" class="btn-primary" value="Primary">
+    <button type="button" class="btn-success">Success</button>
+    <button type="button" class="btn-info">Info</button>
+    <a type="button" class="btn-warning">Warning</a>
+    <a type="button" class="btn-danger">Danger</a>
+    <br />
+    <p></p>
+    <p><span class="label label-default">说明</span> Bootstrap 样式 <code>.btn</code> 仍然可用，例如 <code>class="btn btn-default"</code>，但它与 <code>class="btn-default"</code> 显示效果相同</p>
+</div>
+<br />

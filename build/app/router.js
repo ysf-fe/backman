@@ -19,47 +19,89 @@ angular
                     }
                 }
             })
-            .state('demoBaseElm', {
-                url: '/demo/baseElm',
+            .state('elementNormal', {
+                url: '/element/normal',
                 views: {
                     'content': {
-                        templateUrl: './app/views/base.html'
+                        templateUrl: './app/views/element-normal.html'
                     }
+                }
+            })
+            .state('elementForm', {
+                url: '/element/form',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/element-form.html'
+                    }
+                }
+            })
+            .state('elementEditor', {
+                url: '/element/editor',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/element-editor.html',
+                        controller: 'elementEditor'
+                    }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/element-editor.js'
+                    ])
+                }
+            })
+            .state('elementDatepick', {
+                url: '/element/datepick',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/element-datepick.html',
+                        controller: 'elementDatepick'
+                    }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/element-datepick.js'
+                    ])
                 }
             })
             .state('demoList', {
                 url: '/demo/list',
                 views: {
                     'content': {
-                        templateUrl: './app/views/list.html',
+                        templateUrl: './app/views/demo-list.html',
                         controller: 'demoList'
                     }
                 },
                 resolve:{
                     'load': _tools.loadJs([
-                        './app/controllers/demoList.js'
+                        './app/controllers/demo-list.js'
                     ])
                 }
             })
-            .state('demoList.detail', {
+            .state('demoDetail', {
                 url: '/demo/detail/:id',
                 views: {
                     'content': {
-                        templateUrl: './app/views/.html'
-                    }
-                }
-            })
-            .state('demoSubmit', {
-                url: '/demo/submit',
-                views: {
-                    'content': {
-                        templateUrl: './app/views/submit.html',
-                        controller: 'demoSubmit'
+                        templateUrl: './app/views/demo-detail.html',
+                        controller: 'demoDetail'
                     }
                 },
                 resolve:{
                     'load': _tools.loadJs([
-                        './app/controllers/demoSubmit.js'
+                        './app/controllers/demo-detail.js'
+                    ])
+                }
+            })
+            .state('demoAdd', {
+                url: '/demo/add',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/demo-detail.html',
+                        controller: 'demoAdd'
+                    }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/demo-add.js'
                     ])
                 }
             })
