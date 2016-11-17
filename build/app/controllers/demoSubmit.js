@@ -9,6 +9,6 @@ app.register.controller('demoSubmit', function ($scope, _httpPost) {
         if (!$scope.$$phase) {
             $scope.$apply();
         }
-    }, 1000)
+    }, 1000);
 
 });

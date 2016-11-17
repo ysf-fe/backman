@@ -4,7 +4,7 @@ backman.directive('bmDatepick', function () {
 
     return {
         scope: {
-            dateBind: '='
+            bindDate: '='
         },
         restrict: 'A',
         link: function ($scope, iElm, iAttrs) {

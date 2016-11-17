@@ -4,7 +4,7 @@ backman.directive('bmEditor', function () {
 
     return {
         scope: {
-            contentBind: '='
+            bindContent: '='
         },
         restrict: 'A',
         link: function ($scope, iElm, iAttrs) {
