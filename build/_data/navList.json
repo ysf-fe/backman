@@ -22,15 +22,27 @@
                 },
                 {
                     "order": 3,
+                    "text": "表单验证",
+                    "state": "elementVerify",
+                    "hash": "/element/verify"
+                },
+                {
+                    "order": 4,
                     "text": "富文本编辑器",
                     "state": "elementEditor",
                     "hash": "/element/editor"
                 },
                 {
-                    "order": 4,
+                    "order": 5,
                     "text": "时间日期选择器",
                     "state": "elementDatepick",
                     "hash": "/element/datepick"
+                },
+                {
+                    "order": 6,
+                    "text": "图片上传",
+                    "state": "elementUploadImg",
+                    "hash": "/element/uploadImg"
                 }
             ]
         },

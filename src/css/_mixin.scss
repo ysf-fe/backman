@@ -1,0 +1,80 @@
+/** 
+ * 第二代创建css3动画
+ * -----------------
+ */
+@mixin keyframes2 ($framesName, $framesData) {
+    @-webkit-keyframes #{$framesName} {
+        @each $state, $data in $framesData {
+            #{$state} {
+                @each $p, $v, $f in $data {
+                    @if $f == fix {
+                        -webkit-#{$p}: $v;
+                    } @else {
+                        #{$p}: $v;
+                    }
+                }
+            }
+        }
+    }
+    @-moz-keyframes #{$framesName} {
+        @each $state, $data in $framesData {
+            #{$state} {
+                @each $p, $v, $f in $data {
+                    @if $f == fix {
+                        -moz-#{$p}: $v;
+                    } @else {
+                        #{$p}: $v;
+                    }
+                }
+            }
+        }
+    }
+    @-ms-keyframes #{$framesName} {
+        @each $state, $data in $framesData {
+            #{$state} {
+                @each $p, $v, $f in $data {
+                    @if $f == fix {
+                        -ms-#{$p}: $v;
+                    } @else {
+                        #{$p}: $v;
+                    }
+                }
+            }
+        }
+    }
+    @-o-keyframes #{$framesName} {
+        @each $state, $data in $framesData {
+            #{$state} {
+                @each $p, $v, $f in $data {
+                    @if $f == fix {
+                        -o-#{$p}: $v;
+                    } @else {
+                        #{$p}: $v;
+                    }
+                }
+            }
+        }
+    }
+    @keyframes #{$framesName} {
+        @each $state, $data in $framesData {
+            #{$state} {
+                @each $p, $v, $f in $data {
+                    #{$p}: $v;
+                }
+            }
+        }
+    }
+}
+
+
+/** 
+ * css3属性前缀
+ * -----------
+ */
+@mixin prefixer ($property, $value...) {
+    -webkit-#{$property}: $value;
+    -moz-#{$property}: $value;
+    -ms-#{$property}: $value;
+    -o-#{$property}: $value;
+    #{$property}: $value;
+}

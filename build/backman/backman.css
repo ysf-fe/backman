@@ -965,3 +965,189 @@ input.laydate-icon {
 
 .ke-dialog input[type="text"].ke-input-text {
   height: 23px; }
+
+@charset "UTF-8";
+/** 
+ * 第二代创建css3动画
+ * -----------------
+ */
+/** 
+ * css3属性前缀
+ * -----------
+ */
+/**
+ * 指令：图片上传工具
+ * -----------------
+ */
+.bm-upload-img {
+  position: relative;
+  width: 100px;
+  height: 100px; }
+  .bm-upload-img .bm-upload-img-bg {
+    position: relative;
+    z-index: 10; }
+    .bm-upload-img .bm-upload-img-bg i.fa-image {
+      padding: 21px 19px 19px 17px;
+      font-size: 50px;
+      color: #bbb;
+      background: #eee; }
+    .bm-upload-img .bm-upload-img-bg i.fa-plus {
+      position: absolute;
+      top: 22px;
+      right: 18px;
+      font-size: 20px;
+      color: #bbb;
+      text-shadow: #eee -3px 0 0, #eee 0 3px 0; }
+  .bm-upload-img .bm-upload-img-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    width: 100px;
+    height: 100px;
+    overflow: hidden; }
+    .bm-upload-img .bm-upload-img-input input[type="file"] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100px;
+      font-size: 81px;
+      opacity: 0;
+      filter: alpha(opacity=0);
+      cursor: pointer; }
+  .bm-upload-img .bm-upload-img-uping {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 30;
+    width: 90px;
+    height: 90px;
+    line-height: 100px;
+    text-align: center;
+    color: #aaa;
+    background: #eee; }
+    .bm-upload-img .bm-upload-img-uping i.fa-spinner {
+      font-size: 30px;
+      -webkit-animation: uploadImgRotate 3s infinite linear;
+      -moz-animation: uploadImgRotate 3s infinite linear;
+      -ms-animation: uploadImgRotate 3s infinite linear;
+      -o-animation: uploadImgRotate 3s infinite linear;
+      animation: uploadImgRotate 3s infinite linear; }
+  .bm-upload-img .bm-upload-img-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100px;
+    height: 100px; }
+    .bm-upload-img .bm-upload-img-view > span {
+      display: inline-block;
+      width: 90px;
+      height: 90px;
+      text-align: center;
+      line-height: 90px;
+      background: #eee; }
+      .bm-upload-img .bm-upload-img-view > span > img {
+        max-width: 100%;
+        max-height: 100%;
+        cursor: pointer; }
+    .bm-upload-img .bm-upload-img-view > i {
+      display: none;
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      z-index: 1;
+      width: 30px;
+      height: 30px;
+      color: #ccc;
+      font-size: 22px;
+      text-align: center;
+      line-height: 26px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer; }
+      .bm-upload-img .bm-upload-img-view > i:hover {
+        color: #fff;
+        background: #da4f49;
+        border-color: #da4f49;
+        box-shadow: rgba(128, 79, 73, 0.5) 0 0 4px; }
+    .bm-upload-img .bm-upload-img-view:hover > i {
+      display: block; }
+
+.bm-upload-img-super > .layui-layer-title {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  background: none;
+  border: none; }
+
+.bm-upload-img-super > .layui-layer-content {
+  position: relative;
+  background: #eee; }
+  .bm-upload-img-super > .layui-layer-content > img {
+    position: absolute;
+    max-width: 100%;
+    max-height: 100%;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); }
+
+.bm-upload-img-super .layui-layer-resize {
+  right: 1px;
+  bottom: 1px;
+  width: 24px;
+  height: 24px;
+  font: normal normal normal 16px/1 FontAwesome; }
+  .bm-upload-img-super .layui-layer-resize:before {
+    display: block;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    line-height: 24px;
+    content: "\f07d";
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg); }
+  .bm-upload-img-super .layui-layer-resize:hover, .bm-upload-img-super .layui-layer-resize:active {
+    background: rgba(255, 255, 255, 0.6); }
+
+.bm-upload-img-del {
+  max-width: 220px;
+  max-height: 220px;
+  background: #eee; }
+
+@-webkit-keyframes uploadImgRotate {
+  0% {
+    transform: rotate(0); }
+  100% {
+    transform: rotate(360deg); } }
+
+@-moz-keyframes uploadImgRotate {
+  0% {
+    transform: rotate(0); }
+  100% {
+    transform: rotate(360deg); } }
+
+@-ms-keyframes uploadImgRotate {
+  0% {
+    transform: rotate(0); }
+  100% {
+    transform: rotate(360deg); } }
+
+@-o-keyframes uploadImgRotate {
+  0% {
+    transform: rotate(0); }
+  100% {
+    transform: rotate(360deg); } }
+
+@keyframes uploadImgRotate {
+  0% {
+    transform: rotate(0); }
+  100% {
+    transform: rotate(360deg); } }

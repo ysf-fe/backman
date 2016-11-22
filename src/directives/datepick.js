@@ -10,7 +10,7 @@ backman.directive('bmDatepick', function () {
         link: function ($scope, iElm, iAttrs) {
             var format = iAttrs.dateFormat || 'YYYY-MM-DD hh:mm:ss'; //日期格式
             var timePick = /(hh|mm|ss)+/g.test(format); //是否开启时间选择
-            var eid = 'datepick' + (Date.now() % 1e7) + parseInt(Math.random() * 1000);
+            var eid = iAttrs.id || 'datepick' + (Date.now() % 1e7) + parseInt(Math.random() * 1e3);
             iElm.attr('id', eid)
                 .attr('placeholder', format)
                 .addClass('laydate-icon')

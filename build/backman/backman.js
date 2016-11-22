@@ -98,31 +98,38 @@ backman.factory('_responePreHandler', function (_tools, _setting) {
     return {
         //正常通行
         success: function (success, config) {
+            //需要重新登录
             if (success.data.state.code == 20001) {
                 if (config && config.noVerify == true) {
-                    return;
+                    return null;
                 }
-                window.location.href = _setting.get('loginUrl');
-                return;
-            }
-            //code级报错
-            if (success.data.state.code != 10200 && success.data.state.code != 10205) {
-                success.data.data = null;
-                layer.alert(success.msg || (success.data && success.data.state && success.data.state.msg));
+                layer.alert('您的登录已失效，即将跳转登录页...', {icon: 0, title: false, closeBtn: 0}, function () {});
+                setTimeout(function () {
+                    window.location.href = _setting.get('loginUrl');
+                }, 3000);
                 return null;
             }
-            //正常code
-            if (success.data.state.code == 10205) {
-                return {};
-            } else {
+            //正常code：10200
+            if (success.data.state.code == 10200) {
                 var data = success.data.data ? _tools.transKeyName('camel', success.data.data) : {};
-                data.__state = success.data.state;
+                data.__state = _tools.transKeyName('camel', success.data.state);
                 return data;
+            }
+            //正常code：10205
+            else if (success.data.state.code == 10205) {
+                return {__state: _tools.transKeyName('camel', success.data.state)};
+            }
+            //报错code
+            else {
+                var str = '错误：code ' + success.data.state.code + '<br>' + (success.data.state && success.data.state.msg);
+                layer.alert(str, {icon: 2, title: '通讯内容有误！'});
+                return null;
             }
         },
         //http级报错
         error: function (err) {
-            return err;
+            layer.alert('错误：status ' + err.status + ' ' + err.statusText, {icon: 2, title: '建立通讯失败！'});
+            return null;
         }
     };
 
@@ -182,12 +189,18 @@ backman.factory('_setting', function ($rootScope) {
         globAjaxParams: {}
     };
     _data.path = _data.path == '/' ? '' : _data.path;
+
     //左侧导航栏接口地址
     _data.navListUrl = _data.base + _data.path + '/_data/navList.json';
+
     //登录页地址
     _data.loginUrl = _data.base + _data.path + '/login.html';
+
     //退出登录接口地址
     _data.logoutUrl = _data.base + _data.path + '';
+
+    //全局图片上传设置
+    _data.globUploadImg = {};
 
     return {
         get: function (key) {
@@ -197,6 +210,10 @@ backman.factory('_setting', function ($rootScope) {
             if (key == 'globAjaxParams') {
                 if ($.type(val) == 'object') {
                     angular.extend(_data.globAjaxParams, val);
+                }
+            } else if (key == 'globUploadImg') {
+                if ($.type(val) == 'object') {
+                    angular.extend(_data.globUploadImg, val);
                 }
             } else {
                 _data[key] = val;
@@ -429,7 +446,7 @@ backman.directive('bmDatepick', function () {
         link: function ($scope, iElm, iAttrs) {
             var format = iAttrs.dateFormat || 'YYYY-MM-DD hh:mm:ss'; //日期格式
             var timePick = /(hh|mm|ss)+/g.test(format); //是否开启时间选择
-            var eid = 'datepick' + (Date.now() % 1e7) + parseInt(Math.random() * 1000);
+            var eid = iAttrs.id || 'datepick' + (Date.now() % 1e7) + parseInt(Math.random() * 1e3);
             iElm.attr('id', eid)
                 .attr('placeholder', format)
                 .addClass('laydate-icon')
@@ -486,7 +503,7 @@ backman.directive('bmEditor', function () {
         },
         restrict: 'A',
         link: function ($scope, iElm, iAttrs) {
-            var eid = 'editor' + (Date.now() % 1e7) + parseInt(Math.random() * 1000);
+            var eid = iAttrs.id || 'editor' + (Date.now() % 1e7) + parseInt(Math.random() * 1e3);
             iElm.attr('id', eid);
             var editor = KindEditor.create('#' + eid, {
                 items: [
@@ -564,4 +581,241 @@ backman.directive('bmSidebar', function () {
             });
         }
     }
+});
+backman.directive('bmUploadImg', function (_setting, _httpPost) {
+
+    'use strict';
+
+    return {
+        scope: {
+            bindId: '=',
+            bindUrl: '='
+        },
+        restrict: 'A',
+        template: '<div class="bm-upload-img-bg img-thumbnail">' +
+        '  <i class="fa fa-image"></i><i class="fa fa-plus"></i></div>' +
+        '<div class="bm-upload-img-input"><input type="file" /></div>' +
+        '<div class="bm-upload-img-uping" ng-if="state.upAjaxing" title="上传中，请稍后...">' +
+        '  <i class="fa fa-spinner"></i></div>' +
+        '<div class="bm-upload-img-view img-thumbnail" ng-if="bindUrl">' +
+        '  <span><img ng-src="{{bindUrl}}"/></span>' +
+        '  <i class="fa fa-times" ng-click="act.delImg()"></i>' +
+        '</div>',
+        link: function ($scope, iElm, iAttrs) {
+            var eid = iAttrs.id || 'uploadImg' + (Date.now() % 1e7) + parseInt(Math.random() * 1e3);
+            iElm.addClass('bm-upload-img').attr('id', eid);
+            $scope.state = {
+                upAjaxing: false  //显示上传中
+            };
+            //交互
+            $scope.act = {
+                delImg: function () {
+                    layer.confirm('<img class="bm-upload-img-del" src="' + $scope.bindUrl + '"/>',
+                        {title: '确认删除此图片？'}, function (index) {
+                            layer.close(index);
+                            $scope.bindId = $scope.bindUrl = '';
+                            if (!$scope.$$phase && !$scope.$root.$$phase) {
+                                $scope.$apply();
+                            }
+                        });
+                }
+            };
+            //上传图片
+            var upload = function (img) {
+                var opt = _setting.get('globUploadImg');
+                var sendDate = opt.parameters;
+                sendDate[opt.fileKeyName] = img.src;
+                _httpPost(opt.url, sendDate)
+                    .then(function (data) {
+                        $scope.state.upAjaxing = false;
+                        if (data) {
+                            $scope.bindUrl = data.url;
+                            $scope.bindId = data.imgId;
+                        } else {
+                            layer.tips('图片上传失败！', '#' + eid, {
+                                tips: [1, '#d9534f']
+                            });
+                        }
+                    });
+            };
+            //操作
+            iElm
+                .find('input').on('change', function () {
+                    var files = this.files;
+                    if (!files[0]) {
+                        $scope.state.upAjaxing = false;
+                        return;
+                    }
+                    //状态检测
+                    if (!_setting.get('globUploadImg').url) {
+                        layer.alert('未检测到上传接口地址！<br>请配置 “全局上传接口” ');
+                        return;
+                    }
+                    if (iAttrs.imgSize) {
+                        if (!/^\d{1,4}[,-_\|xX×]\d{1,4}$/.test(iAttrs.imgSize)) {
+                            layer.alert('图片尺寸限制配置不合法！<br>格式例如：300-200');
+                            return
+                        }
+                    }
+                    //显示加载中图标
+                    $scope.state.upAjaxing = true;
+                    if (!$scope.$$phase && !$scope.$root.$$phase) {
+                        $scope.$apply();
+                    }
+                    //读取文件
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var img = new Image();
+                        img.onload = function () {
+                            img.onload = null;
+                            if (iAttrs.imgSize) {
+                                var matchs = iAttrs.imgSize.match(/^(\d{1,4})[,-_\|xX×](\d{1,4})$/);
+                                if (img.width != matchs[1] || img.height != matchs[2]) {
+                                    var msg = '您选择的图片尺寸为 ' + img.width + ' × ' + img.height +
+                                        '，与此处上传要求的尺寸 <b class="text-danger">' +
+                                        matchs[1] + ' × ' + matchs[2] + '</b> 不匹配！' +
+                                        '是否仍然要坚持继续上传？';
+                                    layer.confirm(msg, {icon: 0, title: '尺寸不匹配!'}, function (index) {
+                                        layer.close(index);
+                                        upload(img);
+                                    });
+                                } else {
+                                    upload(img);
+                                }
+                            } else {
+                                console.log(4);
+                                upload(img);
+                            }
+                        };
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(files[0]);
+                })
+                .end()
+                .on('click', 'img', function () {
+                    var $this = $(this);
+                    var $win = $(window);
+                    var widthW = parseInt($win.width() * 0.8);
+                    widthW = (widthW % 2 == 0) ? widthW : widthW + 1;
+                    var heightW = parseInt($win.height() * 0.8);
+                    heightW = (heightW % 2 == 0) ? heightW : heightW + 1;
+                    var width = this.naturalWidth;
+                    var height = this.naturalHeight;
+                    var size = [width, height];
+                    //图片宽高比比窗口宽，按宽度计算
+                    if (width / height >= widthW / heightW) {
+                        if (width > widthW) {
+                            size[0] = parseInt(widthW);
+                            size[1] = parseInt(height / width * widthW);
+                        }
+                    }
+                    //图片宽高比比窗口高，按高度计算
+                    else {
+                        if (height > heightW) {
+                            size[0] = parseInt(width / height * heightW);
+                            size[1] = parseInt(heightW);
+                        }
+                    }
+                    //打开弹窗
+                    layer.open({
+                        type: 1,
+                        shade: 0.3,
+                        shadeClose: true,
+                        title: false,
+                        closeBtn: 2,
+                        move: '.layui-layer-content',
+                        skin: 'bm-upload-img-super',
+                        content: '<img src="' + $this.attr('src') + '"/>',
+                        area: [size[0] + 'px', size[1] + 'px']
+                    });
+                });
+        }
+    }
+});
+backman.directive('form', function () {
+
+    'use strict';
+
+    return {
+        scope: false,
+        restrict: 'E',
+        priority: 10,
+        link: function ($scope, iElm, iAttrs) {
+            var fName = '';
+            if (iElm.attr('id')) {
+                fName = iElm.attr('id');
+            } else {
+                fName = 'form' + (Date.now() % 1e7) + parseInt(Math.random() * 1e3);
+                iElm.attr('id', fName);
+            }
+            if (!$scope.$forms) {
+                $scope.$forms = {};
+            }
+            $scope.$forms[fName] = {};
+        }
+    }
+});
+
+backman.directive('bmVerify', function () {
+
+    'use strict';
+
+    return {
+        scope: {
+            bindVerify: '='
+        },
+        restrict: 'A',
+        link: function ($scope, iElm, iAttrs) {
+            if (!iAttrs.bindVerify) {
+                return;
+            }
+            if (!iAttrs.verifyItem || iAttrs.verifyItem == '{}') {
+                return;
+            }
+            var _validations = null;
+            if (iAttrs.verifyItem == 'require') {
+                _validations = {
+                    require: true
+                };
+            } else {
+                _validations = JSON.parse(iAttrs.verifyItem);
+            }
+            var _messages = JSON.parse(iAttrs.verifyMsg || '{}');
+            var _dirtyState = false;
+            var $curForm = iElm.closest('form');
+            var fName = ($curForm.length > 0) ? $curForm.attr('id') : '';
+            //变化
+            $scope.$watch('bindVerify', function (newVal, oldVal) {
+                //脏检查
+                if (!_dirtyState && newVal) {
+                    _dirtyState = true;
+                }
+            });
+        }
+    }
+
+});
+
+backman.directive('bmVerifyControl', function ($timeout) {
+
+    'use strict';
+
+    return {
+        scope: false,
+        restrict: 'A',
+        link: function ($scope, iElm, iAttrs) {
+            //等待其他指令完成
+            $timeout(function () {
+                var fName = '';
+                if (iAttrs.bmVerifyControl != '') {
+                    fName = iAttrs.bmVerifyControl;
+                } else {
+                    fName = iElm.closest('form').attr('id');
+                }
+                $scope.$watch('$forms.' + fName, function (newVal, oldVal) {
+                });
+            }, 10);
+        }
+    }
+
 });
