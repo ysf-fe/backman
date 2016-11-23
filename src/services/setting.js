@@ -19,7 +19,14 @@ backman.factory('_setting', function ($rootScope) {
     _data.logoutUrl = _data.base + _data.path + '';
 
     //全局图片上传设置
-    _data.globUploadImg = {};
+    _data.globUploadImg = {
+        //接口地址
+        url: '/api/upload-base64-image',
+        //base64键名
+        fileKeyName: 'base64File',
+        //同时发送的其他参数
+        parameters: {}
+    };
 
     return {
         get: function (key) {

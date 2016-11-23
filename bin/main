@@ -4,7 +4,8 @@ var fs = require('fs');
 var http = require('http');
 var url = require('url');
 var util = require('util');
-var child_process = require("child_process");
+var child_process = require('child_process');
+var querystring = require('querystring');
 
 var backman = (function () {
 
@@ -121,10 +122,57 @@ var backman = (function () {
 
     //接口处理
     Backman.prototype._serverApi = function (api, req, res) {
+        var that = this;
+        //导航栏接口
         if (api == 'nav') {
-        } else if (api == 'logout') {
-            res.send('{"state":{"code":20001,"msg":"已退出"}}');
-        } else if (api == 'upload-base64-image') {}
+        }
+        //退出登录接口
+        else if (api == 'logout') {
+            res.setHeader('Content-Type', this._serverConfig.mimeType.json);
+            res.writeHead(200);
+            res.end('{"state":{"code":20001,"msg":"已退出"}}');
+        }
+        //上传图片接口
+        else if (api == 'upload-base64-image') {
+            var data = "";
+            req.on('data', function (chunk) {
+                data += chunk;
+            });
+            req.on('end', function () {
+                var base64 = querystring.parse(data)['base64_file'];
+                var extension = '.';
+                switch (base64.match(/^data:image\/(\w+);base64,/)[1]) {
+                    case 'jpeg':
+                        extension += 'jpg';
+                        break;
+                    case 'jpg':
+                        extension += 'jpg';
+                        break;
+                    case 'png':
+                        extension += 'png';
+                        break;
+                }
+                var bitmap = new Buffer(base64.replace(/^data:image\/\w+;base64,/, ''), 'base64');
+                var imgId = Date.now() + '-' + parseInt(Math.random() * 1000);
+                var path = that._workPath + '\\.temp\\img-' + imgId + extension;
+                fs.writeFileSync(path, bitmap, 'binary');
+                res.setHeader('Content-Type', that._serverConfig.mimeType.json);
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    state: {
+                        code: 10200,
+                        msg: 'ok'
+                    },
+                    date: {
+                        imgId: imgId,
+                        url: '/.temp/img-' + imgId + extension
+                    }
+                }));
+            });
+            if (!fs.existsSync(this._workPath + '\\.temp')) {
+                this._createDir('\\.temp');
+            }
+        }
     };
 
     //浏览当前文档
