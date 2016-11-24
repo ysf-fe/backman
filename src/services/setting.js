@@ -8,12 +8,25 @@ backman.factory('_setting', function ($rootScope) {
         globAjaxParams: {}
     };
     _data.path = _data.path == '/' ? '' : _data.path;
+
     //左侧导航栏接口地址
     _data.navListUrl = _data.base + _data.path + '/_data/navList.json';
+
     //登录页地址
     _data.loginUrl = _data.base + _data.path + '/login.html';
+
     //退出登录接口地址
     _data.logoutUrl = _data.base + _data.path + '';
+
+    //全局图片上传设置
+    _data.globUploadImg = {
+        //接口地址
+        url: '/api/upload-base64-image',
+        //base64键名
+        fileKeyName: 'base64File',
+        //同时发送的其他参数
+        parameters: {}
+    };
 
     return {
         get: function (key) {
@@ -23,6 +36,10 @@ backman.factory('_setting', function ($rootScope) {
             if (key == 'globAjaxParams') {
                 if ($.type(val) == 'object') {
                     angular.extend(_data.globAjaxParams, val);
+                }
+            } else if (key == 'globUploadImg') {
+                if ($.type(val) == 'object') {
+                    angular.extend(_data.globUploadImg, val);
                 }
             } else {
                 _data[key] = val;

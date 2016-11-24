@@ -8,7 +8,7 @@ backman.directive('bmEditor', function () {
         },
         restrict: 'A',
         link: function ($scope, iElm, iAttrs) {
-            var eid = 'editor' + (Date.now() % 1e7) + parseInt(Math.random() * 1000);
+            var eid = iAttrs.id || 'editor' + (Date.now() % 1e7) + parseInt(Math.random() * 1e3);
             iElm.attr('id', eid);
             var editor = KindEditor.create('#' + eid, {
                 items: [

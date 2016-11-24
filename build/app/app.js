@@ -13,6 +13,9 @@ app.run(function ($rootScope, _setting) {
 
     'use strict';
 
+    //右上角管理员名称
+    $rootScope.adminName = window.localStorage['adminName@' + window.location.href.split('#')[0]] || 'anonymous';
+
     //修改左侧导航栏接口地址
     //_setting.set('navListUrl', '/api/nav');
 
@@ -20,9 +23,19 @@ app.run(function ($rootScope, _setting) {
     //_setting.set('logoutUrl', '/api/logout');
 
     //修改登录页地址
-    //_setting.set('loginUrl', 'login.html');
+    _setting.set('loginUrl', 'login.html');
 
-    //右上角管理员名称
-    $rootScope.adminName = window.localStorage['adminName@' + window.location.href.split('#')[0]] || 'anonymous';
+    //设置全局图片上传相关配置
+    _setting.set('globUploadImg', {
+        //接口地址
+        url: '/api/upload-base64-image',
+        //base64键名
+        fileKeyName: 'base64File',
+        //同时发送的其他参数
+        parameters: {
+            appid: 1,
+            useType: 'project'
+        }
+    });
 
 });

@@ -4,7 +4,8 @@ var fs = require('fs');
 var http = require('http');
 var url = require('url');
 var util = require('util');
-var child_process = require("child_process");
+var child_process = require('child_process');
+var querystring = require('querystring');
 
 var backman = (function () {
 
@@ -31,7 +32,7 @@ var backman = (function () {
         if (inPath.length > 0) {
             if (!fs.existsSync(this._workPath + inPath)) {
                 fs.mkdirSync(this._workPath + inPath, 0777);
-                console.warn('Backman: Create ' + inPath);
+                console.warn('Backman: \x1b[36mCreate\x1b[0m ' + inPath);
             }
         }
     };
@@ -42,13 +43,13 @@ var backman = (function () {
             encoding = /(\.jpg|\.png)$/.test(inPath) ? 'binary' : 'utf-8';
             content = fs.readFileSync(this._assetsPath + inPath, encoding);
             fs.writeFileSync(this._workPath + inPath, content, encoding);
-            console.warn('Backman: Create ' + inPath);
+            console.warn('Backman: \x1b[36mCreate\x1b[0m ' + inPath);
         } else {
             if (!fs.existsSync(this._workPath + inPath)) {
                 encoding = /(\.jpg|\.png)$/.test(inPath) ? 'binary' : 'utf-8';
                 content = fs.readFileSync(this._assetsPath + inPath, encoding);
                 fs.writeFileSync(this._workPath + inPath, content, encoding);
-                console.warn('Backman: Create ' + inPath);
+                console.warn('Backman: \x1b[36mCreate\x1b[0m ' + inPath);
             }
         }
     };
@@ -119,6 +120,65 @@ var backman = (function () {
         }
     };
 
+    //接口处理
+    Backman.prototype._serverApi = function (api, req, res) {
+        var that = this;
+        //导航栏接口
+        if (api == 'nav') {
+        }
+        //退出登录接口
+        else if (api == 'logout') {
+            setTimeout(function () {
+                res.setHeader('Content-Type', that._serverConfig.mimeType.json);
+                res.writeHead(200);
+                res.end('{"state":{"code":20001,"msg":"已退出"}}');
+            }, 300);
+        }
+        //上传图片接口
+        else if (api == 'upload-base64-image') {
+            var data = "";
+            req.on('data', function (chunk) {
+                data += chunk;
+            });
+            req.on('end', function () {
+                var base64 = querystring.parse(data)['base64_file'];
+                var extension = '.';
+                switch (base64.match(/^data:image\/(\w+);base64,/)[1]) {
+                    case 'jpeg':
+                        extension += 'jpg';
+                        break;
+                    case 'jpg':
+                        extension += 'jpg';
+                        break;
+                    case 'png':
+                        extension += 'png';
+                        break;
+                }
+                var bitmap = new Buffer(base64.replace(/^data:image\/\w+;base64,/, ''), 'base64');
+                var imgId = Date.now() + '-' + parseInt(Math.random() * 1000);
+                var path = that._workPath + '\\.temp\\img-' + imgId + extension;
+                fs.writeFileSync(path, bitmap, 'binary');
+                setTimeout(function () {
+                    res.setHeader('Content-Type', that._serverConfig.mimeType.json);
+                    res.writeHead(200);
+                    res.end(JSON.stringify({
+                        state: {
+                            code: 10200,
+                            msg: 'ok'
+                        },
+                        data: {
+                            imgId: imgId,
+                            url: '/.temp/img-' + imgId + extension
+                        }
+                    }));
+                }, 1000);
+            });
+            if (!fs.existsSync(this._workPath + '\\.temp')) {
+                this._createDir('\\.temp');
+            }
+        }
+    };
+
     //浏览当前文档
     Backman.prototype._browser = function () {
         //解析地址
@@ -143,7 +203,7 @@ var backman = (function () {
     //初始化框架
     Backman.prototype.createFramework = function () {
         if (fs.readdirSync(this._workPath).length > 0) {
-            console.warn('Backman: This folder is not empty, backman can\'t create project here!');
+            console.warn('Backman: \x1b[41mError!\x1b[0m This folder is not empty, you can\'t create a new project here.');
         } else {
             this._readPath(this._assetsPath);
         }
@@ -152,7 +212,7 @@ var backman = (function () {
     //升级框架
     Backman.prototype.updateFramework = function () {
         if (fs.readdirSync(this._workPath).length == 0) {
-            console.warn('Backman: This folder is empty! You may need to use \'backman init\'.');
+            console.warn('Backman: \x1b[41mError!\x1b[0m This folder is empty! you may need to use \x1b[36mbackman init\x1b[0m before.');
         } else {
             this._readPath(this._assetsPath + '/backman');
             this._readPath(this._assetsPath + '/libs');
@@ -166,13 +226,17 @@ var backman = (function () {
             return;
         }
         var that = this;
-        var finish = function(){
+        var finish = function () {
             finish = null;
-            console.info('Backman: Server running at http://localhost:' + that._serverConfig.port + '/');
+            console.info('Backman: Server running at \x1b[1mhttp://localhost:' + that._serverConfig.port + '/\x1b[0m');
             that._browser();
         };
         this._server = http.createServer(function (req, res) {
             var pathname = url.parse(req.url).pathname;
+            //接口请求
+            if (pathname.indexOf('/api') == 0) {
+                return that._serverApi(pathname.split('/api/')[1], req, res);
+            }
             //真实地址
             var realPath = that._workPath + pathname;
             //解析文件
@@ -196,7 +260,7 @@ var backman = (function () {
         });
         this._server.on('error', function (e) {
             if (e.code == 'EADDRINUSE') {
-                console.info('Backman: The port ' + that._serverConfig.port + ' is already in use.');
+                console.info('Backman: \x1b[43mWarning!\x1b[0m The port ' + that._serverConfig.port + ' is already in use.');
             }
             that._server.close();
             setTimeout(function () {
@@ -213,6 +277,17 @@ var backman = (function () {
         console.info('Backman: v' + this._package.version);
     };
 
+    Backman.prototype.showHelp = function () {
+        var cList = 'Backman: Use \x1b[36mbackman <command>\x1b[0m as\n';
+        cList += '  \x1b[36minit\x1b[0m          Create a backman project on this folder.\n';
+        cList += '  \x1b[36mupdate\x1b[0m        Upgrade the framework files at this project.\n';
+        cList += '  \x1b[36mrun\x1b[0m           Create a simple server which the server root is point\n' +
+            '                to this folder, and open it with browser.\n';
+        cList += '  \x1b[36m-v\x1b[0m / \x1b[36mversion\x1b[0m  Show local installation version.\n';
+        cList += '  \x1b[36m-h\x1b[0m / \x1b[36mhelp\x1b[0m     Show command list.\n';
+        console.info(cList);
+    };
+
     return new Backman();
 
 })();
@@ -227,4 +302,6 @@ if (command == 'init') {
     backman.createServer();
 } else if (command == '-v' || command == 'version') {
     backman.showVersion();
+} else if (command == '-h' || command == 'help') {
+    backman.showHelp();
 }

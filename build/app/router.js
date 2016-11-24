@@ -10,7 +10,7 @@ angular
         //var a = _tools.transKeyName('camel',{key_name:1}); console.log(a);
 
         $stateProvider
-            // 首页
+            //首页
             .state('home', {
                 url: '/home',
                 views: {
@@ -19,6 +19,7 @@ angular
                     }
                 }
             })
+            //普通元素
             .state('elementNormal', {
                 url: '/element/normal',
                 views: {
@@ -27,6 +28,7 @@ angular
                     }
                 }
             })
+            //表单元素
             .state('elementForm', {
                 url: '/element/form',
                 views: {
@@ -35,6 +37,22 @@ angular
                     }
                 }
             })
+            //表单验证
+            .state('elementVerify', {
+                url: '/element/verify',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/element-verify.html',
+                        controller: 'elementVerify'
+                    }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/element-verify.js'
+                    ])
+                }
+            })
+            //富文本编辑器
             .state('elementEditor', {
                 url: '/element/editor',
                 views: {
@@ -49,6 +67,7 @@ angular
                     ])
                 }
             })
+            //时间选择器
             .state('elementDatepick', {
                 url: '/element/datepick',
                 views: {
@@ -60,6 +79,21 @@ angular
                 resolve:{
                     'load': _tools.loadJs([
                         './app/controllers/element-datepick.js'
+                    ])
+                }
+            })
+            //图片上传
+            .state('elementUploadImg', {
+                url: '/element/uploadImg',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/element-uploadImg.html',
+                        controller: 'elementUploadImg'
+                    }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/element-uploadImg.js'
                     ])
                 }
             })

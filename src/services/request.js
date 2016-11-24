@@ -6,31 +6,52 @@ backman.factory('_responePreHandler', function (_tools, _setting) {
     return {
         //正常通行
         success: function (success, config) {
+            //需要重新登录
             if (success.data.state.code == 20001) {
                 if (config && config.noVerify == true) {
-                    return;
+                    return null;
                 }
-                window.location.href = _setting.get('loginUrl');
-                return;
-            }
-            //code级报错
-            if (success.data.state.code != 10200 && success.data.state.code != 10205) {
-                success.data.data = null;
-                layer.alert(success.msg || (success.data && success.data.state && success.data.state.msg));
+                layer.alert('您的登录已失效，即将跳转登录页...', {
+                        icon: 0,
+                        title: false,
+                        closeBtn: 0
+                    }, function () {
+                    }
+                );
+                setTimeout(function () {
+                    window.location.href = _setting.get('loginUrl');
+                }, 3000);
                 return null;
             }
-            //正常code
-            if (success.data.state.code == 10205) {
-                return {};
-            } else {
+            //正常code：10200
+            if (success.data.state.code == 10200) {
                 var data = success.data.data ? _tools.transKeyName('camel', success.data.data) : {};
-                data.__state = success.data.state;
+                data.__state = _tools.transKeyName('camel', success.data.state);
                 return data;
+            }
+            //正常code：10205
+            else if (success.data.state.code == 10205) {
+                return {
+                    __state: _tools.transKeyName('camel', success.data.state)
+                };
+            }
+            //报错code
+            else {
+                var str = '错误：code ' + success.data.state.code + '<br>' + (success.data.state && success.data.state.msg);
+                layer.alert(str, {
+                    icon: 2,
+                    title: '通讯内容有误！'
+                });
+                return null;
             }
         },
         //http级报错
         error: function (err) {
-            return err;
+            layer.alert('错误：status ' + err.status + ' ' + err.statusText, {
+                icon: 2,
+                title: '建立通讯失败！'
+            });
+            return null;
         }
     };
 
