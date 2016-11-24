@@ -67,6 +67,7 @@
         z-index: 100;
         width: 100px;
         height: 100px;
+        outline: none;
         > span {
             display: inline-block;
             width: 90px;
@@ -101,10 +102,11 @@
                 color: #fff;
                 background: #da4f49;
                 border-color: #da4f49;
-                box-shadow: rgba(128,79,73,.5) 0 0 4px;
+                @include prefixer(box-shadow, rgba(128,79,73,.5) 0 0 4px);
             }
         }
-        &:hover > i {
+        &:hover > i,
+        &:focus > i {
             display: block;
         }
     }
@@ -126,10 +128,30 @@
             max-height: 100%;
             top: 50%;
             left: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            -moz-transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+            @include prefixer(transform, translate(-50%, -50%));
+        }
+        > span {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            max-width: 80%;
+            padding: 0 7px;
+            overflow: hidden;
+            white-space: nowrap;
+            line-height: 30px;
+            text-overflow: ellipsis;
+            background: rgba(#fff, .75);
+            opacity: 0;
+        }
+        &:hover {
+            > span {
+                display: block;
+                &:hover {
+                    opacity: 1;
+                }
+            }
         }
     }
     .layui-layer-resize {
@@ -145,10 +167,7 @@
             text-align: center;
             line-height: 24px;
             content: "\f07d";
-            -webkit-transform: rotate(-45deg);
-            -moz-transform: rotate(-45deg);
-            -ms-transform: rotate(-45deg);
-            transform: rotate(-45deg);
+            @include prefixer(transform, rotate(-45deg));
         }
         &:hover,
         &:active {
@@ -161,14 +180,4 @@
     max-height: 220px;
     background: #eee;
 }
-
-@include keyframes2("uploadImgRotate", (
-    0%: (
-        (transform, rotate(0), on ) ,
-        ()
-    ) ,
-    100%: (
-        (transform , rotate(360deg), on) ,
-        ()
-    )
-));
+@include keyframes2("uploadImgRotate", (0%: ((transform, rotate(0), on), ()), 100%: ((transform , rotate(360deg), on), ())));

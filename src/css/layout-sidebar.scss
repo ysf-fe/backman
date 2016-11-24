@@ -1,3 +1,4 @@
+@import "mixin";
 /*
  * 导航栏
  * ------
@@ -11,10 +12,7 @@
     min-height: 100%;
     width: 230px;
     padding-top: 50px;
-    -webkit-transition: -webkit-transform 0.3s ease-in-out, width 0.3s ease-in-out;
-    -moz-transition: -moz-transform 0.3s ease-in-out, width 0.3s ease-in-out;
-    -o-transition: -o-transform 0.3s ease-in-out, width 0.3s ease-in-out;
-    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    @include prefixer(transition, transform 0.3s ease-in-out, width 0.3s ease-in-out);
 }
 
 @media (max-width: 767px) {
@@ -22,16 +20,10 @@
         position: fixed;
         padding-bottom: 10px;
         padding-top: 100px;
-        -webkit-transform: translate(-230px, 0);
-        -ms-transform: translate(-230px, 0);
-        -o-transform: translate(-230px, 0);
-        transform: translate(-230px, 0);
+        @include prefixer(transform, translate(-230px, 0));
     }
     .sidebar-open .backman-sidebar {
-        -webkit-transform: translate(0, 0);
-        -ms-transform: translate(0, 0);
-        -o-transform: translate(0, 0);
-        transform: translate(0, 0);
+        @include prefixer(transform, translate(0, 0));
     }
 }
 
@@ -121,10 +113,7 @@
             > li.treeview {
                 margin: 0;
                 overflow: hidden;
-                -webkit-transition-duration: .3s;
-                -moz-transition-duration: .3s;
-                -ms-transition-duration: .3s;
-                transition-duration: .3s;
+                @include prefixer(transition-duration, .3s);
                 > a.treeview-link,
                 > a.treeview-title {
                     position: relative;
@@ -154,10 +143,7 @@
                     display: inline-block;
                 }
                 .fa-angle-left {
-                    -webkit-transform: rotate(-90deg);
-                    -moz-transform: rotate(-90deg);
-                    -ms-transform: rotate(-90deg);
-                    transform: rotate(-90deg);
+                    @include prefixer(transform, rotate(-90deg));
                 }
             }
         }

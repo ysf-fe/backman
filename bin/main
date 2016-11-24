@@ -128,9 +128,11 @@ var backman = (function () {
         }
         //退出登录接口
         else if (api == 'logout') {
-            res.setHeader('Content-Type', this._serverConfig.mimeType.json);
-            res.writeHead(200);
-            res.end('{"state":{"code":20001,"msg":"已退出"}}');
+            setTimeout(function () {
+                res.setHeader('Content-Type', that._serverConfig.mimeType.json);
+                res.writeHead(200);
+                res.end('{"state":{"code":20001,"msg":"已退出"}}');
+            }, 300);
         }
         //上传图片接口
         else if (api == 'upload-base64-image') {
@@ -156,18 +158,20 @@ var backman = (function () {
                 var imgId = Date.now() + '-' + parseInt(Math.random() * 1000);
                 var path = that._workPath + '\\.temp\\img-' + imgId + extension;
                 fs.writeFileSync(path, bitmap, 'binary');
-                res.setHeader('Content-Type', that._serverConfig.mimeType.json);
-                res.writeHead(200);
-                res.end(JSON.stringify({
-                    state: {
-                        code: 10200,
-                        msg: 'ok'
-                    },
-                    date: {
-                        imgId: imgId,
-                        url: '/.temp/img-' + imgId + extension
-                    }
-                }));
+                setTimeout(function () {
+                    res.setHeader('Content-Type', that._serverConfig.mimeType.json);
+                    res.writeHead(200);
+                    res.end(JSON.stringify({
+                        state: {
+                            code: 10200,
+                            msg: 'ok'
+                        },
+                        data: {
+                            imgId: imgId,
+                            url: '/.temp/img-' + imgId + extension
+                        }
+                    }));
+                }, 1000);
             });
             if (!fs.existsSync(this._workPath + '\\.temp')) {
                 this._createDir('\\.temp');

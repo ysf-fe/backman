@@ -103,7 +103,13 @@ backman.factory('_responePreHandler', function (_tools, _setting) {
                 if (config && config.noVerify == true) {
                     return null;
                 }
-                layer.alert('您的登录已失效，即将跳转登录页...', {icon: 0, title: false, closeBtn: 0}, function () {});
+                layer.alert('您的登录已失效，即将跳转登录页...', {
+                        icon: 0,
+                        title: false,
+                        closeBtn: 0
+                    }, function () {
+                    }
+                );
                 setTimeout(function () {
                     window.location.href = _setting.get('loginUrl');
                 }, 3000);
@@ -117,18 +123,26 @@ backman.factory('_responePreHandler', function (_tools, _setting) {
             }
             //正常code：10205
             else if (success.data.state.code == 10205) {
-                return {__state: _tools.transKeyName('camel', success.data.state)};
+                return {
+                    __state: _tools.transKeyName('camel', success.data.state)
+                };
             }
             //报错code
             else {
                 var str = '错误：code ' + success.data.state.code + '<br>' + (success.data.state && success.data.state.msg);
-                layer.alert(str, {icon: 2, title: '通讯内容有误！'});
+                layer.alert(str, {
+                    icon: 2,
+                    title: '通讯内容有误！'
+                });
                 return null;
             }
         },
         //http级报错
         error: function (err) {
-            layer.alert('错误：status ' + err.status + ' ' + err.statusText, {icon: 2, title: '建立通讯失败！'});
+            layer.alert('错误：status ' + err.status + ' ' + err.statusText, {
+                icon: 2,
+                title: '建立通讯失败！'
+            });
             return null;
         }
     };
@@ -200,7 +214,14 @@ backman.factory('_setting', function ($rootScope) {
     _data.logoutUrl = _data.base + _data.path + '';
 
     //全局图片上传设置
-    _data.globUploadImg = {};
+    _data.globUploadImg = {
+        //接口地址
+        url: '/api/upload-base64-image',
+        //base64键名
+        fileKeyName: 'base64File',
+        //同时发送的其他参数
+        parameters: {}
+    };
 
     return {
         get: function (key) {
@@ -597,15 +618,15 @@ backman.directive('bmUploadImg', function (_setting, _httpPost) {
         '<div class="bm-upload-img-input"><input type="file" /></div>' +
         '<div class="bm-upload-img-uping" ng-if="state.upAjaxing" title="上传中，请稍后...">' +
         '  <i class="fa fa-spinner"></i></div>' +
-        '<div class="bm-upload-img-view img-thumbnail" ng-if="bindUrl">' +
-        '  <span><img ng-src="{{bindUrl}}"/></span>' +
+        '<div class="bm-upload-img-view img-thumbnail" ng-if="bindUrl" tabindex="-1">' +
+        '  <span><img ng-src="{{bindUrl}}" data-img-id="{{bindId}}"/></span>' +
         '  <i class="fa fa-times" ng-click="act.delImg()"></i>' +
         '</div>',
         link: function ($scope, iElm, iAttrs) {
             var eid = iAttrs.id || 'uploadImg' + (Date.now() % 1e7) + parseInt(Math.random() * 1e3);
             iElm.addClass('bm-upload-img').attr('id', eid);
             $scope.state = {
-                upAjaxing: false  //显示上传中
+                upAjaxing: false  //显示上传中状态
             };
             //交互
             $scope.act = {
@@ -617,7 +638,8 @@ backman.directive('bmUploadImg', function (_setting, _httpPost) {
                             if (!$scope.$$phase && !$scope.$root.$$phase) {
                                 $scope.$apply();
                             }
-                        });
+                        }
+                    );
                 }
             };
             //上传图片
@@ -631,10 +653,6 @@ backman.directive('bmUploadImg', function (_setting, _httpPost) {
                         if (data) {
                             $scope.bindUrl = data.url;
                             $scope.bindId = data.imgId;
-                        } else {
-                            layer.tips('图片上传失败！', '#' + eid, {
-                                tips: [1, '#d9534f']
-                            });
                         }
                     });
             };
@@ -683,7 +701,6 @@ backman.directive('bmUploadImg', function (_setting, _httpPost) {
                                     upload(img);
                                 }
                             } else {
-                                console.log(4);
                                 upload(img);
                             }
                         };
@@ -725,8 +742,11 @@ backman.directive('bmUploadImg', function (_setting, _httpPost) {
                         closeBtn: 2,
                         move: '.layui-layer-content',
                         skin: 'bm-upload-img-super',
-                        content: '<img src="' + $this.attr('src') + '"/>',
-                        area: [size[0] + 'px', size[1] + 'px']
+                        content: '<span>' + $this[0].src + '</span><img src="' + $this.attr('src') + '"/>',
+                        area: [size[0] + 'px', size[1] + 'px'],
+                        end: function() {
+                            $this.parent().parent().focus();
+                        }
                     });
                 });
         }
