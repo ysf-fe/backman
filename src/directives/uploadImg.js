@@ -91,6 +91,11 @@ backman.directive('bmUploadImg', function (_setting, _httpPost) {
                                     layer.confirm(msg, {icon: 0, title: '尺寸不匹配!'}, function (index) {
                                         layer.close(index);
                                         upload(img);
+                                    }, function(){
+                                        $scope.state.upAjaxing = false;
+                                        if (!$scope.$$phase && !$scope.$root.$$phase) {
+                                            $scope.$apply();
+                                        }
                                     });
                                 } else {
                                     upload(img);
@@ -104,6 +109,7 @@ backman.directive('bmUploadImg', function (_setting, _httpPost) {
                     reader.readAsDataURL(files[0]);
                 })
                 .end()
+                //点击图片放大显示
                 .on('click', 'img', function () {
                     var $this = $(this);
                     var $win = $(window);

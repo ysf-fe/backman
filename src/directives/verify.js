@@ -38,16 +38,18 @@ backman.directive('bmVerify', function () {
             if (!iAttrs.verifyItem || iAttrs.verifyItem == '{}') {
                 return;
             }
-            var _validations = null;
+            var validations = null;
             if (iAttrs.verifyItem == 'require') {
-                _validations = {
+                validations = {
                     require: true
                 };
             } else {
-                _validations = JSON.parse(iAttrs.verifyItem);
+                validations = JSON.parse(iAttrs.verifyItem.replace(/'/g, '"'));
             }
-            var _messages = JSON.parse(iAttrs.verifyMsg || '{}');
+            var messages = JSON.parse(iAttrs.verifyMsg ? iAttrs.verifyMsg.replace(/'/g, '"') : '{}');
+            //当前指令脏值
             var _dirtyState = false;
+            //所属表单
             var $curForm = iElm.closest('form');
             var fName = ($curForm.length > 0) ? $curForm.attr('id') : '';
             //变化
@@ -79,6 +81,7 @@ backman.directive('bmVerifyControl', function ($timeout) {
                     fName = iElm.closest('form').attr('id');
                 }
                 $scope.$watch('$forms.' + fName, function (newVal, oldVal) {
+                    console.log(newVal);
                 });
             }, 10);
         }

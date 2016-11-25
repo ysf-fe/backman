@@ -28,6 +28,9 @@ backman.factory('_setting', function ($rootScope) {
         parameters: {}
     };
 
+    //富文本编辑器图片上传接口
+    _data.kindUploadImgUrl = '/api/upload-image';
+
     return {
         get: function (key) {
             return _data[key];
