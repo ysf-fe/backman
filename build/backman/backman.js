@@ -223,6 +223,9 @@ backman.factory('_setting', function ($rootScope) {
         parameters: {}
     };
 
+    //富文本编辑器图片上传接口
+    _data.kindUploadImgUrl = '/api/upload-image';
+
     return {
         get: function (key) {
             return _data[key];
@@ -514,7 +517,7 @@ backman.directive('bmDatepick', function () {
         }
     }
 });
-backman.directive('bmEditor', function () {
+backman.directive('bmEditor', function (_setting) {
 
     'use strict';
 
@@ -528,24 +531,25 @@ backman.directive('bmEditor', function () {
             iElm.attr('id', eid);
             var editor = KindEditor.create('#' + eid, {
                 items: [
-                    "source", "|",
-                    "undo", "redo", "|",
-                    "template", "code", "|",
-                    "cut", "copy", "paste", "plainpaste", "wordpaste", "|",
-                    "justifyleft", "justifycenter", "justifyright", "justifyfull", "insertorderedlist",
-                    "insertunorderedlist", "indent", "outdent", "subscript", "superscript", "clearhtml",
-                    "quickformat", "|", "selectall", "fullscreen", "/",
-                    "formatblock", "fontname", "fontsize", "|",
-                    "forecolor", "hilitecolor", "bold", "italic", "underline", "strikethrough", "lineheight",
-                    "removeformat", "|",
-                    "image", "table", "hr", "emoticons", "baidumap", "pagebreak", "anchor", "link", "unlink", "|",
-                    "preview", "print", "about"
+                    'source', '|',
+                    'undo', 'redo', '|',
+                    'template', 'code', '|',
+                    'cut', 'copy', 'paste', 'plainpaste', 'wordpaste', '|',
+                    'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', 'insertorderedlist',
+                    'insertunorderedlist', 'indent', 'outdent', 'subscript', 'superscript', 'clearhtml',
+                    'quickformat', '|', 'selectall', 'fullscreen', '/',
+                    'formatblock', 'fontname', 'fontsize', '|',
+                    'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'strikethrough', 'lineheight',
+                    'removeformat', '|',
+                    'image', 'multiimage', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak', 'anchor', 'link', 'unlink', '|',
+                    'preview', 'print', 'about'
                 ],
                 width: '100%',
                 height: '270px',
                 resizeMode: 1,
                 allowFileManager: false,
-                imageUploadJson: iAttrs.imageUploadUrl || '',
+                //imageUploadJson: _setting.get('kindUploadImgUrl') || '',
+                uploadJson: _setting.get('kindUploadImgUrl') || '',
                 afterChange: function () {
                     if (editor && editor.html()) {
                         $scope.bindContent = editor.html();
@@ -555,6 +559,7 @@ backman.directive('bmEditor', function () {
                     }
                 }
             });
+            console.log(editor);
             //初次数据
             var initW = $scope.$watch('bindContent', function (newVal, oldVal) {
                 if (newVal) {
@@ -696,6 +701,11 @@ backman.directive('bmUploadImg', function (_setting, _httpPost) {
                                     layer.confirm(msg, {icon: 0, title: '尺寸不匹配!'}, function (index) {
                                         layer.close(index);
                                         upload(img);
+                                    }, function(){
+                                        $scope.state.upAjaxing = false;
+                                        if (!$scope.$$phase && !$scope.$root.$$phase) {
+                                            $scope.$apply();
+                                        }
                                     });
                                 } else {
                                     upload(img);
@@ -709,6 +719,7 @@ backman.directive('bmUploadImg', function (_setting, _httpPost) {
                     reader.readAsDataURL(files[0]);
                 })
                 .end()
+                //点击图片放大显示
                 .on('click', 'img', function () {
                     var $this = $(this);
                     var $win = $(window);
@@ -792,16 +803,18 @@ backman.directive('bmVerify', function () {
             if (!iAttrs.verifyItem || iAttrs.verifyItem == '{}') {
                 return;
             }
-            var _validations = null;
+            var validations = null;
             if (iAttrs.verifyItem == 'require') {
-                _validations = {
+                validations = {
                     require: true
                 };
             } else {
-                _validations = JSON.parse(iAttrs.verifyItem);
+                validations = JSON.parse(iAttrs.verifyItem.replace(/'/g, '"'));
             }
-            var _messages = JSON.parse(iAttrs.verifyMsg || '{}');
+            var messages = JSON.parse(iAttrs.verifyMsg ? iAttrs.verifyMsg.replace(/'/g, '"') : '{}');
+            //当前指令脏值
             var _dirtyState = false;
+            //所属表单
             var $curForm = iElm.closest('form');
             var fName = ($curForm.length > 0) ? $curForm.attr('id') : '';
             //变化
@@ -833,6 +846,7 @@ backman.directive('bmVerifyControl', function ($timeout) {
                     fName = iElm.closest('form').attr('id');
                 }
                 $scope.$watch('$forms.' + fName, function (newVal, oldVal) {
+                    console.log(newVal);
                 });
             }, 10);
         }
