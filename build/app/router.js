@@ -97,6 +97,21 @@ angular
                     ])
                 }
             })
+            //省市区地址联动
+            .state('elementDistpicker', {
+                url: '/element/distpicker',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/element-distpicker.html',
+                        controller: 'elementDistpicker'
+                    }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/element-distpicker.js'
+                    ])
+                }
+            })
             .state('demoList', {
                 url: '/demo/list',
                 views: {

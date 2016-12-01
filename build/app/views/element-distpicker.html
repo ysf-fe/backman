@@ -1,0 +1,11 @@
+<h1>省市区地址联动</h1>
+<hr />
+<br />
+<div bm:distpicker region="region" selectedplace="selectedPlace"></div>
+<hr>
+<p ng-show="selectedPlace.selectedprovince != '-1'">
+    所选省市区对应编号：
+    <span ng-bind="selectedPlace.selectedprovince != '-1' ? selectedPlace.selectedprovince  : ''"></span>
+    <span ng-bind="selectedPlace.selectedcity != '-1'? '-' + selectedPlace.selectedcity  : ''"></span>
+    <span ng-bind="selectedPlace.selectedblock != '-1' ? '-' + selectedPlace.selectedblock : ''"></span>
+</p>
