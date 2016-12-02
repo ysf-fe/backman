@@ -15,7 +15,7 @@ backman.directive('bmDistpicker', function() {
         template: '<div class="distpicker">' +
                         '<div class="distpicker-content" >' +
                             '<select class="" ng-options="province.regionId as province.regionName for province in region.provinces" ng-model="selectedPlace.provinceCode">' +
-                                '<option value="">请选择省份</option>' +
+                                '<option value="" disabled>请选择省份</option>' +
                             '</select>' +
                             '<select class="" ng-options="city.regionId as city.regionName for city in region.cities" ng-model="selectedPlace.cityCode">' +
                                 '<option value="" disabled>请选择市</option>' +
@@ -57,6 +57,9 @@ backman.directive('bmDistpicker', function() {
                         blockName: '', //区/县名
                     };
 
+                }else{
+                    $scope.region.cities = [];
+                    $scope.region.blocks = [];
                 }
             });
 
@@ -83,6 +86,8 @@ backman.directive('bmDistpicker', function() {
                         cityName:  _chinaAddress.getRegionIdData($scope.region.cities,newVal), //市名
                         blockName: '', //区/县名
                     };
+                }else{
+                    $scope.region.blocks = [];
                 }
             });
 
