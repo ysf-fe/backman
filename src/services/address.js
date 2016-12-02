@@ -88,6 +88,24 @@ backman.factory('_chinaAddress', function ($http, $q, _tools, _setting) {
                     }
                 }
             });
+        },
+        /**
+         * 获取对应的区域id的数据
+         * @param  {String} type     'provinces','cities','blocks'
+         * @param  {String} regionId 区域id
+         * @return {Object}          区域id对应的对象
+         */
+        getRegionIdData: function(arr, regionId){
+            var result = '';
+            if (arr) {
+                for (var i = 0, len = arr.length; i < len; i++) {
+                    if (arr[i].regionId == regionId) {
+                        result = arr[i].regionName;
+                        break;
+                    }
+                }
+            }
+            return result;
         }
     };
 });
