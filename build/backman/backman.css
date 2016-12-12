@@ -986,6 +986,26 @@ a {
     vertical-align: middle;
     font-weight: normal; }
 
+.bm-select2-box {
+  position: relative;
+  display: inline-block; }
+  .bm-select2-box > input[type="text"] {
+    width: 100%;
+    margin: 0; }
+  .bm-select2-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 2px 5px;
+    overflow: auto;
+    max-height: 200px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6); }
+
 @charset "UTF-8";
 /**
  * 指令：时间选择器

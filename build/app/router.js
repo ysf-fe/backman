@@ -112,6 +112,21 @@ angular
                     ])
                 }
             })
+            //select2
+            .state('elementSelect2', {
+                url: '/element/select2',
+                views: {
+                    'content': {
+                        templateUrl: './app/views/element-select2.html',
+                        controller: 'elementSelect2'
+                    }
+                },
+                resolve:{
+                    'load': _tools.loadJs([
+                        './app/controllers/element-select2.js'
+                    ])
+                }
+            })
             .state('demoList', {
                 url: '/demo/list',
                 views: {
