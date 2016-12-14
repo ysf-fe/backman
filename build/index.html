@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="app" lang="zh-cn">
 
     <head>
         <meta charset="UTF-8">
@@ -43,10 +43,10 @@
                     <li class="treeview" ng-repeat="itemLv1 in navData">
                         <!-- Level-1 title -->
                         <a class="treeview-title" href="javascript:;">
-                            <i class="fa fa-angle-left pull-right"></i>
                             <i class="fa fa-folder"></i>
                             <i class="fa fa-folder-open"></i>
                             <span ng-bind="itemLv1.text"></span>
+                            <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <!-- Level-1 menu -->
                         <ul class="treeview-menu" ng-if="itemLv1.children.length">
@@ -60,10 +60,10 @@
                                 </a>
                                 <!-- Level-2 title -->
                                 <a class="treeview-title" ng-if="itemLv2.children.length" href="javascript:;">
-                                    <i class="fa fa-angle-left pull-right"></i>
                                     <i class="fa fa-folder-o"></i>
                                     <i class="fa fa-folder-open-o"></i>
                                     <span ng-bind="itemLv2.text"></span>
+                                    <i class="fa fa-angle-left pull-right"></i>
                                 </a>
                                 <!-- Level-2 menu -->
                                 <ul class="treeview-menu" ng-if="itemLv2.children.length">

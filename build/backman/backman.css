@@ -91,7 +91,9 @@ a {
     height: 100%;
     overflow-y: auto; }
   .backman-content {
-    overflow-y: auto; } }
+    overflow-y: auto;
+    padding: 50px 0 0;
+    margin-top: -50px; } }
 
 @charset "UTF-8";
 /** 
@@ -323,14 +325,6 @@ a {
         .sidebar-menu li.treeview > ul.treeview-menu > li.treeview > a.treeview-title > .fa-caret-right {
           width: 20px;
           text-align: center; }
-        .sidebar-menu li.treeview > ul.treeview-menu > li.treeview > a.treeview-link > span,
-        .sidebar-menu li.treeview > ul.treeview-menu > li.treeview > a.treeview-title > span {
-          display: inline-block;
-          width: 150px;
-          overflow: hidden;
-          vertical-align: bottom;
-          white-space: nowrap;
-          text-overflow: ellipsis; }
       .sidebar-menu li.treeview > ul.treeview-menu > li.treeview ul.treeview-menu {
         padding-left: 15px; }
   .sidebar-menu li.treeview.active > a.treeview-title .fa-folder,
@@ -991,6 +985,26 @@ a {
     margin-bottom: 10px;
     vertical-align: middle;
     font-weight: normal; }
+
+.bm-select2-box {
+  position: relative;
+  display: inline-block; }
+  .bm-select2-box > input[type="text"] {
+    width: 100%;
+    margin: 0; }
+  .bm-select2-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 2px 5px;
+    overflow: auto;
+    max-height: 200px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6); }
 
 @charset "UTF-8";
 /**

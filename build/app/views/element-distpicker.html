@@ -1,0 +1,33 @@
+<h1>省市区地址联动</h1>
+<hr />
+<br />
+<h3>一般选择</h3>
+<div bm:distpicker region="distRegion" selectedplace="distSelect"></div>
+<p>
+    所选省市区对应名称：
+    <span ng-bind="distSelect.provinceName"></span>
+    <span ng-bind="distSelect.cityName ? ' - ' + distSelect.cityName  : ''"></span>
+    <span ng-bind="distSelect.blockName ? ' - ' + distSelect.blockName : ''"></span>
+</p>
+<p>
+    所选省市区对应编号：
+    <span ng-bind="distSelect.provinceCode"></span>
+    <span ng-bind="distSelect.cityCode ? ' - ' + distSelect.cityCode  : ''"></span>
+    <span ng-bind="distSelect.blockCode ? ' - ' + distSelect.blockCode : ''"></span>
+</p>
+
+<hr>
+<h3>回填数据</h3>
+<div bm:distpicker region="region" selectedplace="selectedPlace"></div>
+<p>
+    所选省市区对应名称：
+    <span ng-bind="selectedPlace.provinceName"></span>
+    <span ng-bind="selectedPlace.cityName ? ' - ' + selectedPlace.cityName  : ''"></span>
+    <span ng-bind="selectedPlace.blockName ? ' - ' + selectedPlace.blockName : ''"></span>
+</p>
+<p ng-show="selectedPlace.provinceCode">
+    所选省市区对应编号：
+    <span ng-bind="selectedPlace.provinceCode"></span>
+    <span ng-bind="selectedPlace.cityCode ? ' - ' + selectedPlace.cityCode  : ''"></span>
+    <span ng-bind="selectedPlace.blockCode ? ' - ' + selectedPlace.blockCode : ''"></span>
+</p>
