@@ -91,9 +91,7 @@ a {
     height: 100%;
     overflow-y: auto; }
   .backman-content {
-    overflow-y: auto;
-    padding: 50px 0 0;
-    margin-top: -50px; } }
+    overflow-y: auto; } }
 
 @charset "UTF-8";
 /** 
@@ -325,6 +323,14 @@ a {
         .sidebar-menu li.treeview > ul.treeview-menu > li.treeview > a.treeview-title > .fa-caret-right {
           width: 20px;
           text-align: center; }
+        .sidebar-menu li.treeview > ul.treeview-menu > li.treeview > a.treeview-link > span,
+        .sidebar-menu li.treeview > ul.treeview-menu > li.treeview > a.treeview-title > span {
+          display: inline-block;
+          width: 150px;
+          overflow: hidden;
+          vertical-align: bottom;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
       .sidebar-menu li.treeview > ul.treeview-menu > li.treeview ul.treeview-menu {
         padding-left: 15px; }
   .sidebar-menu li.treeview.active > a.treeview-title .fa-folder,

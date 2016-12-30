@@ -335,6 +335,8 @@ backman.factory('_setting', function ($rootScope) {
         parameters: {}
     };
 
+    _data.userInforUrl = '/reseller/user/user-info';
+
     //富文本编辑器图片上传接口
     _data.kindUploadImgUrl = '/api/upload-image';
 
@@ -503,7 +505,7 @@ backman.factory('_validate', function () {
         }
     };
 });
-backman.controller('backmanFramework', function ($scope, _setting) {
+backman.controller('backmanFramework', function ($scope, _setting, _httpGet) {
 
     'use strict';
 
@@ -516,6 +518,8 @@ backman.controller('backmanFramework', function ($scope, _setting) {
             $scope.sidebarOpen = !$scope.sidebarOpen;
         }
     };
+
+    _httpGet(_setting.get('userInforUrl'),{});
 
 });
 backman.controller('backmanNavigation', function ($scope, _setting, _httpGet) {
@@ -776,7 +780,7 @@ backman.directive('bmEditor', function (_setting) {
                 //imageUploadJson: _setting.get('kindUploadImgUrl') || '',
                 uploadJson: _setting.get('kindUploadImgUrl') || '',
                 afterChange: function () {
-                    if (editor && editor.html()) {
+                    if (editor) {
                         $scope.bindContent = editor.html();
                         if (!$scope.$$phase && !$scope.$root.$$phase) {
                             $scope.$apply();
@@ -784,7 +788,6 @@ backman.directive('bmEditor', function (_setting) {
                     }
                 }
             });
-            console.log(editor);
             //初次数据
             var initW = $scope.$watch('bindContent', function (newVal, oldVal) {
                 if (newVal) {
