@@ -335,7 +335,7 @@ backman.factory('_setting', function ($rootScope) {
         parameters: {}
     };
 
-    _data.userInforUrl = '/reseller/user/user-info';
+    _data.userInforUrl = '/reseller-admin/user/user-info';
 
     //富文本编辑器图片上传接口
     _data.kindUploadImgUrl = '/api/upload-image';
