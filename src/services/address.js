@@ -3,10 +3,15 @@ backman.factory('_chinaAddress', function ($http, $q, _tools, _setting) {
 
     'use strict';
 
+    // 清除使用旧的key的本地存储 
+    var OldStorageKey = 'AREA_TREE';
+    localStorage.removeItem(OldStorageKey);
+    
+
     var tree = null;
     var deferred2 = $q.defer();
 
-    var StorageKey = 'AREA_TREE';
+    var StorageKey = 'AREA_TREE20170324';
 
     var tempTree = localStorage.getItem(StorageKey);
     tempTree = tempTree?JSON.parse(tempTree) : [];
@@ -24,7 +29,7 @@ backman.factory('_chinaAddress', function ($http, $q, _tools, _setting) {
                 //所有地址regionId存在从小到大排列的规律，且parentId必定比自身regionId小，所以parent元素必定先于自身已经被创建
                 for (var i = 0; i < list.length; i++) {
                     //省级
-                    if (list[i].parentId == '') {
+                    if (list[i].parentId == '' || list[i].parentId == '0') {
                         list[i].children = [];
                         tree.push(list[i]);
                     } else {
