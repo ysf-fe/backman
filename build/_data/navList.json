@@ -43,6 +43,18 @@
                     "text": "图片上传",
                     "state": "elementUploadImg",
                     "hash": "/element/uploadImg"
+                },
+                {
+                    "order": 7,
+                    "text": "省市区地址联动",
+                    "state": "elementDistpicker",
+                    "hash": "/element/distpicker"
+                },
+                {
+                    "order": 8,
+                    "text": "省市区地址联动",
+                    "state": "elementSelect2",
+                    "hash": "/element/select2"
                 }
             ]
         },

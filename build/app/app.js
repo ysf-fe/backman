@@ -38,4 +38,7 @@ app.run(function ($rootScope, _setting) {
         }
     });
 
+    //设置富文本编辑器上传图片地址
+    _setting.set('kindUploadImgUrl', '/api/upload-image');
+
 });

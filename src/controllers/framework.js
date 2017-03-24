@@ -1,4 +1,4 @@
-backman.controller('backmanFramework', function ($scope, _setting) {
+backman.controller('backmanFramework', function ($scope, _setting, _httpGet) {
 
     'use strict';
 
@@ -11,5 +11,7 @@ backman.controller('backmanFramework', function ($scope, _setting) {
             $scope.sidebarOpen = !$scope.sidebarOpen;
         }
     };
+
+    _httpGet(_setting.get('userInforUrl'),{});
 
 });

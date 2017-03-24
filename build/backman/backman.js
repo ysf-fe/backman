@@ -90,6 +90,123 @@ backman.module = function (name, dependences) {
 
 
 
+// 服务：地址tree全局缓存服务
+backman.factory('_chinaAddress', function ($http, $q, _tools, _setting) {
+
+    'use strict';
+
+    // 清除使用旧的key的本地存储 
+    var OldStorageKey = 'AREA_TREE';
+    localStorage.removeItem(OldStorageKey);
+    
+
+    var tree = null;
+    var deferred2 = $q.defer();
+
+    var StorageKey = 'AREA_TREE20170324';
+
+    var tempTree = localStorage.getItem(StorageKey);
+    tempTree = tempTree?JSON.parse(tempTree) : [];
+
+    if(tempTree && tempTree.length) {
+        tree = tempTree;
+        deferred2.resolve(tree);
+    }else {
+        // 当前修改为请求远程文件的方式来获取区域信息
+        $http.get('../_data/region.json').then(function (data) {
+            if (data.data.state.code == 10200) {
+                tree = [];
+                var list = _tools.transKeyName('camel', data.data.data);
+                //匹配依赖依据：
+                //所有地址regionId存在从小到大排列的规律，且parentId必定比自身regionId小，所以parent元素必定先于自身已经被创建
+                for (var i = 0; i < list.length; i++) {
+                    //省级
+                    if (list[i].parentId == '' || list[i].parentId == '0') {
+                        list[i].children = [];
+                        tree.push(list[i]);
+                    } else {
+                        //市级
+                        for (var j = 0; j < tree.length; j++) {
+                            if (tree[j].regionId == list[i].parentId) {
+                                list[i].children = [];
+                                tree[j].children.push(list[i]);
+                                break;
+                            } else {
+                                //区级
+                                for (var k = 0; k < tree[j].children.length; k++) {
+                                    if (tree[j].children[k].regionId == list[i].parentId) {
+                                        tree[j].children[k].children.push(list[i]);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                tree = [];
+            }
+            localStorage.setItem(StorageKey, JSON.stringify(tree));
+            deferred2.resolve(tree);
+        }, function (err) {
+            tree = [];
+            deferred2.resolve(tree);
+        });
+    }
+
+
+    return {
+        getTree: function () {
+            if (tree) {
+                var deferred = $q.defer();
+                deferred.resolve(tree);
+                return deferred.promise;
+            } else {
+                return deferred2.promise;
+            }
+        },
+        getProvinces: function(){
+            return this.getTree();
+        },
+        getCities: function(provinceId){
+            return this.getProvinces().then(function(data){
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].regionId == provinceId) {
+                        return data[i].children;
+                    }
+                }
+            });
+        },
+        getDistricts: function(provinceId, cityId){
+            return this.getCities(provinceId).then(function(data){
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].regionId == cityId) {
+                        return data[i].children;
+                    }
+                }
+            });
+        },
+        /**
+         * 获取对应的区域id的数据
+         * @param  {String} type     'provinces','cities','blocks'
+         * @param  {String} regionId 区域id
+         * @return {Object}          区域id对应的对象
+         */
+        getRegionIdData: function(arr, regionId){
+            var result = '';
+            if (arr) {
+                for (var i = 0, len = arr.length; i < len; i++) {
+                    if (arr[i].regionId == regionId) {
+                        result = arr[i].regionName;
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
+    };
+});
+
 // 服务：请求预处理
 backman.factory('_responePreHandler', function (_tools, _setting) {
 
@@ -222,6 +339,11 @@ backman.factory('_setting', function ($rootScope) {
         //同时发送的其他参数
         parameters: {}
     };
+
+    _data.userInforUrl = '/reseller-admin/user/user-info';
+
+    //富文本编辑器图片上传接口
+    _data.kindUploadImgUrl = '/api/upload-image';
 
     return {
         get: function (key) {
@@ -388,7 +510,7 @@ backman.factory('_validate', function () {
         }
     };
 });
-backman.controller('backmanFramework', function ($scope, _setting) {
+backman.controller('backmanFramework', function ($scope, _setting, _httpGet) {
 
     'use strict';
 
@@ -401,6 +523,8 @@ backman.controller('backmanFramework', function ($scope, _setting) {
             $scope.sidebarOpen = !$scope.sidebarOpen;
         }
     };
+
+    _httpGet(_setting.get('userInforUrl'),{});
 
 });
 backman.controller('backmanNavigation', function ($scope, _setting, _httpGet) {
@@ -514,7 +638,120 @@ backman.directive('bmDatepick', function () {
         }
     }
 });
-backman.directive('bmEditor', function () {
+// 指令: 处理多级联动下拉菜单
+// disabled-select="1" 设置该属性将不能设置区域
+backman.directive('bmDistpicker', function() {
+
+    'use strict';
+
+    return {
+        restrict: 'A',
+        scope: {
+            region: '=region', // 与控制器的$scope.region绑定
+            selectedPlace: '=selectedplace' // 与控制器的$scope.selectedPlace (双向)绑定
+        },
+        replace: true,
+        transclude: false,
+        template: '<div class="distpicker">' +
+                        '<div class="distpicker-content" >' +
+                            '<select class="" ng-options="province.regionId as province.regionName for province in region.provinces" ng-model="selectedPlace.provinceCode">' +
+                                '<option value="" disabled>请选择省份</option>' +
+                            '</select>' +
+                            '<select class="" ng-options="city.regionId as city.regionName for city in region.cities" ng-model="selectedPlace.cityCode">' +
+                                '<option value="" disabled>请选择市</option>' +
+                            '</select>' +
+                            '<select class="" ng-options="block.regionId as block.regionName for block in region.blocks" ng-model="selectedPlace.blockCode">' +
+                                '<option value="" disabled>请选择区/县</option>' +
+                            '</select>' +
+                        '</div>' +
+                   '</div>',
+        link: function(scope, iElement, iAttrs) {
+            if (parseInt(iAttrs.disabledSelect, 10) == 1) {
+                iElement.find('.distpicker-content>select').attr('disabled', 'disabled');
+            }
+        },
+        controller: function($scope, _chinaAddress) {
+            // 获取一次菜单
+            _chinaAddress.getTree().then(function(data) {
+                $scope.region.provinces = data;
+            });
+
+            // 省的变化
+            $scope.$watch('selectedPlace.provinceCode', function(newVal, oldVal, scope) {
+
+                // 如果值改变
+                if (!!newVal) {
+
+                    // 设置显示的值 城市与区域
+                    _chinaAddress.getCities($scope.selectedPlace.provinceCode).then(function(data) {
+                        $scope.region.cities = data;
+                        $scope.region.blocks = [];
+                    });
+
+                    $scope.selectedPlace = {
+                        provinceCode: newVal, //省编号
+                        cityCode: '', //市编号
+                        blockCode: '', //区/县编号
+                        provinceName: _chinaAddress.getRegionIdData($scope.region.provinces,newVal), //省名
+                        cityName: '', //市名
+                        blockName: '', //区/县名
+                    };
+
+                }else{
+                    $scope.region.cities = [];
+                    $scope.region.blocks = [];
+                }
+            });
+
+            // 市的变化
+            $scope.$watch('selectedPlace.cityCode', function(newVal, oldVal, scope) {
+
+                // 如果值改变
+                if (!!newVal) {
+
+                    // 设置显示的值 区域
+                    _chinaAddress.getDistricts(
+                        $scope.selectedPlace.provinceCode,
+                        $scope.selectedPlace.cityCode
+                    ).then(function(data) {
+                        $scope.selectedPlace.cityCode = newVal;
+                        $scope.region.blocks = data;
+                    });
+                    // $scope.selectedPlace.blockCode = '';
+                    scope.selectedPlace = {
+                        provinceCode: $scope.selectedPlace.provinceCode, //省编号
+                        cityCode: newVal, //市编号
+                        blockCode: '', //区/县编号
+                        provinceName: $scope.selectedPlace.provinceName, //省名
+                        cityName:  _chinaAddress.getRegionIdData($scope.region.cities,newVal), //市名
+                        blockName: '', //区/县名
+                    };
+                }else{
+                    $scope.region.blocks = [];
+                }
+            });
+
+            // 区的变化
+            $scope.$watch('selectedPlace.blockCode', function(newVal, oldVal, scope) {
+                if (newVal !== oldVal) {
+                    $scope.selectedPlace.blockCode = newVal;
+                    $scope.selectedPlace = {
+                        provinceCode: $scope.selectedPlace.provinceCode, //省编号
+                        cityCode: $scope.selectedPlace.cityCode, //市编号
+                        blockCode: newVal, //区/县编号
+                        provinceName: $scope.selectedPlace.provinceName, //省名
+                        cityName:  $scope.selectedPlace.cityName, //市名
+                        blockName: _chinaAddress.getRegionIdData($scope.region.blocks,newVal), //区/县名
+                    };
+                }
+            });
+
+        }
+
+    };
+});
+
+backman.directive('bmEditor', function (_setting) {
 
     'use strict';
 
@@ -528,26 +765,27 @@ backman.directive('bmEditor', function () {
             iElm.attr('id', eid);
             var editor = KindEditor.create('#' + eid, {
                 items: [
-                    "source", "|",
-                    "undo", "redo", "|",
-                    "template", "code", "|",
-                    "cut", "copy", "paste", "plainpaste", "wordpaste", "|",
-                    "justifyleft", "justifycenter", "justifyright", "justifyfull", "insertorderedlist",
-                    "insertunorderedlist", "indent", "outdent", "subscript", "superscript", "clearhtml",
-                    "quickformat", "|", "selectall", "fullscreen", "/",
-                    "formatblock", "fontname", "fontsize", "|",
-                    "forecolor", "hilitecolor", "bold", "italic", "underline", "strikethrough", "lineheight",
-                    "removeformat", "|",
-                    "image", "table", "hr", "emoticons", "baidumap", "pagebreak", "anchor", "link", "unlink", "|",
-                    "preview", "print", "about"
+                    'source', '|',
+                    'undo', 'redo', '|',
+                    'template', 'code', '|',
+                    'cut', 'copy', 'paste', 'plainpaste', 'wordpaste', '|',
+                    'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', 'insertorderedlist',
+                    'insertunorderedlist', 'indent', 'outdent', 'subscript', 'superscript', 'clearhtml',
+                    'quickformat', '|', 'selectall', 'fullscreen', '/',
+                    'formatblock', 'fontname', 'fontsize', '|',
+                    'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'strikethrough', 'lineheight',
+                    'removeformat', '|',
+                    'image', 'multiimage', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak', 'anchor', 'link', 'unlink', '|',
+                    'preview', 'print', 'about'
                 ],
                 width: '100%',
                 height: '270px',
                 resizeMode: 1,
                 allowFileManager: false,
-                imageUploadJson: iAttrs.imageUploadUrl || '',
+                //imageUploadJson: _setting.get('kindUploadImgUrl') || '',
+                uploadJson: _setting.get('kindUploadImgUrl') || '',
                 afterChange: function () {
-                    if (editor && editor.html()) {
+                    if (editor) {
                         $scope.bindContent = editor.html();
                         if (!$scope.$$phase && !$scope.$root.$$phase) {
                             $scope.$apply();
@@ -602,6 +840,164 @@ backman.directive('bmSidebar', function () {
             });
         }
     }
+});
+/*
+ * author:tank
+ * date:2016-12-12
+ * desc:component select2
+ */
+backman.directive('bmSelect2', function($timeout){
+    'use strict';
+    
+    return {
+        scope: {
+            bindList:'=', // 列表中的数据集
+            bindSearch:'@', // 搜索哪个字段
+            bindData:'=' // 统一返回数组
+        },
+        restrict: 'A',
+        template: '<div class="bm-select2-box" ng-click="$event.stopPropagation();">' +                       
+                        '<input type="text" class="bm-select2-input" ng-model="name">' +
+                        '<ul class="bm-select2-list list-unstyled">' +
+                            '<li ng-if="isShowCheckbox">' +
+                                '<label style="margin: 0;">'+
+                                    '<input type="checkbox" ng-checked="checkedAll" ng-click="act.doCheckAll(filtoutData);"/>' +
+                                    '<span>全选</span>' +
+                                '</label>' +
+                            '</li>' +
+                            '<li ng-repeat="item in filtoutData">' +
+                                '<label style="margin: 0;" ng-if="!isShowCheckbox" ng-click="act.doClick(item);" ng-bind="item[bindSearch]"></label>' +
+                                '<label style="margin: 0;" ng-if="isShowCheckbox">'+
+                                    '<input type="checkbox" ng-checked="item.checked" ng-click="act.doClick(item);"/>' +
+                                    '<span ng-bind="item[bindSearch]"></span>' +
+                                '</label>' +
+                            '</li>' +
+                        '</ul> ' +               
+                    '</div>',
+        replace: true,
+        link: function($scope, iElm, iAttrs, ctrl) {
+            var doc = $(document),
+                input = iElm.children('input'),
+                ul = iElm.children('ul');
+
+            // 控件行为
+            input.click(function(e) {
+                var hideUl = function() {
+                    ul.hide();
+                    doc.off('click', hideUl);
+                };
+                var isUlShow = ul.css('display') != 'none';
+                if(isUlShow) {
+                    ul.hide();
+                    doc.off('click', hideUl);
+                }else {
+                    ul.show();
+                    doc.on('click', hideUl);
+                }
+            });
+
+            // 筛选用函数
+            var filterFn = function(key, data) {
+                var searchin = $scope.bindSearch;
+                var result = [];
+                if(key && data && data.length) {
+                    angular.forEach(data, function(v, k, obj) {
+                        if(v[searchin].indexOf(key) >= 0) {
+                            result.push(v);
+                        }
+                    });
+                }
+                return result;
+            };
+
+            // 模板中用到的模型
+            $scope.bindListCopy = []; // 拷贝出来的数据源
+            $scope.filtoutData = []; // 过滤出来的数据(展示用)
+            $scope.name = ''; // input输入框的模型
+            $scope.isShowCheckbox = parseInt(iAttrs.isShowCheckbox, 10) === 1 ? true : false  ; // 是否显示复选框
+            $scope.checkedAll = false; // 是否全选
+            $scope.bindData = []; // 返回控制器的结果集
+
+            // arr就是结果集合$scope.bindData
+            var toggleSelectedItem = function(arr, it) {
+                var idx = arr.indexOf(it);
+                if(it.checked) {
+                    if(idx < 0) {
+                        arr.push(it);
+                    }
+                } else {
+                    if(idx >= 0) {
+                        arr.splice(idx, 1);
+                    }
+                }
+                return arr;
+            };
+
+            $scope.act = {
+                doClick:function(item) {
+                    if($scope.isShowCheckbox) { // 多选的情况
+                        item.checked = !item.checked;
+                        $scope.bindData = toggleSelectedItem($scope.bindData, item);
+                    } else { // 单选的情况
+                        $scope.name = item[$scope.bindSearch];
+                        $scope.bindData = [item];
+
+                        // 写这里貌似不太好
+                        ul.hide();
+                    }
+                },
+                doCheckAll:function(allItems) {
+                    if($scope.isShowCheckbox) { // 多选的情况
+                        $scope.checkedAll = !$scope.checkedAll;
+                        angular.forEach(allItems, function(v, k) {
+                            v.checked = $scope.checkedAll;
+                            toggleSelectedItem($scope.bindData, v);        
+                        });
+                    }
+                }
+            };
+
+            // 如果绑定的数据源改变了，则重新初始化一些值
+            $scope.$watch('bindList', function(newVal, oldVal) {
+                var dataPreHandler = function(dt) {
+                    if(dt && dt.length) {
+                        angular.forEach(dt, function(v, k) {
+                            v.checked = false;
+                        });
+                    }
+                    return dt;
+                };
+                if(newVal) {
+                    $scope.bindListCopy = dataPreHandler(angular.copy($scope.bindList));
+                    $scope.filtoutData = [].concat($scope.bindListCopy);
+                    $scope.name = '';
+                    $scope.bindData = [];
+                    if ($scope.isShowCheckbox) {
+                        $scope.checkedAll = false;
+                    }
+                }
+            });
+
+            // 函数节流，减少筛选的次数
+            var timeObj = null;
+            $scope.$watch('name', function(newVal, oldVal) {
+                if(timeObj){
+                    $timeout.cancel(timeObj);
+                }
+                timeObj = $timeout(function(){
+                    var search = $.trim(newVal)?$.trim(newVal):'';
+                    if(search) {
+                        $scope.filtoutData = filterFn(search ,$scope.bindListCopy);                    
+                    }else {
+                        $scope.filtoutData = [].concat($scope.bindListCopy);
+                    }
+                    $scope.checkedAll = false;
+
+                    timeObj = null;
+                }, 500);
+            });
+        }
+    };
 });
 backman.directive('bmUploadImg', function (_setting, _httpPost) {
 
@@ -696,6 +1092,11 @@ backman.directive('bmUploadImg', function (_setting, _httpPost) {
                                     layer.confirm(msg, {icon: 0, title: '尺寸不匹配!'}, function (index) {
                                         layer.close(index);
                                         upload(img);
+                                    }, function(){
+                                        $scope.state.upAjaxing = false;
+                                        if (!$scope.$$phase && !$scope.$root.$$phase) {
+                                            $scope.$apply();
+                                        }
                                     });
                                 } else {
                                     upload(img);
@@ -709,6 +1110,7 @@ backman.directive('bmUploadImg', function (_setting, _httpPost) {
                     reader.readAsDataURL(files[0]);
                 })
                 .end()
+                //点击图片放大显示
                 .on('click', 'img', function () {
                     var $this = $(this);
                     var $win = $(window);
@@ -792,16 +1194,18 @@ backman.directive('bmVerify', function () {
             if (!iAttrs.verifyItem || iAttrs.verifyItem == '{}') {
                 return;
             }
-            var _validations = null;
+            var validations = null;
             if (iAttrs.verifyItem == 'require') {
-                _validations = {
+                validations = {
                     require: true
                 };
             } else {
-                _validations = JSON.parse(iAttrs.verifyItem);
+                validations = JSON.parse(iAttrs.verifyItem.replace(/'/g, '"'));
             }
-            var _messages = JSON.parse(iAttrs.verifyMsg || '{}');
+            var messages = JSON.parse(iAttrs.verifyMsg ? iAttrs.verifyMsg.replace(/'/g, '"') : '{}');
+            //当前指令脏值
             var _dirtyState = false;
+            //所属表单
             var $curForm = iElm.closest('form');
             var fName = ($curForm.length > 0) ? $curForm.attr('id') : '';
             //变化
@@ -833,6 +1237,7 @@ backman.directive('bmVerifyControl', function ($timeout) {
                     fName = iElm.closest('form').attr('id');
                 }
                 $scope.$watch('$forms.' + fName, function (newVal, oldVal) {
+                    console.log(newVal);
                 });
             }, 10);
         }

@@ -3,7 +3,6 @@
  * 导航栏
  * ------
  */
-
 .backman-sidebar {
     position: absolute;
     top: 0;
@@ -14,7 +13,6 @@
     padding-top: 50px;
     @include prefixer(transition, transform 0.3s ease-in-out, width 0.3s ease-in-out);
 }
-
 @media (max-width: 767px) {
     .backman-sidebar {
         position: fixed;
@@ -26,13 +24,10 @@
         @include prefixer(transform, translate(0, 0));
     }
 }
-
-
 /*
  * 导航栏菜单
  * ---------
  */
-
 .sidebar-menu {
     list-style: none;
     margin: 0;
@@ -125,6 +120,14 @@
                     > .fa-caret-right {
                         width: 20px;
                         text-align: center;
+                    }
+                    > span {
+                        display: inline-block;
+                        width: 150px;
+                        overflow: hidden;
+                        vertical-align: bottom;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
                     }
                 }
                 ul.treeview-menu {

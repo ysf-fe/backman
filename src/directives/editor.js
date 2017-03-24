@@ -1,4 +1,4 @@
-backman.directive('bmEditor', function () {
+backman.directive('bmEditor', function (_setting) {
 
     'use strict';
 
@@ -12,26 +12,27 @@ backman.directive('bmEditor', function () {
             iElm.attr('id', eid);
             var editor = KindEditor.create('#' + eid, {
                 items: [
-                    "source", "|",
-                    "undo", "redo", "|",
-                    "template", "code", "|",
-                    "cut", "copy", "paste", "plainpaste", "wordpaste", "|",
-                    "justifyleft", "justifycenter", "justifyright", "justifyfull", "insertorderedlist",
-                    "insertunorderedlist", "indent", "outdent", "subscript", "superscript", "clearhtml",
-                    "quickformat", "|", "selectall", "fullscreen", "/",
-                    "formatblock", "fontname", "fontsize", "|",
-                    "forecolor", "hilitecolor", "bold", "italic", "underline", "strikethrough", "lineheight",
-                    "removeformat", "|",
-                    "image", "table", "hr", "emoticons", "baidumap", "pagebreak", "anchor", "link", "unlink", "|",
-                    "preview", "print", "about"
+                    'source', '|',
+                    'undo', 'redo', '|',
+                    'template', 'code', '|',
+                    'cut', 'copy', 'paste', 'plainpaste', 'wordpaste', '|',
+                    'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', 'insertorderedlist',
+                    'insertunorderedlist', 'indent', 'outdent', 'subscript', 'superscript', 'clearhtml',
+                    'quickformat', '|', 'selectall', 'fullscreen', '/',
+                    'formatblock', 'fontname', 'fontsize', '|',
+                    'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'strikethrough', 'lineheight',
+                    'removeformat', '|',
+                    'image', 'multiimage', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak', 'anchor', 'link', 'unlink', '|',
+                    'preview', 'print', 'about'
                 ],
                 width: '100%',
                 height: '270px',
                 resizeMode: 1,
                 allowFileManager: false,
-                imageUploadJson: iAttrs.imageUploadUrl || '',
+                //imageUploadJson: _setting.get('kindUploadImgUrl') || '',
+                uploadJson: _setting.get('kindUploadImgUrl') || '',
                 afterChange: function () {
-                    if (editor && editor.html()) {
+                    if (editor) {
                         $scope.bindContent = editor.html();
                         if (!$scope.$$phase && !$scope.$root.$$phase) {
                             $scope.$apply();
